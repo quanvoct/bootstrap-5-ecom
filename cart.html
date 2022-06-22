@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Type some info">
+	<meta name="author" content="Type name">
+
+	<title>Trang chủ - Phù Sa Genomics</title>
+	<!-- jQuery CDN -->
+	<script src="js/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+		crossorigin="anonymous"></script>
+
+	<!-- Bootstrap css -->
+	<link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom css -->
+	<link href="css/ui.css" rel="stylesheet" type="text/css">
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+	<link href="css/responsive.css" rel="stylesheet" type="text/css">
+	<link href="css/fslightbox.css" rel="stylesheet" type="text/css">
+
+	<!-- Font awesome 5 -->
+	<link href="fonts/fontawesome/css/all.min.css" type="text/css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+	<header class="section-header">
+		<section class="header-main bg-white">
+			<div class="container">
+				<div class="row gy-3 align-items-center">
+					<div class="col-lg-2 col-sm-4 col-4">
+						<a href="/" class="navbar-brand">
+							<img class="logo" height="40" src="images/logo.svg">
+						</a> <!-- brand end.// -->
+					</div>
+					<div class="order-lg-last col-lg-3 col-sm-8 col-8">
+						<div class="float-end">
+							<a type="button" class="text-primary fs-5" style="text-decoration: none;">
+								<i class="fa fa-phone-alt"></i> <span class="ms-1">0292 651 5678</span>
+							</a>
+						</div>
+					</div> <!-- col end.// -->
+					<div class="col-lg-7 col-md-12 col-12 ps-lg-5">
+						<div class="mx-auto ps-lg-5">
+							<form action="#" class="">
+								<div class="input-group">
+									<input type="search" class="form-control" style="width:25%" placeholder="Search">
+									<button class="btn btn-primary">
+										<i class="fa fa-search"></i>
+									</button>
+								</div> <!-- input-group end.// -->
+							</form>
+						</div>
+					</div> <!-- col end.// -->
+
+				</div> <!-- row end.// -->
+			</div> <!-- container end.// -->
+		</section> <!-- header-main end.// -->
+
+		<nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+			<div class="container">
+				<button class="navbar-toggler border" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbar_main" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbar_main">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item mx-3">
+							<a class="nav-link ps-0" href="index.html">Trang chủ</a>
+						</li>
+						<li class="nav-item mx-3">
+							<a class="nav-link" href="page-blank.html">Giới thiệu</a>
+						</li>
+						<li class="nav-item mx-3">
+							<a class="nav-link" href="news-list.html">Tin tức</a>
+						</li>
+						<li class="nav-item mx-3">
+							<a class="nav-link" href="news-list.html">Tuyển dụng</a>
+						</li>
+						<li class="nav-item mx-3 dropdown">
+							<a class="dropdown-toggle nav-link c-pointer" data-bs-toggle="dropdown">
+								Hướng dẫn mua hàng
+							</a>
+							<ul class="dropdown-menu">
+								<li> <a class="dropdown-item" href="news-detail.html">Chính sách bán hàng</a> </li>
+								<li> <a class="dropdown-item" href="news-detail.html">Chính sách giao hàng & đổi trả</a>
+								</li>
+								<li> <a class="dropdown-item" href="news-detail.html">Hướng dẫn thanh toán</a> </li>
+							</ul>
+						</li>
+					</ul>
+					<span>
+						<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLogin">
+							<i class="fa fa-user"></i> <span class="ms-1">Đăng nhập</span>
+						</button>
+					</span>
+				</div> <!-- collapse end.// -->
+			</div> <!-- container end.// -->
+
+		</nav> <!-- navbar end.// -->
+	</header> <!-- section-header end.// -->
+
+	<!-- ============== SECTION PAGETOP ============== -->
+	<section class="bg-primary padding-y-sm">
+		<div class="container">
+			<h2 class="text-white">Giỏ hàng</h2>
+
+			<ol class="breadcrumb ondark mb-0">
+				<li class="breadcrumb-item"> <a href="/">Home</a> </li>
+				<li class="breadcrumb-item active">Giỏ hàng</li>
+			</ol>
+		</div> <!-- container //  -->
+	</section>
+	<!-- ============== SECTION PAGETOP END// ============== -->
+
+	<section class="padding-y bg-light">
+		<div class="container">
+
+			<!-- =================== COMPONENT CART+SUMMARY ====================== -->
+			<div class="row">
+				<div class="col-lg-9">
+
+					<div class="card">
+						<div class="content-body">
+							<h4 class="card-title mb-4">Giỏ hàng của bạn</h4>
+							<article class="row gy-3 mb-4">
+								<div class="col-lg-5">
+									<figure class="itemside me-lg-5">
+										<div class="aside"><img src="images/items/11.jpg" class="img-sm img-thumbnail">
+										</div>
+										<figcaption class="info">
+											<a href="#" class="title">Winter jacket for men and lady</a>
+										</figcaption>
+									</figure>
+								</div>
+								<div class="col-auto">
+									<select style="width: 100px" class="form-select">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+									</select>
+								</div>
+								<div class="col-lg-2 col-sm-4 col-6">
+									<div class="price-wrap lh-sm">
+										<var class="price h6">33.000.000<sup>đ</sup></var> <br>
+										<small class="text-muted"> 33.000.000đ / món </small>
+									</div> <!-- price-wrap .// -->
+								</div>
+								<div class="col-lg col-sm-4">
+									<div class="float-lg-end">
+										<a href="#" class="btn btn-light text-danger"> Xóa</a>
+									</div>
+								</div>
+							</article> <!-- row.// -->
+
+							<article class="row gy-3 mb-4">
+								<div class="col-lg-5">
+									<figure class="itemside me-lg-5">
+										<div class="aside"><img src="images/items/12.jpg" class="img-sm img-thumbnail">
+										</div>
+										<figcaption class="info">
+											<a href="#" class="title">Mens T-shirt Cotton Base</a>
+											<p class="text-muted"> Tên biến thể hoặc mã biến thể </p>
+										</figcaption>
+									</figure>
+								</div>
+								<div class="col-auto">
+									<select style="width: 100px" class="form-select">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option selected>4</option>
+									</select>
+								</div>
+								<div class="col-lg-2 col-sm-4 col-6">
+									<div class="price-wrap lh-sm">
+										<var class="price h6">132.000.000<sup>đ</sup></var> <br>
+										<small class="text-muted"> 33.000.000đ / món </small>
+									</div> <!-- price-wrap .// -->
+								</div>
+								<div class="col-lg col-sm-4">
+									<div class="float-lg-end">
+										<a href="#" class="btn btn-light text-danger"> Xóa</a>
+									</div>
+								</div>
+							</article> <!-- row.// -->
+
+							<article class="row gy-3 mb-4">
+								<div class="col-lg-5">
+									<figure class="itemside me-lg-5">
+										<div class="aside"><img src="images/items/13.jpg" class="img-sm img-thumbnail">
+										</div>
+										<figcaption class="info">
+											<a href="#" class="title">Blazer Suit Dress Jacket for Men</a>
+											<p class="text-muted"><a data-bs-toggle="collapse" href="#product-detail"
+													role="button" aria-expanded="false" aria-controls="product-detail">
+													Chi tiết sản phẩm
+												</a></p>
+										</figcaption>
+									</figure>
+								</div>
+								<div class="col-auto">
+									<select style="width: 100px" class="form-select">
+										<option>1</option>
+										<option>2</option>
+										<option selected>3</option>
+										<option>4</option>
+									</select>
+								</div>
+								<div class="col-lg-2 col-sm-4 col-6">
+									<div class="price-wrap lh-sm">
+										<var class="price h6">99.000.000<sup>đ</sup></var> <br>
+										<small class="text-muted"> 33.000.000đ / món </small>
+									</div> <!-- price-wrap .// -->
+								</div>
+								<div class="col-lg col-sm-4">
+									<div class="float-lg-end">
+										<a href="#" class="btn btn-light text-danger"> Xóa</a>
+									</div>
+								</div>
+							</article> <!-- row.// -->
+
+						</div> <!-- card-body .// -->
+
+						<div class="content-body border-top">
+							<p><i class="me-2 text-muted fa-lg fa fa-truck"></i> Lưu ý về thời gian giao hàng</p>
+							<p class="text-muted">Thời gian giao hàng có thể khác nhau tùy thuộc vào danh mục sản phẩm
+								mà bạn đặt. Vui lòng xem mục ED (Estimate Dilivery - Thời gian dự kiến giao hàng) để
+								biết thời gian giao hàng của từng sản phẩm.<br />Phù Sa Genomics xin chân thành cảm ơn!
+							</p>
+						</div> <!-- card-body.// -->
+
+					</div> <!-- card.// -->
+
+				</div> <!-- col.// -->
+				<aside class="col-lg-3">
+
+					<div class="card mb-3">
+						<div class="card-body">
+							<form>
+								<div class="form-group">
+									<label class="form-label">Bạn có mã giảm giá?</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="" placeholder="Nhập mã giảm giá">
+										<button class="btn btn-light">Áp dụng</button>
+									</div>
+								</div>
+							</form>
+						</div> <!-- card-body.// -->
+					</div> <!-- card.// -->
+
+					<div class="card">
+						<div class="card-body">
+							<dl class="dlist-align">
+								<dt>Tổng thành tiền:</dt>
+								<dd class="text-end"> 254.000.000<sup>đ</sup></dd>
+							</dl>
+							<dl class="dlist-align">
+								<dt>Chiết khấu:</dt>
+								<dd class="text-end text-success"> - 4.000.000<sup>đ</sup> </dd>
+							</dl>
+							<hr>
+							<dl class="dlist-align">
+								<dt>Total:</dt>
+								<dd class="text-end text-dark h5"> 250.000.000<sup>đ</sup> </dd>
+							</dl>
+
+							<div class="d-grid gap-2 my-3">
+								<a href="checkout.html" class="btn btn-primary w-100"> Thanh toán </a>
+								<a href="product-grid.html" class="btn btn-light w-100"> Tiếp tục mua hàng </a>
+							</div>
+						</div> <!-- card-body.// -->
+					</div> <!-- card.// -->
+
+				</aside> <!-- col.// -->
+
+			</div> <!-- row.// -->
+			<!-- =================== COMPONENT 1 CART+SUMMARY .//END  ====================== -->
+
+			<br><br>
+
+		</div> <!-- container .//  -->
+	</section>
+
+	<section class="padding-y">
+		<div class="container">
+			<div class="collapse" id="product-detail">
+				<div class="card card-body">
+					<h4 class="cart-title text-primary">Chi tiết sản phẩm Oligo Premium</h4>
+					<table class="table table-striped table-hover table-sm align-middle mt-3">
+						<thead>
+							<tr>
+								<th scope="col" class="text-center">Tên chuỗi</th>
+								<th scope="col">Chuỗi trình tự</th>
+								<th scope="col" class="text-center">Độ dài</th>
+								<th scope="col" class="text-center">OD</th>
+								<th scope="col" class="text-center">Loại Oligo</th>
+								<th scope="col" class="text-center">Sấy</th>
+								<th scope="col" class="text-center">Tiêu chuẩn</th>
+								<th scope="col" class="text-end">Đơn giá</th>
+								<th scope="col" class="text-end">Phí</th>
+								<th scope="col" class="text-end">Thành tiền</th>
+								<th scope="col" class="text-center">Dự giao</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td scope="col" class="text-center">A012</td>
+								<td scope="col">AGCTACGACTACGACTACGATC</td>
+								<td scope="col" class="text-center">22</td>
+								<td scope="col" class="text-center">3+</td>
+								<td scope="col" class="text-center">PremiumOligo.01</td>
+								<td scope="col" class="text-center">Dry</td>
+								<td scope="col" class="text-center">100</td>
+								<td scope="col" class="text-end">4300</td>
+								<td scope="col" class="text-end">30.000</td>
+								<td scope="col" class="text-end">124.600</td>
+								<td scope="col" class="text-center">24/06/2022</td>
+							</tr>
+							<tr>
+								<td scope="col" class="text-center">A02</td>
+								<td scope="col">AGCATCGACTACGACTAGCATCGACTACGTACG</td>
+								<td scope="col" class="text-center">33</td>
+								<td scope="col" class="text-center">3+</td>
+								<td scope="col" class="text-center">PremiumOligo.01</td>
+								<td scope="col" class="text-center">Dry</td>
+								<td scope="col" class="text-center">50</td>
+								<td scope="col" class="text-end">4300</td>
+								<td scope="col" class="text-end">30.000</td>
+								<td scope="col" class="text-end">171.900</td>
+								<td scope="col" class="text-center">24/06/2022</td>
+							</tr>
+							<tr>
+								<td scope="col" class="text-center">A03</td>
+								<td scope="col">CAGCTACGTACGACTACGACTACGATCGACTAG</td>
+								<td scope="col" class="text-center">33</td>
+								<td scope="col" class="text-center">3+</td>
+								<td scope="col" class="text-center">PremiumOligo.01</td>
+								<td scope="col" class="text-center">Dry</td>
+								<td scope="col" class="text-center">50</td>
+								<td scope="col" class="text-end">4300</td>
+								<td scope="col" class="text-end">30.000</td>
+								<td scope="col" class="text-end">171.900</td>
+								<td scope="col" class="text-center">24/06/2022</td>
+							</tr>
+							<tr>
+								<td scope="col" class="text-center">A04</td>
+								<td scope="col">GACTACGACTAGCTACGACTACGACTAGCTA</td>
+								<td scope="col" class="text-center">31</td>
+								<td scope="col" class="text-center">3+</td>
+								<td scope="col" class="text-center">PremiumOligo.01</td>
+								<td scope="col" class="text-center">Dry</td>
+								<td scope="col" class="text-center">50</td>
+								<td scope="col" class="text-end">4300</td>
+								<td scope="col" class="text-end">30.000</td>
+								<td scope="col" class="text-end">163.300</td>
+								<td scope="col" class="text-center">24/06/2022</td>
+							</tr>
+							<tr>
+								<td scope="col" class="text-center">A05</td>
+								<td scope="col">GCATGCTACGCTCGATCAGCTACGTACGAC</td>
+								<td scope="col" class="text-center">30</td>
+								<td scope="col" class="text-center">3+</td>
+								<td scope="col" class="text-center">PremiumOligo.01</td>
+								<td scope="col" class="text-center">Dry</td>
+								<td scope="col" class="text-center">50</td>
+								<td scope="col" class="text-end">4300</td>
+								<td scope="col" class="text-end">30.000</td>
+								<td scope="col" class="text-end">159.000</td>
+								<td scope="col" class="text-center">24/06/2022</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="9" class="text-end">Tổng thành tiền</th>
+								<th class="text-end">790.700</th>
+								<th colspan="3"></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============== SECTION  ============== -->
+	<section class="padding-y border-top">
+		<div class="container">
+			<header class="section-heading">
+				<h4 class="section-title">Sản phẩm đề xuất</h4>
+			</header>
+
+			<div class="row">
+				<div class="col-lg-3 col-sm-6 col-12">
+					<figure class="card card-product-grid">
+						<div class="img-wrap">
+							<span class="topbar">
+								<span class="badge bg-danger"> New </span>
+							</span>
+							<a href="product-detail.html"><img src="images/items/7.jpg"></a>
+						</div>
+						<figcaption class="info-wrap border-top">
+							<a href="product-detail.html" class="title">Gaming Headset with Mic</a>
+							<div class="price-wrap mb-3">
+								<strong class="price">33.000.000<sup>đ</sup></strong>
+								<del class="price-old">30.000.000<sup>đ</sup></del>
+							</div> <!-- price-wrap.// -->
+						</figcaption>
+					</figure> <!-- card // -->
+				</div> <!-- col.// -->
+				<div class="col-lg-3 col-sm-6 col-12">
+					<figure class="card card-product-grid">
+						<div class="img-wrap">
+							<span class="topbar">
+							</span>
+							<a href="product-detail.html"><img src="images/items/8.jpg"></a>
+						</div>
+						<figcaption class="info-wrap border-top">
+							<a href="product-detail.html" class="title">Apple Watch Series 1 Sport </a>
+							<div class="price-wrap mb-3">
+								<strong class="price">33.000.000<sup>đ</sup></strong>
+							</div> <!-- price-wrap.// -->
+						</figcaption>
+					</figure> <!-- card // -->
+				</div> <!-- col.// -->
+				<div class="col-lg-3 col-sm-6 col-12">
+					<figure class="card card-product-grid">
+						<div class="img-wrap">
+							<span class="topbar">
+							</span>
+							<a href="product-detail.html"><img src="images/items/9.jpg"></a>
+						</div>
+						<figcaption class="info-wrap border-top">
+							<a href="product-detail.html" class="title"> Men's Denim Jeans Shorts </a>
+							<div class="price-wrap mb-3">
+								<strong class="price">33.000.000<sup>đ</sup></strong>
+							</div> <!-- price-wrap.// -->
+						</figcaption>
+					</figure> <!-- card // -->
+				</div> <!-- col.// -->
+				<div class="col-lg-3 col-sm-6 col-12">
+					<figure class="card card-product-grid">
+						<div class="img-wrap">
+							<span class="topbar">
+							</span>
+							<a href="product-detail.html"><img src="images/items/10.jpg"></a>
+						</div>
+						<figcaption class="info-wrap border-top">
+							<a href="product-detail.html" class="title text-truncate">Mens T-shirt Cotton Base Layer Slim fit </a>
+							<div class="price-wrap mb-3">
+								<strong class="price">33.000.000<sup>đ</sup></strong>
+							</div> <!-- price-wrap.// -->
+						</figcaption>
+					</figure> <!-- card // -->
+				</div> <!-- col.// -->
+			</div> <!-- row.// -->
+
+		</div> <!-- container .//  -->
+	</section>
+	<!-- ============== SECTION END// ============== -->
+
+
+
+
+	<footer class="section-footer bg-primary footer-dark">
+		<div class="container">
+			<section class="footer-main padding-y">
+				<div class="row">
+					<aside class="col-md-6 col-sm-12 col-lg-4 mb-3">
+						<article class="me-lg-4">
+							<img src="images/logo-white.svg" class="logo-footer mb-3">
+							<ul class="list-menu">
+								<li>ĐC: 503, đường 30/04, P. Hưng Lợi<br /> Q. Ninh Kiều, TP. Cần Thơ</li>
+								<li>Kinh doanh: 0292 651 5678</li>
+								<li>Kế toán: 0292 65 3388</li>
+								<li>Email: cskh@phusabiochem.com</li>
+								<li>MSDN: 1800716267<br />Cấp ngày 25/06/2008 tại sở KH-ĐT TP. Cần Thơ</li>
+							</ul>
+						</article>
+					</aside>
+					<aside class="col-md-6 col-sm-12 col-lg-3 mb-3">
+						<h6 class="title">Các chính sách</h6>
+						<ul class="list-menu">
+							<li> <a href="#">Hướng dẫn mua hàng</a></li>
+							<li> <a href="#">Chính sách bán hàng</a></li>
+							<li> <a href="#">Chính sách giao hàng và đổi trả</a></li>
+							<li> <a href="#">Chính sách bảo mật</a></li>
+							<li> <a href="#">Hướng dẫn thanh toán</a></li>
+						</ul>
+					</aside>
+					<aside class="col-md-6 col-sm-12 col-lg-2 mb-3">
+						<h6 class="title">Danh mục chính</h6>
+						<ul class="list-menu">
+							<li> <a href="#">Trang chủ</a></li>
+							<li> <a href="#">Giới thiệu</a></li>
+							<li> <a href="#">Tuyển dụng</a></li>
+							<li> <a href="#">Tin tức</a></li>
+							<li> <a href="#">Liên hệ</a></li>
+						</ul>
+					</aside>
+					<aside class="col-md-6 col-sm-12 col-lg-3 mb-3">
+						<h6 class="title">Danh mục sản phẩm</h6>
+						<ul class="list-menu">
+							<li> <a href="#">Oligo/Primer</a></li>
+							<li> <a href="#">Sars-COV-2</a></li>
+							<li> <a href="#">Hóa chất BIO</a></li>
+							<li> <a href="#">KIT chẩn đoán BIO</a></li>
+							<li> <a href="#">Tổng hợp Gene</a></li>
+							<li> <a href="#">Thiết bị</a></li>
+						</ul>
+					</aside>
+				</div> <!-- row.// -->
+			</section> <!-- footer-top.// -->
+			<hr class="my-0">
+			<section class="footer-bottom d-flex justify-content-lg-between">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-4 col-md-12 col-sm-12">
+							<div>
+								<i class="fa-brands fa-cc-visa"></i>
+								<i class="fa-solid fa-credit-card"></i>
+								<i class="fa-brands fa-cc-mastercard"></i>
+								<i class="fa-brands fa-cc-jcb"></i>
+								<i class="fa-solid fa-money-check-dollar"></i>
+							</div>
+						</div>
+						<div class="col-lg-8 col-md-12 col-sm-12">
+							<p class="text-lg-end">Phù Sa BIOCHEM © 2022. All right reserved. Design and build by Key
+								Digital</p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div> <!-- container end.// -->
+	</footer>
+
+    <!-- Modal Login -->
+    <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLoginLabel">Đăng nhập</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post">
+                        <div class="mb-3">
+                            <input type="email" class="form-control" id="username" placeholder="Email đăng nhập" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Mật khẩu">
+                        </div>
+                        <div class="mb-3 d-inline-block">
+                            <!-- <button type="submit" class="btn btn-primary">Đăng nhập</button> -->
+                            <a href="account.html" class="btn btn-primary">Đăng nhập</a>
+                        </div>
+                        <div class="mb-3 form-check d-inline-block ms-3">
+                          <input type="checkbox" class="form-check-input" id="saveCookies">
+                          <label class="form-check-label" for="saveCookies">Lưu thông tin</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <p class="text-center mb-2">Chưa có tài khoản? <a href="signup.html">Đăng ký</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal Login -->
+
+	<!-- Bootstrap js -->
+	<script src="js/bootstrap/bootstrap.bundle.min.js"
+		integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+		crossorigin="anonymous"></script>
+
+	<!-- Owl Carousel js -->
+	<link href="css/owl.carousel/owl.carousel.min.css" rel="stylesheet" />
+	<script src="js/owl.carousel/owl.carousel.min.js"></script>
+
+	<!-- FS Lightbox js -->
+	<script src="plugins/fslightbox.js"></script>
+
+	<!-- Custom js -->
+	<script src="js/script.js"></script>
+	<div>
+</body>
+
+</html>

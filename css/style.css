@@ -1,0 +1,215 @@
+/* CSS PHU SA GENOMICS */
+div {
+    transition: .3s;
+}
+
+.c-pointer {
+    cursor: pointer;
+}
+
+.no-icon:after {
+    display: none !important;
+}
+
+.dropend:hover ul.dropdown-menu {
+    position: absolute;
+    inset: 0px auto auto 0px;
+    margin: 0px;
+    transform: translate(300px, 0px);
+    display: block;
+    margin-top: 0;
+}
+
+.icon-line svg {
+    color: var(--bs-orange);
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.img-crop {
+    padding-bottom: 56%;
+    overflow: hidden;
+    position: relative;
+}
+
+.img-crop.crop-200 {
+    padding-bottom: 200% !important;
+}
+
+.img-crop.crop-100 {
+    padding-bottom: 100% !important;
+}
+
+.img-crop.crop-56 {
+    padding-bottom: 56% !important;
+}
+
+.img-crop.crop-50 {
+    padding-bottom: 50% !important;
+}
+
+.img-crop img {
+    position: absolute;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.sticky {
+    position: sticky;
+    top: 20px;
+}
+
+.product-attr input {
+    width: auto;
+    height: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 4px 8px;
+    background: var(--bs-secondary);
+    ;
+    color: #fff;
+    font-size: 14px;
+    transition: all 100ms linear;
+}
+
+.product-attr input:checked {
+    background: var(--bs-primary);
+    color: #fff;
+}
+
+.product-attr input:before {
+    content: attr(label);
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+
+/* ========= IMAGE HOVER OVERLAY ============== */
+.hover {
+    overflow: hidden;
+    position: relative;
+}
+
+.hover-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 90;
+    transition: all 0.4s;
+}
+
+.hover img {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.3s;
+}
+
+.hover-content {
+    position: relative;
+    z-index: 99;
+}
+
+.hover-1 img {
+    width: 105%;
+    position: absolute;
+    top: 0;
+    left: -5%;
+    transition: all 0.3s;
+}
+
+.hover-1-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    transition: all 0.4s;
+}
+
+.hover-1 .hover-overlay {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.hover-1-description {
+    transform: translateY(0.5rem);
+    transition: all 0.4s;
+    opacity: 0;
+}
+
+.hover-1:hover .hover-1-content {
+    bottom: .5rem;
+}
+
+.hover-1:hover .hover-1-title {
+    color: var(--bs-blue);
+}
+
+.hover-1:hover img {
+    left: 0;
+}
+
+.hover-1:hover .hover-overlay {
+    opacity: 0;
+}
+
+
+/* ========= OWL CAROUSEL ============ */
+.owl-carousel .item {
+    margin: 3px;
+}
+
+.owl-carousel .item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: grayscale(100%);
+    opacity: .5;
+    transition: all .5s;
+}
+
+.owl-carousel .item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.owl-carousel .item {
+    margin: 3px;
+    /* height: 110px; */
+}
+
+.owl-carousel {
+    margin-bottom: 15px;
+}
+
+
+/* =========== IMAGE FIT COVER ============== */
+.feature-img {
+    width: 305px;
+    height: 305px;
+}
+.category-img {
+    width: 200px;
+    height: 200px;
+}
+.cart-sidebar-img {
+    width: 125px;
+    height: 125px;
+}
+.product-grid-img {
+    width: 335px;
+    height: 335px;
+}
