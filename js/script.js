@@ -45,6 +45,10 @@ function numberFormat(val) {
   return sign < 0 ? "-" + result : result;
 }
 
+document.querySelector('.btn-dat-hang').addEventListener('click', function () {
+  this.remove();
+})
+
 $(document).ready(function () {
   $(".owl-carousel").owlCarousel({
     autoPlay: 3000,

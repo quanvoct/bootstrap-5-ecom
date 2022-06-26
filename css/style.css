@@ -247,3 +247,22 @@ div {
 .icon-shape i {
     font-size: 1.25rem;
 }
+
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+
+.rating>span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+}
+
+.rating>span:hover:before,
+.rating>span:hover~span:before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f005";
+    position: absolute;
+    color: var(--bs-orange);
+}

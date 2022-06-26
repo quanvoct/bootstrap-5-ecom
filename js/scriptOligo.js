@@ -8,6 +8,7 @@ var oligoName = document.getElementById('oligo-name'),
     oligoStatusLabel = document.getElementById('oligo-status-label'),
     validateForm = document.getElementById('validate-form'),
     stringCounter = document.getElementById('string-counter'),
+    addToCartOligo = document.querySelector('.add-to-cart-oligo'),
     
     nameLength = document.getElementById('name-length').innerHTML.split(","),
     stringLength = document.getElementById('string-length').innerHTML.split(","),
@@ -39,6 +40,8 @@ oligoSubmit.addEventListener('click', function (e) {
         let status = (oligoStatus.checked) ? 1 : 0;
         productArr.push(createRow(oligoName.value, oligoString.value, status, oligoNormalization.value));
         oligoList.innerHTML = displayOligo(productArr);
+        addToCartOligo.classList.add('d-block');
+        addToCartOligo.classList.remove('d-none');
         resetForm();
     }
 })
