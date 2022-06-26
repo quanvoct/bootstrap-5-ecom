@@ -562,77 +562,52 @@
       </header>
 
       <!-- comment template -->
-      <div class="card card-stats mb-4 mb-xl-3">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-auto">
-              <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                <img class="rounded-circle" src="images/avatars/avatar.jpg" width="60">
-              </div>
-            </div>
-            <div class="col">
-              <h6 class="text-uppercase fw-bolder text-muted mb-0">
-                Jonathan Chien Le
-                <div class="rating-wrap my-0">
-                  <ul class="rating-stars">
-                    <li style="width:90%" class="stars-active"> <img src="images/misc/stars-active.svg" alt="">
-                    </li>
-                    <li> <img src="images/misc/starts-disable.svg" alt=""> </li>
-                  </ul>
-                </div> <!-- rating-wrap.// -->
-              </h6>
-              <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-              <div class="row fs-6">
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                  <small class="text-muted py-2">Bình luận cách đây hơn 3 tuần
-                  </small>
+      <div class="cmt-wrap">
+        <div class="card card-stats mb-4 mb-xl-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-auto">
+                <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                  <img class="rounded-circle" src="images/avatars/avatar.jpg" width="60">
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                  <a class="c-pointer text-decoration-none" data-bs-toggle="collapse" data-bs-target="#reply-cmt-form-1" aria-expanded="false"
-                    aria-controls="reply-cmt-form-1">
-                    <small class="text-muted py-2 c-pointer">
-                      <i class="fa-solid fa-reply"></i> Trả lời đánh giá này
+              </div>
+              <div class="col">
+                <h6 class="text-uppercase fw-bolder text-muted mb-0">
+                  Jonathan Chien Le
+                  <div class="rating-wrap my-0">
+                    <ul class="rating-stars">
+                      <li style="width:90%" class="stars-active"> <img src="images/misc/stars-active.svg" alt="">
+                      </li>
+                      <li> <img src="images/misc/starts-disable.svg" alt=""> </li>
+                    </ul>
+                  </div> <!-- rating-wrap.// -->
+                </h6>
+                <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                  ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+                <div class="row fs-6">
+                  <div class="col-lg-3 col-md-6 col-sm-12">
+                    <small class="text-muted py-2">Bình luận cách đây hơn 3 tuần
                     </small>
-                  </a>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-12">
+                    <a class="c-pointer text-decoration-none btn-reply-cmt" data-bs-toggle="collapse"
+                      data-bs-target="#reply-cmt-form-1" aria-expanded="false" aria-controls="reply-cmt-form-1">
+                      <small class="text-muted py-2 c-pointer">
+                        <i class="fa-solid fa-reply"></i> Trả lời đánh giá này
+                      </small>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- reply comment display -->
-      <div class="row justify-content-end">
-        <div class="col-11">
-          <div class="card card-stats mb-4 mb-xl-3">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-auto">
-                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                    <img class="rounded-circle" src="images/avatars/avatar.jpg" width="60">
-                  </div>
-                </div>
-                <div class="col">
-                  <h6 class="text-uppercase fw-bolder text-muted mb-0">
-                    Quản trị viên
-                  </h6>
-                  <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-                  <div class="d-flex flex-row fs-6">
-                    <small class="text-muted py-2">Bình luận cách đây hơn 3 tuần</span></small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Reply comment form -->
-          <div class="collapse collapse-horizontal" id="reply-cmt-form-1">
+        <!-- reply comment display -->
+        <div class="row justify-content-end">
+          <div class="col-11 reply-cmt-wrap">
             <div class="card card-stats mb-4 mb-xl-3">
               <div class="card-body">
                 <div class="row">
@@ -643,97 +618,77 @@
                   </div>
                   <div class="col">
                     <h6 class="text-uppercase fw-bolder text-muted mb-0">
-                      Jonathan Chien Le
-
+                      Quản trị viên
                     </h6>
-                    <textarea class="form-control my-3" rows="3"></textarea>
-                    <button class="btn btn-primary btn-sm shadow-none" type="submit">
-                      Gửi đánh giá
-                    </button>
+                    <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+                    <div class="d-flex flex-row fs-6">
+                      <small class="text-muted py-2">Bình luận cách đây hơn 3 tuần</span></small>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div> <!-- end reply comment form -->
+
+          </div>
         </div>
       </div>
-
 
 
       <!-- comment template -->
-      <div class="card card-stats mb-4 mb-xl-3">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-auto">
-              <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                <img class="rounded-circle" src="images/avatars/avatar.jpg" width="60">
-              </div>
-            </div>
-            <div class="col">
-              <h6 class="text-uppercase fw-bolder text-muted mb-0">
-                Nguyễn Hải Minh
-                <div class="rating-wrap my-0">
-                  <ul class="rating-stars">
-                    <li style="width:70%" class="stars-active"> <img src="images/misc/stars-active.svg" alt="">
-                    </li>
-                    <li> <img src="images/misc/starts-disable.svg" alt=""> </li>
-                  </ul>
-                </div> <!-- rating-wrap.// -->
-              </h6>
-              <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
-              <div class="row fs-6">
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                  <small class="text-muted py-2">11:45 26/12/2021
-                  </small>
+      <div class="cmt-wrap">
+        <div class="card card-stats mb-4 mb-xl-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-auto">
+                <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                  <img class="rounded-circle" src="images/avatars/avatar.jpg" width="60">
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                  <a class="c-pointer text-decoration-none" data-bs-toggle="collapse" data-bs-target="#reply-cmt-form-2" aria-expanded="false"
-                    aria-controls="reply-cmt-form-2">
-                    <small class="text-muted py-2 c-pointer">
-                      <i class="fa-solid fa-reply"></i> Trả lời đánh giá này
+              </div>
+              <div class="col">
+                <h6 class="text-uppercase fw-bolder text-muted mb-0">
+                  Nguyễn Hải Minh
+                  <div class="rating-wrap my-0">
+                    <ul class="rating-stars">
+                      <li style="width:70%" class="stars-active"> <img src="images/misc/stars-active.svg" alt="">
+                      </li>
+                      <li> <img src="images/misc/starts-disable.svg" alt=""> </li>
+                    </ul>
+                  </div> <!-- rating-wrap.// -->
+                </h6>
+                <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                  ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+                <div class="row fs-6">
+                  <div class="col-lg-3 col-md-6 col-sm-12">
+                    <small class="text-muted py-2">11:45 26/12/2021
                     </small>
-                  </a>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-12">
+                    <a class="c-pointer text-decoration-none btn-reply-cmt" data-bs-toggle="collapse"
+                      data-bs-target="#reply-cmt-form-2" aria-expanded="false" aria-controls="reply-cmt-form-2">
+                      <small class="text-muted py-2 c-pointer">
+                        <i class="fa-solid fa-reply"></i> Trả lời đánh giá này
+                      </small>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- reply comment display -->
-      <div class="row justify-content-end">
-        <div class="col-11">
+        <!-- reply comment display -->
+        <div class="row justify-content-end">
+          <div class="col-11 reply-cmt-wrap">
 
-          <!-- Reply comment form -->
-          <div class="collapse collapse-horizontal" id="reply-cmt-form-2">
-            <div class="card card-stats mb-4 mb-xl-3">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-auto">
-                    <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                      <img class="rounded-circle" src="images/avatars/avatar.jpg" width="60">
-                    </div>
-                  </div>
-                  <div class="col">
-                    <h6 class="text-uppercase fw-bolder text-muted mb-0">
-                      Jonathan Chien Le
-
-                    </h6>
-                    <textarea class="form-control my-3" rows="3"></textarea>
-                    <button class="btn btn-primary btn-sm shadow-none" type="submit">
-                      Gửi đánh giá
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> <!-- end reply comment form -->
+          </div>
         </div>
       </div>
-
 
       <div class="card card-stats mb-4 mb-xl-3">
         <div class="card-body">
@@ -746,12 +701,13 @@
             <div class="col">
               <h6 class="text-uppercase fw-bolder text-muted mb-0">
                 Chiến Lê
-                <div class="rating rating-wrap my-0 text-start text-black-50">
-                  <span><i class="fa-solid fa-star"></i></span>
-                  <span><i class="fa-solid fa-star"></i></span>
-                  <span><i class="fa-solid fa-star"></i></span>
-                  <span><i class="fa-solid fa-star"></i></span>
-                  <span><i class="fa-solid fa-star"></i></span>
+                <div class="rating rating-wrap my-0 text-start">
+                  <span><button class="btn btn-link btn-rating c-pointer text-reset p-0" value="5"><i class="fa-solid fa-star"></i></button></span>
+                  <span><button class="btn btn-link btn-rating c-pointer text-reset p-0" value="4"><i class="fa-solid fa-star"></i></button></span>
+                  <span><button class="btn btn-link btn-rating c-pointer text-reset p-0" value="3"><i class="fa-solid fa-star"></i></button></span>
+                  <span><button class="btn btn-link btn-rating c-pointer text-reset p-0" value="2"><i class="fa-solid fa-star"></i></button></span>
+                  <span><button class="btn btn-link btn-rating c-pointer text-reset p-0" value="1"><i class="fa-solid fa-star"></i></button></span>
+                  <input type="number" name="" class="d-none rating-value-input">
                 </div>
               </h6>
               <textarea class="form-control my-3" rows="3"></textarea>
@@ -962,7 +918,7 @@
         </div>
       </div>
 
-    </div>
+    </div> <!-- END offcanvas body -->
     <div class="offcanvas-footer border-top">
       <h5 class="offcanvas-title text-center" id="cartLabel">Tạm tính: <var
           class="price h5">125.000.000<sup>đ</sup></var></h5>
@@ -981,6 +937,31 @@
     </div>
   </div>
   <!-- END Offcanvas Cart -->
+
+  <!-- Reply comment form -->
+  <div class="reply-cmt-form d-none">
+    <div class="card card-stats mb-4 mb-xl-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-auto">
+            <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+              <img class="rounded-circle" src="images/avatars/avatar.jpg" width="60">
+            </div>
+          </div>
+          <div class="col">
+            <h6 class="text-uppercase fw-bolder text-muted mb-0">
+              Jonathan Chien Le
+
+            </h6>
+            <textarea class="form-control my-3" rows="3"></textarea>
+            <button class="btn btn-primary btn-sm shadow-none" type="submit">
+              Gửi đánh giá
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- end reply comment form -->
 
   <!-- Bootstrap js -->
   <script src="js/bootstrap/bootstrap.bundle.min.js"

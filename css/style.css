@@ -264,5 +264,8 @@ div {
     font-family: "Font Awesome 6 Free";
     content: "\f005";
     position: absolute;
+    left: -1px;
+    top: 3.5px;
     color: var(--bs-orange);
+    cursor: pointer;
 }

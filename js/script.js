@@ -72,23 +72,30 @@ $(document).ready(function () {
     },
   });
 
-  $(".btn-dat-hang").on('click', function () {
+  $(".btn-dat-hang").on("click", function () {
     $(this).remove();
-  })
+  });
 
   // Increase product quantity on cart page
   $(".btn-increase").on("click", function () {
-    var parent = $(this).parents(".product-quantity");
-    var value = parent.find(".quantity-input").val();
+    let parent = $(this).parents(".product-quantity");
+    let value = parent.find(".quantity-input").val();
     value++;
     parent.find(".quantity-input").val(value);
   });
   // Decrease product quantity on cart page
   $(".btn-decrease").on("click", function () {
-    var parent = $(this).parents(".product-quantity");
-    var value = parent.find(".quantity-input").val();
+    let parent = $(this).parents(".product-quantity");
+    let value = parent.find(".quantity-input").val();
     value--;
     parent.find(".quantity-input").val(value);
+  });
+
+  $(".btn-reply-cmt").on("click", function () {
+    let parent = $(this).parents(".cmt-wrap");
+    let cmtForm = $(".reply-cmt-form").html();
+    parent.find(".reply-cmt-wrap").append(cmtForm);
+    $(this).remove();
   });
 
   $(".code-attr").click(function () {
