@@ -150,9 +150,9 @@
 					<article class="card">
 						<div class="content-body">
 							<div class="row">
-								<div class="col-6 mb-3">
+								<div class="col-12 col-buyer mb-3">
 									<fieldset class="form-label">
-										<legend>Thông tin thanh toán</legend>
+										<legend class="checkout-fieldlabel">Thông tin thanh toán và nhận hàng</legend>
 										<label class="form-label">Người thanh toán</label>
 										<input type="text" class="form-control mb-3" placeholder="Tên người thanh toán">
 										<label class="form-label">Địa chỉ</label>
@@ -187,10 +187,10 @@
 										<input type="text" class="form-control mb-3" placeholder="Số điện thoại">
 									</fieldset>
 								</div> <!-- col end.// -->
-								<div class="col-6 mb-3">
+								<div class="col-6 col-receiver mb-3">
 									<div class="collapse" id="thongtingiaohang">
 										<fieldset class="form-label">
-											<legend>Thông tin giao hàng</legend>
+											<legend id="receiver-info">Thông tin giao hàng</legend>
 											<label class="form-label">Người nhận hàng</label>
 											<input type="text" class="form-control mb-3"
 												placeholder="Tên người nhận hàng">
@@ -230,14 +230,14 @@
 							</div> <!-- row.// -->
 
 							<label class="form-check mb-3">
-								<input class="form-check-input" type="checkbox" data-bs-toggle="collapse"
+								<input class="form-check-input ship-to-other" type="checkbox" data-bs-toggle="collapse"
 									href="#thongtingiaohang" role="button" aria-expanded="false"
 									aria-controls="thongtingiaohang">
 								<span class="form-check-label"> Giao hàng tới địa chỉ khác </span>
 							</label>
 
 							<label class="form-check mb-3">
-								<input class="form-check-input" type="checkbox" data-bs-toggle="collapse"
+								<input class="form-check-input tax-invoice" type="checkbox" data-bs-toggle="collapse"
 									href="#thongtinhoadon" role="button" aria-expanded="false"
 									aria-controls="thongtinhoadon">
 								<span class="form-check-label"> Tôi cần xuất hóa đơn VAT </span>
@@ -323,7 +323,7 @@
 				</main> <!-- col.// -->
 				<aside class="col-xl-4 col-lg-4">
 					<!-- ============== COMPONENT SUMMARY =============== -->
-					<article class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px">
+					<article class="ms-lg-4 mt-4 mt-lg-0 sticky" style="max-width: 320px">
 						<h6 class="card-title">Giá trị thanh toán</h6>
 
 						<dl class="dlist-align">

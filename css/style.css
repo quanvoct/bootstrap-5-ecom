@@ -201,15 +201,49 @@ div {
     width: 305px;
     height: 305px;
 }
+
 .category-img {
     width: 200px;
     height: 200px;
 }
+
 .cart-sidebar-img {
     width: 125px;
     height: 125px;
 }
+
 .product-grid-img {
     width: 335px;
     height: 335px;
+}
+
+/* ========= ICON CARD ACCOUNT ========= */
+.card-stats .card-body {
+    padding: 1rem 1.5rem;
+}
+
+.shadow {
+    box-shadow: 0 0 2rem 0 rgba(136, 152, 170, .15) !important;
+}
+
+.icon {
+    width: 3rem;
+    height: 3rem;
+}
+
+.icon i {
+    font-size: 2.25rem;
+}
+
+.icon-shape {
+    display: inline-flex;
+    padding: 12px;
+    text-align: center;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-shape i {
+    font-size: 1.25rem;
 }
