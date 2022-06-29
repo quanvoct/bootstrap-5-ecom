@@ -226,17 +226,17 @@ div {
     box-shadow: 0 0 2rem 0 rgba(136, 152, 170, .15) !important;
 }
 
-.icon {
+.account-icon {
     width: 3rem;
     height: 3rem;
 }
 
-.icon i {
+.account-icon i {
     font-size: 2.25rem;
 }
 
-.icon-shape {
-    display: inline-flex;
+.account-icon-shape {
+    display: inline-flex;  
     padding: 12px;
     text-align: center;
     border-radius: 50%;
@@ -244,7 +244,7 @@ div {
     justify-content: center;
 }
 
-.icon-shape i {
+.account-icon-shape i {
     font-size: 1.25rem;
 }
 
