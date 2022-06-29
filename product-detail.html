@@ -701,13 +701,27 @@
             <div class="col">
               <h6 class="text-uppercase fw-bolder text-muted mb-0">
                 Chiến Lê
-                <div class="rating rating-wrap my-0 text-start">
-                  <span><button class="btn btn-link btn-rating c-pointer text-reset p-0" value="5"><i class="fa-solid fa-star"></i></button></span>
-                  <span><button class="btn btn-link btn-rating c-pointer text-reset p-0" value="4"><i class="fa-solid fa-star"></i></button></span>
-                  <span><button class="btn btn-link btn-rating c-pointer text-reset p-0" value="3"><i class="fa-solid fa-star"></i></button></span>
-                  <span><button class="btn btn-link btn-rating c-pointer text-reset p-0" value="2"><i class="fa-solid fa-star"></i></button></span>
-                  <span><button class="btn btn-link btn-rating c-pointer text-reset p-0" value="1"><i class="fa-solid fa-star"></i></button></span>
-                  <input type="number" name="" class="d-none rating-value-input">
+                <div class="rating">
+                  <input type="radio" name="rating-star" class="rating__control d-none" id="star-1">
+                  <input type="radio" name="rating-star" class="rating__control d-none" id="star-2">
+                  <input type="radio" name="rating-star" class="rating__control d-none" id="star-3">
+                  <input type="radio" name="rating-star" class="rating__control d-none" id="star-4">
+                  <input type="radio" name="rating-star" class="rating__control d-none" id="star-5">
+                  <label for="star-1" class="rating__item">
+                    <i class="fa-solid fa-star"></i>
+                  </label>
+                  <label for="star-2" class="rating__item">
+                    <i class="fa-solid fa-star"></i>
+                  </label>
+                  <label for="star-3" class="rating__item">
+                    <i class="fa-solid fa-star"></i>
+                  </label>
+                  <label for="star-4" class="rating__item">
+                    <i class="fa-solid fa-star"></i>
+                  </label>
+                  <label for="star-5" class="rating__item">
+                    <i class="fa-solid fa-star"></i>
+                  </label>	
                 </div>
               </h6>
               <textarea class="form-control my-3" rows="3"></textarea>
