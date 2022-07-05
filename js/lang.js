@@ -1,6 +1,10 @@
 if (window.location.href.includes('/en')) {
     var colName = 'Name',
         colSequence = 'Sequence string',
+        wet = 'Wet',
+        dry = 'Dry',
+        yes = 'Yes',
+        no = 'No',
         colLength = 'Length',
         colOD = 'OD',
         colType = 'Type',
@@ -25,10 +29,15 @@ if (window.location.href.includes('/en')) {
         noEmptyString = 'Empty sequence is not accepted. ',
         base = ' base. ',
         minStringLength = 'Oligo sequence must be at least ',
-        maxStringLength = 'Sequence of this oligo can be up to ';
+        maxStringLength = 'Sequence of this oligo can be up to ',
+        addToCartLabel = 'Add to cart';
 } else {
     var colName = 'Tên chuỗi',
         colSequence = 'Chuỗi trình tự',
+        wet = 'Ướt',
+        dry = 'Khô',
+        yes = 'Có',
+        no = 'Không',
         colLength = 'Độ dài',
         colOD = 'OD',
         colType = 'Loại Oligo',
@@ -53,5 +62,6 @@ if (window.location.href.includes('/en')) {
         noEmptyString = 'Chuỗi Oligo không được bỏ trống. ',
         base = ' base. ',
         minStringLength = 'Chuỗi Oligo tối thiểu phải từ ',
-        maxStringLength = 'Chuỗi Oligo tối đa phải dưới ';
+        maxStringLength = 'Chuỗi Oligo tối đa phải dưới ',
+        addToCartLabel = 'Thêm vào giỏ hàng';
 }
