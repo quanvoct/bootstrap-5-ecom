@@ -7,7 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    
-    <script></script>
+    <div class="class"></div>
+    <input type="button" value="comfirm" id='btn'>
+    <script>
+        document.getElementById('btn').addEventListener('click', function () {
+            document.querySelector('.class').innerHTML = "Hiển thị";
+        })
+    </script>
 </body>
 </html>

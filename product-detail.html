@@ -268,21 +268,20 @@
             <form action="">
               <div class="row p-0">
                 <div class="col-lg-1 col-sm-3">
-                    <input type="text" class="form-control" id="oligo-name" placeholder="${colName}" autocomplete="off"
-                      autofocus>
+                  <input type="text" class="form-control" id="oligo-name" placeholder="${colName}" autocomplete="off"
+                    autofocus>
                 </div>
                 <div class="col-lg-7 col-sm-9">
-                    <input type="text" class="form-control" id="oligo-string" autocomplete="off"
-                      placeholder="${colSequence}">
-                  <span class="translate-middle badge rounded-pill bg-danger d-none"
-                    id="string-counter" style="z-index: 3;">
+                  <div class="highlighter form-control" placeholder="${colSequence}" id="oligo-string" autocomplete="off" contenteditable></div>
+                  <span class="translate-middle badge rounded-pill bg-danger d-none" id="string-counter"
+                    style="z-index: 3;">
                     99+
                   </span>
                 </div>
                 <div class="col-lg-2 col-sm-5">
-                    <select class="form-select d-none" id="oligo-normalization">
-                        <option value="0" selected>Không tùy chỉnh</option>
-                    </select>
+                  <select class="form-select d-none" id="oligo-normalization">
+                    <option value="0" selected>Không tùy chỉnh</option>
+                  </select>
                 </div>
                 <div class="col-lg-2 col-sm-2">
                   <div class="d-grid">

@@ -1,5 +1,6 @@
 var dryFee = 30000,
     oligoType = document.getElementById('oligo-type'),
+    highlighter = document.querySelector('.highlighter'),
     oligoName = document.getElementById('oligo-name'),
     oligoString = document.getElementById('oligo-string'),
     oligoStatus = document.getElementById('oligo-status'),
@@ -28,7 +29,6 @@ var dryFee = 30000,
 oligoName.placeholder = colName;
 wetBtn.innerHTML = wet;
 dryBtn.innerHTML = dry;
-oligoString.placeholder = colSequence;
 oligoSubmit.innerHTML = addBtnLabel;
 oligoEdit.innerHTML = editBtnLabel;
 addToCartOligo.innerHTML = addToCartLabel;
@@ -70,7 +70,7 @@ dryBtn.addEventListener('click', function () {
 oligoSubmit.addEventListener('click', function (e) {
     e.preventDefault();
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.value.replace(/\s/g, '').toUpperCase(),
+        oString = oligoString.innerText.replace(/\s/g, '').toUpperCase(),
         oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
         oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
     if (validateOligo(oName, oString) == `` || validateOligo(oName, oString == `<li>${difficultOligo}</li>`)) {
@@ -84,20 +84,23 @@ oligoSubmit.addEventListener('click', function (e) {
 
 oligoName.addEventListener('change', function () {
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.value.replace(/\s/g, '').toUpperCase();
+        oString = oligoString.innerText.replace(/\s/g, '').toUpperCase();
+    oligoName.value = oName;
     validateForm.innerHTML = validateOligo(oName, oString);
 })
 
 oligoString.addEventListener('keyup', function () {
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.value.replace(/\s/g, '').toUpperCase();
+        oString = oligoString.innerText.replace(/\s/g, '').toUpperCase();
+    oligoString.innerText = oString;
+    oligoString.focus();
     validateForm.innerHTML = validateOligo(oName, oString);
 })
 
 oligoString.addEventListener('keyup', function () {
-    if (oligoString.value.replace(/\s/g, '').toUpperCase().length > stringLength[stringLength.length - 1] - 5) {
+    if (oligoString.innerText.replace(/\s/g, '').toUpperCase().length > stringLength[stringLength.length - 1] - 5) {
         stringCounter.classList.remove('d-none');
-        stringCounter.innerText = oligoString.value.replace(/\s/g, '').toUpperCase().length;
+        stringCounter.innerText = oligoString.innerText.replace(/\s/g, '').toUpperCase().length;
     } else {
         stringCounter.classList.add('d-none');
     }
@@ -106,12 +109,12 @@ oligoString.addEventListener('keyup', function () {
 oligoEdit.addEventListener('click', function (e) {
     e.preventDefault();
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.value.replace(/\s/g, '').toUpperCase(),
+        oString = oligoString.innerText.replace(/\s/g, '').toUpperCase(),
         oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
         oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
     for (let i = 0; i < productArr.length; i++) {
         if (productArr[i][0] == oligoName.value) {
-            if (validateInputArray(oligoString.value.replace(/\s/g, ''), baseList) == '') {
+            if (validateInputArray(oligoString.innerText.replace(/\s/g, ''), baseList) == '') {
                 productArr[i] = createRow(oName, oString, oStatus, oNormalization);
                 oligoList.innerHTML = displayOligo(productArr);
                 resetForm();
@@ -193,14 +196,11 @@ function validateOligo(name, string) {
             oligoSubmit.disabled = true;
             text += `<li>${noEmptyString}</li>`;
             break;
-        case string.includes('GGGGGG'):
-            oligoString.classList.add('border-danger');
-            text += `<li>${difficultOligo}</li>`;
-            break;
         case validateInputArray(string, baseList) != '':
             oligoString.classList.add('border-danger');
             oligoSubmit.disabled = true;
             text += `<li>${validateInputArray(string, baseList)}</li>`;
+            break;
         case string.length < stringLength[0]:
             oligoString.classList.add('border-danger');
             oligoSubmit.disabled = true;
@@ -208,11 +208,19 @@ function validateOligo(name, string) {
         case string.length > stringLength[stringLength.length - 1]:
             oligoString.classList.add('border-danger');
             oligoSubmit.disabled = true;
-            text += `<li>${minStringLength}${stringLength[stringLength.length - 1]}${base}</li>`;
+            text += `<li>${maxStringLength}${stringLength[stringLength.length - 1]}${base}</li>`;
+            break;
+        case string.includes('GGGGGG'):
+            oligoString.classList.add('border-danger');
+            let sequence = string.replace(/gggggg/gi, '<span>GGGGGG</span>');
+            oligoString.innerHTML = sequence;
+            oligoString.focus();
+            text += `<li>${difficultOligo}</li>`;
             break;
         default:
             oligoString.classList.remove('border-danger');
             oligoSubmit.disabled = false;
+            // highlighter.innerHTML = '';
             break;
     }
     return text;
@@ -229,10 +237,11 @@ function resetForm() {
     validateForm.innerHTML = "";
     oligoName.value = '';
     oligoName.disabled = false;
-    oligoString.value = '';
+    oligoString.innerText = '';
     oligoStatus.checked = false;
     oligoNormalization.value = 0;
     oligoName.focus();
+    highlighter.innerHTML = "";
 }
 
 /*---------------------------------
@@ -252,7 +261,7 @@ Hiển thị dữ liệu của 1 hàng (mảng con) lên form để tiến hành
 function editRow(num) {
     oligoName.value = productArr[num][0];
     oligoName.disabled = true;
-    oligoString.value = productArr[num][1];
+    oligoString.innerText = productArr[num][1];
     oligoStatus.checked = (productArr[num][2] == 1) ? true : false;
     oligoNormalization.value = productArr[num][3];
     oligoEdit.classList.remove('d-none');
