@@ -31,6 +31,7 @@ if (window.location.href.includes('/en')) {
         minStringLength = 'Oligo sequence must be at least ',
         maxStringLength = 'Sequence of this oligo can be up to ',
         addToCartLabel = 'Add to cart';
+        beginOligoLabel = 'Import oligo';
 } else {
     var colName = 'Tên chuỗi',
         colSequence = 'Chuỗi trình tự',
@@ -64,4 +65,5 @@ if (window.location.href.includes('/en')) {
         minStringLength = 'Chuỗi Oligo tối thiểu phải từ ',
         maxStringLength = 'Chuỗi Oligo tối đa phải dưới ',
         addToCartLabel = 'Thêm vào giỏ hàng';
+        beginOligoLabel = 'Bắt đầu nhập trình tự';
 }

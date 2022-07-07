@@ -1,22 +1,38 @@
-var dryFee = 30000,
-    oligoType = document.getElementById('oligo-type'),
+var dryFee = 30000, lowNu = 25000,
     highlighter = document.querySelector('.highlighter'),
     oligoName = document.getElementById('oligo-name'),
     oligoString = document.getElementById('oligo-string'),
-    oligoStatus = document.getElementById('oligo-status'),
-    oligoNormalization = document.getElementById('oligo-normalization'),
     oligoList = document.getElementById('oligo-list'),
     oligoSubmit = document.getElementById('oligo-submit'),
     oligoEdit = document.getElementById('oligo-edit'),
     validateForm = document.getElementById('validate-form'),
     stringCounter = document.getElementById('string-counter'),
     addToCartOligo = document.querySelector('.add-to-cart-oligo'),
+    navSingle = document.querySelector('.nav-single'),
+    tabSingle = document.getElementById('tab_single'),
+
+    oligoListBtn = document.getElementById('oligo-list-btn'),
+    oligoListInput = document.getElementById('oligo-list-input'),
+    navList = document.querySelector('.nav-list'),
+    tabList = document.getElementById('tab_list'),
+
+    oligoExcelBtn = document.getElementById('oligo-excel-btn'),
+    oligoExcelInput = document.getElementById('oligo-excel-input'),
+    navExcel = document.querySelector('.nav-excel'),
+    tabExcel = document.getElementById('tab_excel'),
+
+    oligoNormalization = document.getElementById('oligo-normalization'),
+    checkConfirmOligoNormalization = document.getElementById('check-confirm-oligo-normalization'),
+    labelConfirmOligoNormalization = document.getElementById('label-confirm-oligo-normalization'),
     wetBtn = document.querySelector('.btn-wet'),
     dryBtn = document.querySelector('.btn-dry'),
+    oligoStatus = document.getElementById('oligo-status'),
+    btnBeginOligo = document.querySelector('.btn-begin'),
     cardOligoSelect = document.querySelector('.card-oligo-select'),
     cardOligoInput = document.querySelector('.card-oligo-input'),
     cardOligoShow = document.querySelector('.card-oligo-show'),
 
+    oligoType = document.getElementById('oligo-type'),
     nameLength = document.getElementById('name-length').innerHTML.split(","),
     stringLength = document.getElementById('string-length').innerHTML.split(","),
     odList = document.getElementById('od-list').innerHTML.split(","),
@@ -27,6 +43,7 @@ var dryFee = 30000,
     baseList = document.getElementById('base-list').innerHTML;
 
 oligoName.placeholder = colName;
+btnBeginOligo.innerHTML = beginOligoLabel;
 wetBtn.innerHTML = wet;
 dryBtn.innerHTML = dry;
 oligoSubmit.innerHTML = addBtnLabel;
@@ -42,29 +59,31 @@ if (productArr.length > 0) {
     };
 }
 
-function addOption(arrayNormalization) {
-    for (let i = 0; i < arrayNormalization.length; i++) {
-        let option = document.createElement('option');
-        option.innerHTML = arrayNormalization[i] + ' pmol/µL';
-        option.value = arrayNormalization[i];
-        oligoNormalization.appendChild(option);
-    }
-}
-
-wetBtn.addEventListener('click', function () {
-    oligoStatus.innerText = 'wet';
+btnBeginOligo.addEventListener('click', function (e) {
+    e.preventDefault();
     cardOligoSelect.classList.add('d-none');
-    oligoNormalization.classList.remove('d-none');
-    addOption(normalizationList);
     cardOligoInput.classList.remove('d-none');
     cardOligoShow.classList.remove('d-none');
 })
 
+wetBtn.addEventListener('click', function () {
+    oligoStatus.innerText = 'wet';
+    oligoNormalization.classList.remove('d-none');
+    checkConfirmOligoNormalization.classList.remove('d-none');
+    labelConfirmOligoNormalization.classList.remove('d-none');
+    btnBeginOligo.disabled = true;
+    addOption(normalizationList);
+    checkConfirmOligoNormalization.addEventListener('click', function () {
+        btnBeginOligo.disabled = (checkConfirmOligoNormalization.checked == true) ? false : true;
+    })
+})
+
 dryBtn.addEventListener('click', function () {
     oligoStatus.innerText = 'dry';
-    cardOligoSelect.classList.add('d-none');
-    cardOligoInput.classList.remove('d-none');
-    cardOligoShow.classList.remove('d-none');
+    oligoNormalization.classList.add('d-none');
+    checkConfirmOligoNormalization.classList.add('d-none');
+    labelConfirmOligoNormalization.classList.add('d-none');
+    btnBeginOligo.disabled = false;
 })
 
 oligoSubmit.addEventListener('click', function (e) {
@@ -72,13 +91,40 @@ oligoSubmit.addEventListener('click', function (e) {
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
         oString = oligoString.innerText.replace(/\s/g, '').toUpperCase(),
         oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
-        oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
-    if (validateOligo(oName, oString) == `` || validateOligo(oName, oString == `<li>${difficultOligo}</li>`)) {
+        oStatus = oligoStatus.innerText;
+    if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>` ) {
         productArr.push(createRow(oName, oString, oStatus, oNormalization));
         oligoList.innerHTML = displayOligo(productArr);
         addToCartOligo.classList.add('d-block');
         addToCartOligo.classList.remove('d-none');
         resetForm();
+    }
+})
+
+oligoExcelBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+})
+
+oligoListBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    let arr = oligoListInput.value.split(/\r?\n/);
+    for (let i = 0; i < arr.length; i++) {
+        let oligo = arr[i].split('\t');
+        if (oligo[0] != '' && oligo[1] != '') {
+            let oName = oligo[0].replace(/\s/g, '').toUpperCase(),
+                oString = oligo[1].replace(/\s/g, '').toUpperCase(),
+                oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
+                oStatus = oligoStatus.innerText;
+                console.log(i, oName, validateOligo(oName, oString));
+            if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>'+difficultOligo+'</li>') {
+                productArr.push(createRow(oName, oString, oStatus, oNormalization));
+                oligoList.innerHTML = displayOligo(productArr);
+                addToCartOligo.classList.add('d-block');
+                addToCartOligo.classList.remove('d-none');
+                resetForm();
+            }
+        }
     }
 })
 
@@ -111,7 +157,7 @@ oligoEdit.addEventListener('click', function (e) {
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
         oString = oligoString.innerText.replace(/\s/g, '').toUpperCase(),
         oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
-        oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
+        oStatus = oligoStatus.innerText
     for (let i = 0; i < productArr.length; i++) {
         if (productArr[i][0] == oligoName.value) {
             if (validateInputArray(oligoString.innerText.replace(/\s/g, ''), baseList) == '') {
@@ -122,6 +168,22 @@ oligoEdit.addEventListener('click', function (e) {
         }
     }
 })
+
+/*---------------------------------
+Hàm thêm option Normalization cho select
+-----------------------------------*/
+function addOption(arrayNormalization) {
+    let optionNormalization = document.querySelector('.option-normalization');
+    if (optionNormalization == null) {
+        for (let i = 0; i < arrayNormalization.length; i++) {
+            let option = document.createElement('option');
+            option.innerHTML = arrayNormalization[i] + ' pmol/µL';
+            option.value = arrayNormalization[i];
+            option.classList.add('option-normalization');
+            oligoNormalization.appendChild(option);
+        }
+    }
+}
 
 /*---------------------------------
 Hàm kiểm tra từng ký tự trong chuỗi nhập vào có trong danh sách cho sẵn không
@@ -162,35 +224,33 @@ function validateOligo(name, string) {
     for (let i = 0; i < productArr.length; i++) {
         array.push(productArr[i][0]);
     }
-    if (name != null) {
-        switch (true) {
-            case name == "":
-                oligoName.classList.add('border-danger');
-                oligoSubmit.disabled = true;
-                text += `<li>${noEmptyName}</li>`;
-                break;
-            case array.includes(name):
-                if (oligoName.disabled == false) {
-                    oligoName.classList.add('border-danger');
-                    oligoSubmit.disabled = true;
-                    text += `<li>${existName}</li>`;
-                }
-                break;
-            case name.length < nameLength[0]:
-                oligoName.classList.add('border-danger');
-                oligoSubmit.disabled = true;
-                text += `<li>${minNameLength}${nameLength[0]}${letter}</li>`;
-            case name.length > nameLength[1]:
-                oligoName.classList.add('border-danger');
-                oligoSubmit.disabled = true;
-                text += `<li>${maxnameLength}${nameLength[1]}${letter}</li>`;
-                break;
-            default:
-                oligoName.classList.remove('border-danger');
-                oligoSubmit.disabled = false;
-        }
-    }
     switch (true) {
+        case name == "":
+            oligoName.classList.add('border-danger');
+            oligoSubmit.disabled = true;
+            text += `<li>${noEmptyName}</li>`;
+            break;
+        case name == null:
+            oligoName.classList.add('border-danger');
+            oligoSubmit.disabled = true;
+            text += `<li>${noEmptyName}</li>`;
+            break;
+        case array.includes(name):
+            if (oligoName.disabled == false) {
+                oligoName.classList.add('border-danger');
+                oligoSubmit.disabled = true;
+                text += `<li>${existName}</li>`;
+            }
+            break;
+        case name.length < nameLength[0]:
+            oligoName.classList.add('border-danger');
+            oligoSubmit.disabled = true;
+            text += `<li>${minNameLength}${nameLength[0]}${letter}</li>`;
+        case name.length > nameLength[1]:
+            oligoName.classList.add('border-danger');
+            oligoSubmit.disabled = true;
+            text += `<li>${maxnameLength}${nameLength[1]}${letter}</li>`;
+            break;
         case string == "":
             oligoString.classList.add('border-danger');
             oligoSubmit.disabled = true;
@@ -205,6 +265,7 @@ function validateOligo(name, string) {
             oligoString.classList.add('border-danger');
             oligoSubmit.disabled = true;
             text += `<li>${minStringLength}${stringLength[0]}${base}</li>`;
+            break;
         case string.length > stringLength[stringLength.length - 1]:
             oligoString.classList.add('border-danger');
             oligoSubmit.disabled = true;
@@ -215,9 +276,11 @@ function validateOligo(name, string) {
             let sequence = string.replace(/gggggg/gi, '<span>GGGGGG</span>');
             oligoString.innerHTML = sequence;
             oligoString.focus();
+            oligoSubmit.disabled = false;
             text += `<li>${difficultOligo}</li>`;
             break;
         default:
+            oligoName.classList.remove('border-danger');
             oligoString.classList.remove('border-danger');
             oligoSubmit.disabled = false;
             // highlighter.innerHTML = '';
@@ -242,6 +305,7 @@ function resetForm() {
     oligoNormalization.value = 0;
     oligoName.focus();
     highlighter.innerHTML = "";
+    stringCounter.classList.add('d-none');
 }
 
 /*---------------------------------
@@ -266,6 +330,15 @@ function editRow(num) {
     oligoNormalization.value = productArr[num][3];
     oligoEdit.classList.remove('d-none');
     oligoSubmit.classList.add('d-none');
+    navSingle.classList.add('active');
+    navExcel.classList.remove('active');
+    navList.classList.remove('active');
+    tabSingle.classList.add('show');
+    tabExcel.classList.remove('show');
+    tabList.classList.remove('show');
+    tabSingle.classList.add('active');
+    tabExcel.classList.remove('active');
+    tabList.classList.remove('active');
 }
 
 /*---------------------------------
@@ -298,7 +371,7 @@ function displayOligo(arr2ways) {
             <thead>
                 <tr>
                     <th scope="col" class="text-center">${colName}</th>
-                    <th scope="col">${colSequence}</th>
+                    <th scope="col" style="max-width: 25rem;">${colSequence}</th>
                     <th scope="col" class="text-center">${colLength}</th>
                     <th scope="col" class="text-center">${colOD}</th>
                     <th scope="col" class="text-center">${colType}</th>
@@ -339,12 +412,13 @@ function displayOligo(arr2ways) {
                 default:
                     break;
             }
+            fee += (arr2ways[i][1].length <= 14) ? lowNu : 0;
             fee += (arr2ways[i][2] == 'dry') ? dryFee : 0;
             total = unitPrice * arr2ways[i][1].length + fee;
             subTotal += total;
             str += `<tr>
                         <td scope="col" class="text-center">${arr2ways[i][0]}</td>
-                        <td scope="col">${arr2ways[i][1]}</td>
+                        <td scope="col" style="max-width: 25rem;">${arr2ways[i][1]}</td>
                         <td scope="col" class="text-center">${arr2ways[i][1].length}</td>
                         <td scope="col" class="text-center">${od}</td>
                         <td scope="col" class="text-center">${type}</td>

@@ -251,56 +251,118 @@
       <div class="d-none" id="unit-price-list">4300,4300,5000</div>
       <div class="d-none" id="oligo-status"></div>
       <div class="collapse collapse-horizontal" id="oligo-order-list">
-        <div class="card mt-3 mx-auto card-oligo-select">
-          <div class="card-body text-center">
-            <h3 class="card-title">Chọn hình thức xử lý</h3>
-            <div class="btn-group" role="group">
-              <button type="button" class="btn btn-outline-primary btn-wet">${wetLabel}</button>
-              <button type="button" class="btn btn-outline-primary btn-dry">${dryLabel}</button>
-            </div>
-          </div>
-        </div>
-        <div class="card mt-3 mx-auto card-oligo-input d-none">
-          <div class="card-header">
-            <h4 class="text-primary text-center">Lập danh sách sản phẩm</h4>
-          </div>
+        <div class="card my-3 mx-auto card-oligo-select">
           <div class="card-body">
-            <form action="">
-              <div class="row p-0">
-                <div class="col-lg-1 col-sm-3">
-                  <input type="text" class="form-control" id="oligo-name" placeholder="${colName}" autocomplete="off"
-                    autofocus>
-                </div>
-                <div class="col-lg-7 col-sm-9">
-                  <div class="highlighter form-control" placeholder="${colSequence}" id="oligo-string" autocomplete="off" contenteditable></div>
-                  <span class="translate-middle badge rounded-pill bg-danger d-none" id="string-counter"
-                    style="z-index: 3;">
-                    99+
-                  </span>
-                </div>
-                <div class="col-lg-2 col-sm-5">
-                  <select class="form-select d-none" id="oligo-normalization">
-                    <option value="0" selected>Không tùy chỉnh</option>
-                  </select>
-                </div>
-                <div class="col-lg-2 col-sm-2">
-                  <div class="d-grid">
-                    <button class="btn btn-primary btn-block" id="oligo-submit">${addBtnLabel}</button>
-                    <button class="btn btn-primary btn-block d-none" id="oligo-edit">${editBtnLabel}</button>
+            <form>
+              <fieldset>
+                <legend>Chọn hình thức xử lý và tùy chỉnh</legend>
+                <div class="row">
+                  <div class="col-3">
+                    <div class="btn-group d-flex mb-3" role="group">
+                      <input type="radio" class="btn-check" name="oligo-status" id="wet" autocomplete="off">
+                      <label class="btn btn-outline-success btn-wet" for="wet">${wetLabel}</label>
+                      <input type="radio" class="btn-check" name="oligo-status" id="dry" autocomplete="off">
+                      <label class="btn btn-outline-danger btn-dry" for="dry">${dryLabel}</label>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <select id="oligo-normalization" class="form-select">
+                      <option value="0">Không tùy chỉnh</option>
+                    </select>
+                  </div>
+                  <div class="col-5">
+                    <button type="submit" class="btn btn-primary btn-begin" disabled>${beginOligoLabel}</button>
+                    <div class="form-check d-inline-block ms-3">
+                      <input class="form-check-input" type="checkbox" value="" id="check-confirm-oligo-normalization">
+                      <label class="form-check-label" id="label-confirm-oligo-normalization"
+                        for="check-confirm-oligo-normalization">
+                        Xác nhận các lựa chọn
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </fieldset>
             </form>
-            <ol class="text-danger" id="validate-form"></ol>
           </div>
         </div>
-        <div class="card my-3 mx-auto card-oligo-show">
+
+        <div class="card mb-3 mx-auto card-oligo-input d-none">
+          <header class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a data-bs-target="#tab_list" data-bs-toggle="tab" class="nav-link c-pointer nav-list active">Nhập liên tục</a>
+              </li>
+              <li class="nav-item">
+                <a data-bs-target="#tab_single" data-bs-toggle="tab" class="nav-link c-pointer nav-single">Nhập từng dòng</a>
+              </li>
+              <li class="nav-item">
+                <a data-bs-target="#tab_excel" data-bs-toggle="tab" class="nav-link c-pointer nav-excel">Nhập từ excel</a>
+              </li>
+            </ul>
+          </header>
+          <div class="tab-content">
+            <article id="tab_list" class="tab-pane show active card-body">
+              <form>
+                <fieldset>
+                  <legend>Nhập danh sách các trình tự</legend>
+                  <textarea class="form-control mb-3" id="oligo-list-input" rows="10"></textarea>
+                  <button type="submit" class="btn btn-primary" id="oligo-list-btn">Thêm vào danh sách</button>
+                </fieldset>
+              </form>
+            </article> <!-- tab-content.// -->
+            <article id="tab_single" class="tab-pane card-body">
+              <div class="card-body">
+                <form>
+                  <fieldset>
+                    <legend>Thêm từng trình tự</legend>
+                    <div class="row p-0">
+                      <div class="col-lg-1 col-sm-3">
+                        <input type="text" class="form-control" id="oligo-name" placeholder="${colName}"
+                          autocomplete="off" autofocus>
+                      </div>
+                      <div class="col-lg-9 col-sm-9">
+                        <div class="highlighter form-control" placeholder="${colSequence}" id="oligo-string"
+                          autocomplete="off" contenteditable></div>
+                        <span class="translate-middle badge rounded-pill bg-danger d-none" id="string-counter"
+                          style="z-index: 3;">
+                          99+
+                        </span>
+                      </div>
+                      <div class="col-lg-2 col-sm-2">
+                        <div class="d-grid">
+                          <button type="submit" class="btn btn-primary btn-block"
+                            id="oligo-submit">${addBtnLabel}</button>
+                          <button class="btn btn-primary btn-block d-none" id="oligo-edit">${editBtnLabel}</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ol class="text-danger" id="validate-form"></ol>
+                  </fieldset>
+                </form>
+              </div>
+              </form>
+            </article>
+            <article id="tab_excel" class="tab-pane card-body">
+              <form>
+                <fieldset>
+                  <legend>Nhập từ excel</legend><div class="mb-3">
+                    <input class="form-control" type="file" id="oligo-excel-input">
+                  </div>
+                  <button type="submit" class="btn btn-primary" id="oligo-excel-btn">Nhập dữ liệu</button>
+                </fieldset>
+              </form>
+            </article>
+          </div>
+        </div>
+        <div class="card mb-3 mx-auto card-oligo-show d-none">
           <div class="card-body">
             <div class="table-responsive-sm table-responsive-md table-responsive" id="oligo-list">
             </div>
             <button class="btn btn-primary add-to-cart-oligo d-none">${addToCartLabel}</button>
           </div>
         </div>
+
+
       </div> <!-- Lập danh sách sản phẩm -->
     </div> <!-- container .//  -->
   </section>
@@ -316,19 +378,19 @@
             <header class="card-header">
               <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                  <a href="#" data-bs-target="#tab_specs" data-bs-toggle="tab" class="nav-link active">Thông tin sản
+                  <a data-bs-target="#tab_specs" data-bs-toggle="tab" class="nav-link c-pointer active">Thông tin sản
                     phẩm</a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" data-bs-target="#tab_warranty" data-bs-toggle="tab" class="nav-link">Quy trình sản
+                  <a data-bs-target="#tab_warranty" data-bs-toggle="tab" class="nav-link c-pointer">Quy trình sản
                     xuất</a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" data-bs-target="#tab_shipping" data-bs-toggle="tab" class="nav-link">Hướng dẫn đặt
+                  <a data-bs-target="#tab_shipping" data-bs-toggle="tab" class="nav-link c-pointer">Hướng dẫn đặt
                     hàng</a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" data-bs-target="#tab_seller" data-bs-toggle="tab" class="nav-link">Các chính sách</a>
+                  <a data-bs-target="#tab_seller" data-bs-toggle="tab" class="nav-link c-pointer">Các chính sách</a>
                 </li>
               </ul>
             </header>
@@ -436,7 +498,7 @@
                   <img src="images/items/10.jpg" width="96" height="96" class="img-md img-thumbnail">
                 </a>
                 <div class="info">
-                  <a href="#" class="title mb-1"> T-shirts with multiple colors, for men and lady </a>
+                  <a href="#" class="title mb-1"> T-shirts with listple colors, for men and lady </a>
                   <strong class="price"> $120.00</strong> <!-- price.// -->
                 </div>
               </article>
