@@ -1,8 +1,8 @@
 /* xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
-importScripts('dist/shim.min.js');
+importScripts('./shim.min.js');
 /* uncomment the next line for encoding support */
-importScripts('dist/cpexcel.js');
-importScripts('xlsx.js');
+importScripts('./cpexcel.js');
+importScripts('./xlsx.js');
 postMessage({t:"ready"});
 
 onmessage = function (evt) {
