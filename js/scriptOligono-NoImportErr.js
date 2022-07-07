@@ -1,5 +1,6 @@
 var dryFee = 30000, lowNu = 25000,
-    highlighter = document.querySelector('.highlighter'),
+    oligoTitleText = document.querySelector('.oligo-title'),
+    noCustomLabel = document.querySelector('.no-custom'),
     oligoName = document.getElementById('oligo-name'),
     oligoString = document.getElementById('oligo-string'),
     oligoList = document.getElementById('oligo-list'),
@@ -10,18 +11,21 @@ var dryFee = 30000, lowNu = 25000,
     addToCartOligo = document.querySelector('.add-to-cart-oligo'),
     navSingle = document.querySelector('.nav-single'),
     tabSingle = document.getElementById('tab_single'),
+    titleSingle = document.querySelector('.title-single'),
 
-    loader = document.querySelector('.loader'),
+    titleList = document.querySelector('.title-list'),
     oligoListBtn = document.getElementById('oligo-list-btn'),
     oligoListInput = document.getElementById('oligo-list-input'),
     navList = document.querySelector('.nav-list'),
     tabList = document.getElementById('tab_list'),
 
+    titleExcel = document.querySelector('.title-excel'),
     oligoExcelBtn = document.getElementById('oligo-excel-btn'),
     oligoExcelInput = document.getElementById('oligo-excel-input'),
     navExcel = document.querySelector('.nav-excel'),
     tabExcel = document.getElementById('tab_excel'),
     excelProcess = document.querySelector('.excel-process'),
+    excelDragDrop = document.querySelector('.drag-drop-placeholder'),
 
     oligoNormalization = document.getElementById('oligo-normalization'),
     checkConfirmOligoNormalization = document.getElementById('check-confirm-oligo-normalization'),
@@ -44,15 +48,29 @@ var dryFee = 30000, lowNu = 25000,
     unitPriceList = document.getElementById('unit-price-list').innerHTML.split(","),
     baseList = document.getElementById('base-list').innerHTML;
 
+oligoTitleText.innerText = oligoTitle;
+noCustomLabel.innerHTML = noCustom;
+labelConfirmOligoNormalization.innerText = confirmChosenLabel;
 oligoName.placeholder = colName;
+oligoString.placeholder = colSequence;
 btnBeginOligo.innerHTML = beginOligoLabel;
 wetBtn.innerHTML = wet;
 dryBtn.innerHTML = dry;
 oligoSubmit.innerHTML = addBtnLabel;
 oligoEdit.innerHTML = editBtnLabel;
 addToCartOligo.innerHTML = addToCartLabel;
-// oligoExcelBtn.innerHTML = oligoExcelBtnLabel;
+oligoExcelBtn.innerHTML = oligoExcelBtnLabel;
 oligoListBtn.innerHTML = oligoListBtnLabel;
+
+navList.innerText = oligoListTabLabel;
+navSingle.innerText = oligoSingleTabLabel;
+navExcel.innerText = oligoExcelTabLabel;
+titleSingle.innerText = oligoSingleTitle;
+titleList.innerText = oligoListTitle;
+oligoListInput.placeholder = oligoListPlaceholder;
+titleExcel.innerText = oligoExcelTitle;
+excelDragDrop.innerText = oligoExcelPlaceholder;
+
 var productArr = [];
 
 oligoList.innerHTML = displayOligo(productArr);
@@ -93,9 +111,9 @@ dryBtn.addEventListener('click', function () {
 oligoSubmit.addEventListener('click', function (e) {
     e.preventDefault();
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.innerText.replace(/\s/g, '').toUpperCase(),
+        oString = oligoString.value.replace(/\s/g, '').toUpperCase(),
         oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
-        oStatus = oligoStatus.innerText;
+        oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
     if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>`) {
         productArr.push(createRow(oName, oString, oStatus, oNormalization));
         oligoList.innerHTML = displayOligo(productArr);
@@ -114,7 +132,7 @@ oligoListBtn.addEventListener('click', function (e) {
             let oName = oligo[0].replace(/\s/g, '').toUpperCase(),
                 oString = oligo[1].replace(/\s/g, '').toUpperCase(),
                 oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
-                oStatus = oligoStatus.innerText;
+                oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
             console.log(i, oName, validateOligo(oName, oString));
             if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>' + difficultOligo + '</li>') {
                 productArr.push(createRow(oName, oString, oStatus, oNormalization));
@@ -129,25 +147,32 @@ oligoListBtn.addEventListener('click', function (e) {
     }
 })
 
+oligoExcelBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+        excelProcess.classList.remove('d-none');
+        excelProcess.innerText = 'Đang xử lý';
+        do_file(oligoExcelInput.files);
+    }, false);
+
 oligoName.addEventListener('change', function () {
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.innerText.replace(/\s/g, '').toUpperCase();
+        oString = oligoString.value.replace(/\s/g, '').toUpperCase();
     oligoName.value = oName;
     validateForm.innerHTML = validateOligo(oName, oString);
 })
 
 oligoString.addEventListener('keyup', function () {
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.innerText.replace(/\s/g, '').toUpperCase();
-    oligoString.innerText = oString;
+        oString = oligoString.value.replace(/\s/g, '').toUpperCase();
+    oligoString.value = oString;
     oligoString.focus();
     validateForm.innerHTML = validateOligo(oName, oString);
 })
 
 oligoString.addEventListener('keyup', function () {
-    if (oligoString.innerText.replace(/\s/g, '').toUpperCase().length > stringLength[stringLength.length - 1] - 5) {
+    if (oligoString.value.replace(/\s/g, '').toUpperCase().length > stringLength[stringLength.length - 1] - 5) {
         stringCounter.classList.remove('d-none');
-        stringCounter.innerText = oligoString.innerText.replace(/\s/g, '').toUpperCase().length;
+        stringCounter.innerText = oligoString.value.replace(/\s/g, '').toUpperCase().length;
     } else {
         stringCounter.classList.add('d-none');
     }
@@ -156,12 +181,12 @@ oligoString.addEventListener('keyup', function () {
 oligoEdit.addEventListener('click', function (e) {
     e.preventDefault();
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.innerText.replace(/\s/g, '').toUpperCase(),
+        oString = oligoString.value.replace(/\s/g, '').toUpperCase(),
         oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
-        oStatus = oligoStatus.innerText
+        oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
     for (let i = 0; i < productArr.length; i++) {
         if (productArr[i][0] == oligoName.value) {
-            if (validateInputArray(oligoString.innerText.replace(/\s/g, ''), baseList) == '') {
+            if (validateInputArray(oligoString.value.replace(/\s/g, ''), baseList) == '') {
                 productArr[i] = createRow(oName, oString, oStatus, oNormalization);
                 oligoList.innerHTML = displayOligo(productArr);
                 resetForm();
@@ -274,9 +299,6 @@ function validateOligo(name, string) {
             break;
         case string.includes('GGGGGG'):
             oligoString.classList.add('border-danger');
-            let sequence = string.replace(/gggggg/gi, '<span>GGGGGG</span>');
-            oligoString.innerHTML = sequence;
-            oligoString.focus();
             oligoSubmit.disabled = false;
             text += `<li>${difficultOligo}</li>`;
             break;
@@ -301,14 +323,15 @@ function resetForm() {
     validateForm.innerHTML = "";
     oligoName.value = '';
     oligoName.disabled = false;
-    oligoString.innerText = '';
+    oligoString.value = '';
     oligoStatus.checked = false;
     oligoNormalization.value = 0;
     oligoName.focus();
-    highlighter.innerHTML = "";
     stringCounter.classList.add('d-none');
     oligoListInput.value = '';
     excelProcess.classList.add('d-none');
+    titleSingle.innerText = oligoSingleTitle;
+    navSingle.innerText = oligoSingleTabLabel;
 }
 
 /*---------------------------------
@@ -328,7 +351,7 @@ Hiển thị dữ liệu của 1 hàng (mảng con) lên form để tiến hành
 function editRow(num) {
     oligoName.value = productArr[num][0];
     oligoName.disabled = true;
-    oligoString.innerText = productArr[num][1];
+    oligoString.value = productArr[num][1];
     oligoStatus.checked = (productArr[num][2] == 1) ? true : false;
     oligoNormalization.value = productArr[num][3];
     oligoEdit.classList.remove('d-none');
@@ -342,6 +365,8 @@ function editRow(num) {
     tabSingle.classList.add('active');
     tabExcel.classList.remove('active');
     tabList.classList.remove('active');
+    titleSingle.innerText = oligoEditTitle;
+    navSingle.innerText = oligoEditTabLabel;
 }
 
 /*---------------------------------
@@ -416,7 +441,7 @@ function displayOligo(arr2ways) {
                     break;
             }
             fee += (arr2ways[i][1].length <= 14) ? lowNu : 0;
-            fee += (arr2ways[i][2] == 'dry') ? dryFee : 0;
+            fee += (arr2ways[i][2] == yes) ? dryFee : 0;
             total = unitPrice * arr2ways[i][1].length + fee;
             subTotal += total;
             str += `<tr>
@@ -432,8 +457,8 @@ function displayOligo(arr2ways) {
                         <td scope="col" class="text-end">${total.toLocaleString()}</td>
                         <td scope="col" class="text-center">${eDD}</td>
                         <td scope="col class="text-center"">
-                            <button class="btn btn-light" onclick="editRow(${i})"><i class="fa-solid fa-pencil"></i></button>
-                            <button class="btn btn-light" onclick="removeRow(${i})"><i class="fa-solid fa-trash"></i></button>
+                            <button class="btn btn-link" onclick="editRow(${i})"><i class="fa-solid fa-pencil"></i></button>
+                            <button class="btn btn-link" onclick="removeRow(${i})"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>`;
         }
@@ -480,7 +505,7 @@ var process_wb = (function () {
                         let oName = oligo[0].replace(/\s/g, '').toUpperCase(),
                             oString = oligo[1].replace(/\s/g, '').toUpperCase(),
                             oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
-                            oStatus = oligoStatus.innerText;
+                            oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
                         if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>' + difficultOligo + '</li>') {
                             productArr.push(createRow(oName, oString, oStatus, oNormalization));
                         }
