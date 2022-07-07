@@ -30,8 +30,10 @@ if (window.location.href.includes('/en')) {
         base = ' base. ',
         minStringLength = 'Oligo sequence must be at least ',
         maxStringLength = 'Sequence of this oligo can be up to ',
-        addToCartLabel = 'Add to cart';
-        beginOligoLabel = 'Import oligo';
+        addToCartLabel = 'Add to cart',
+        beginOligoLabel = 'Import oligo',
+        oligoListBtnLabel = 'Add data',
+        oligoExcelBtnLabel = 'Import from Excel';
 } else {
     var colName = 'Tên chuỗi',
         colSequence = 'Chuỗi trình tự',
@@ -64,6 +66,8 @@ if (window.location.href.includes('/en')) {
         base = ' base. ',
         minStringLength = 'Chuỗi Oligo tối thiểu phải từ ',
         maxStringLength = 'Chuỗi Oligo tối đa phải dưới ',
-        addToCartLabel = 'Thêm vào giỏ hàng';
-        beginOligoLabel = 'Bắt đầu nhập trình tự';
+        addToCartLabel = 'Thêm vào giỏ hàng',
+        beginOligoLabel = 'Bắt đầu nhập trình tự',
+        oligoListBtnLabel = 'Thêm danh sách',
+        oligoExcelBtnLabel = 'Import từ Excel';
 }

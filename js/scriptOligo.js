@@ -11,6 +11,7 @@ var dryFee = 30000, lowNu = 25000,
     navSingle = document.querySelector('.nav-single'),
     tabSingle = document.getElementById('tab_single'),
 
+    loader = document.querySelector('.loader'),
     oligoListBtn = document.getElementById('oligo-list-btn'),
     oligoListInput = document.getElementById('oligo-list-input'),
     navList = document.querySelector('.nav-list'),
@@ -20,6 +21,7 @@ var dryFee = 30000, lowNu = 25000,
     oligoExcelInput = document.getElementById('oligo-excel-input'),
     navExcel = document.querySelector('.nav-excel'),
     tabExcel = document.getElementById('tab_excel'),
+    excelProcess = document.querySelector('.excel-process'),
 
     oligoNormalization = document.getElementById('oligo-normalization'),
     checkConfirmOligoNormalization = document.getElementById('check-confirm-oligo-normalization'),
@@ -49,6 +51,8 @@ dryBtn.innerHTML = dry;
 oligoSubmit.innerHTML = addBtnLabel;
 oligoEdit.innerHTML = editBtnLabel;
 addToCartOligo.innerHTML = addToCartLabel;
+// oligoExcelBtn.innerHTML = oligoExcelBtnLabel;
+oligoListBtn.innerHTML = oligoListBtnLabel;
 var productArr = [];
 
 oligoList.innerHTML = displayOligo(productArr);
@@ -92,18 +96,13 @@ oligoSubmit.addEventListener('click', function (e) {
         oString = oligoString.innerText.replace(/\s/g, '').toUpperCase(),
         oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
         oStatus = oligoStatus.innerText;
-    if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>` ) {
+    if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>`) {
         productArr.push(createRow(oName, oString, oStatus, oNormalization));
         oligoList.innerHTML = displayOligo(productArr);
         addToCartOligo.classList.add('d-block');
         addToCartOligo.classList.remove('d-none');
         resetForm();
     }
-})
-
-oligoExcelBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-
 })
 
 oligoListBtn.addEventListener('click', function (e) {
@@ -116,16 +115,16 @@ oligoListBtn.addEventListener('click', function (e) {
                 oString = oligo[1].replace(/\s/g, '').toUpperCase(),
                 oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
                 oStatus = oligoStatus.innerText;
-                console.log(i, oName, validateOligo(oName, oString));
-            if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>'+difficultOligo+'</li>') {
+            console.log(i, oName, validateOligo(oName, oString));
+            if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>' + difficultOligo + '</li>') {
                 productArr.push(createRow(oName, oString, oStatus, oNormalization));
-                oligoList.innerHTML = displayOligo(productArr);
-                addToCartOligo.classList.add('d-block');
-                addToCartOligo.classList.remove('d-none');
-                resetForm();
             }
         }
     }
+    oligoList.innerHTML = displayOligo(productArr);
+    addToCartOligo.classList.add('d-block');
+    addToCartOligo.classList.remove('d-none');
+    resetForm();
 })
 
 oligoName.addEventListener('change', function () {
@@ -306,6 +305,8 @@ function resetForm() {
     oligoName.focus();
     highlighter.innerHTML = "";
     stringCounter.classList.add('d-none');
+    oligoListInput.value = '';
+    excelProcess.classList.add('d-none');
 }
 
 /*---------------------------------
@@ -448,3 +449,126 @@ function displayOligo(arr2ways) {
         return `<p>${guideText} <span class="badge bg-primary text-light">${addBtnLabel}</span></p>`;
     }
 }
+
+
+/*---------------------------------
+Xử lý file excel
+-----------------------------------*/
+var global_wb;
+function to_csv(workbook) {
+    var result = [];
+    workbook.SheetNames.forEach(function (sheetName) {
+        var csv = XLSX.utils.sheet_to_csv(workbook.Sheets[sheetName]);
+        if (csv.length) {
+            result.push(csv);
+        }
+    });
+    return result;
+};
+var process_wb = (function () {
+    return function process_wb(wb) {
+        global_wb = wb;
+        var output = to_csv(wb);
+        try {
+            for (let j = 0; j < output.length; j++) {
+                let arr = output[j].split(/\r?\n/);
+                for (let i = 0; i < arr.length; i++) {
+                    let oligo = arr[i].split(',');
+                    if (oligo[0] != '' && oligo[1] != '') {
+                        let oName = oligo[0].replace(/\s/g, '').toUpperCase(),
+                            oString = oligo[1].replace(/\s/g, '').toUpperCase(),
+                            oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
+                            oStatus = oligoStatus.innerText;
+                        console.log(i, oName, validateOligo(oName, oString));
+                        excelProcess.innerText = 'Đang xử lý dòng: '+i;
+                        if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>' + difficultOligo + '</li>') {
+                            productArr.push(createRow(oName, oString, oStatus, oNormalization));
+                        }
+                    }
+                }
+            }
+            resetForm();
+            addToCartOligo.classList.add('d-block');
+            addToCartOligo.classList.remove('d-none');
+            oligoList.innerHTML = displayOligo(productArr);
+        } catch (e) {
+            window.onbeforeunload = function() {
+                return confirm("Đã có lỗi xảy ra! Hãy kiểm tra file Excel và thử lại.");
+            };
+        }
+    };
+})();
+
+var do_file = (function () {
+    var use_worker = true,
+        use_utf8 = true;
+
+    var xw = function xw(data, cb) {
+        var worker = new Worker('./xlsxworker.js');
+        worker.onmessage = function (e) {
+            switch (e.data.t) {
+                case 'ready': break;
+                case 'e': console.error(e.data.d); break;
+                case 'xlsx': cb(JSON.parse(e.data.d)); break;
+            }
+        };
+        worker.postMessage({ d: data, b: 'array', c: use_utf8 ? 65001 : void 0 });
+    };
+
+    return function do_file(files) {
+        var f = files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var data = new Uint8Array(e.target.result);
+            if (use_worker) xw(data, process_wb);
+            else process_wb(XLSX.read(data, { type: 'array', codepage: use_utf8 ? 65001 : void 0 }));
+        };
+        reader.readAsArrayBuffer(f);
+    };
+})();
+
+(function () {
+    var dropZone = document.getElementById('drop-zone');
+    if (!dropZone.addEventListener && !window.addEventListener) return;
+
+    function handleDrop(e) {
+        dropZoneDisplay(e, false);
+        do_file(e.dataTransfer.files);
+    }
+
+    function handleDragover(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+    }
+
+    function dropZoneDisplay(e, show) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        var opacity = show ? '1' : '0';
+        var zIndex = show ? '1' : '-1';
+
+        dropZone.style.opacity = opacity;
+        dropZone.style.zIndex = zIndex;
+    }
+
+    window.addEventListener('drop', handleDrop);
+    window.addEventListener('dragover', handleDragover);
+    window.addEventListener('dragenter', function (e) {
+        dropZoneDisplay(e, true);
+    });
+
+    dropZone.addEventListener('dragleave', function (e) {
+        dropZoneDisplay(e, false);
+    });
+})();
+
+(function () {
+    if (!oligoExcelInput.addEventListener) return;
+    oligoExcelInput.addEventListener('change', function (e) {
+        excelProcess.classList.remove('d-none');
+        excelProcess.innerText = 'Đang xử lý';
+        do_file(e.target.files);
+    }, false);
+})();

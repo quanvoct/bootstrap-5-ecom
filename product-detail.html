@@ -290,13 +290,16 @@
           <header class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
               <li class="nav-item">
-                <a data-bs-target="#tab_list" data-bs-toggle="tab" class="nav-link c-pointer nav-list active">Nhập liên tục</a>
+                <a data-bs-target="#tab_list" data-bs-toggle="tab" class="nav-link c-pointer nav-list active">Nhập liên
+                  tục</a>
               </li>
               <li class="nav-item">
-                <a data-bs-target="#tab_single" data-bs-toggle="tab" class="nav-link c-pointer nav-single">Nhập từng dòng</a>
+                <a data-bs-target="#tab_single" data-bs-toggle="tab" class="nav-link c-pointer nav-single">Nhập từng
+                  dòng</a>
               </li>
               <li class="nav-item">
-                <a data-bs-target="#tab_excel" data-bs-toggle="tab" class="nav-link c-pointer nav-excel">Nhập từ excel</a>
+                <a data-bs-target="#tab_excel" data-bs-toggle="tab" class="nav-link c-pointer nav-excel">Nhập từ
+                  excel</a>
               </li>
             </ul>
           </header>
@@ -306,7 +309,7 @@
                 <fieldset>
                   <legend>Nhập danh sách các trình tự</legend>
                   <textarea class="form-control mb-3" id="oligo-list-input" rows="10"></textarea>
-                  <button type="submit" class="btn btn-primary" id="oligo-list-btn">Thêm vào danh sách</button>
+                  <button type="submit" class="btn btn-primary" id="oligo-list-btn">${oligoListBtnLabel}</button>
                 </fieldset>
               </form>
             </article> <!-- tab-content.// -->
@@ -345,10 +348,19 @@
             <article id="tab_excel" class="tab-pane card-body">
               <form>
                 <fieldset>
-                  <legend>Nhập từ excel</legend><div class="mb-3">
-                    <input class="form-control" type="file" id="oligo-excel-input">
+                  <legend>Nhập từ excel</legend>
+                  <div class="mb-3">
+                    <input class="form-control" type="file" id="oligo-excel-input" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
                   </div>
-                  <button type="submit" class="btn btn-primary" id="oligo-excel-btn">Nhập dữ liệu</button>
+                  <div id="drop-zone">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path
+                        d="M17 13h-10v-1h10v1zm0-4h-10v1h10v-1zm0-3h-10v1h10v-1zm-15-1v-5h6v2h-4v3h-2zm8-5v2h4v-2h-4zm6 2h4v3h2v-5h-6v2zm6 5h-2v4h2v-4zm-20 10h2v-4h-2v4zm18-4v.543c0 4.107-6 2.457-6 2.457s1.518 6-2.638 6h-1.362v2h2.189c3.163 0 9.811-7.223 9.811-9.614v-1.386h-2zm-18-2h2v-4h-2v4zm2 11v-3h-2v5h6v-2h-4z" />
+                    </svg>
+                    <p>Kéo và thả file Excel của bạn vào đây</p>
+                  </div>
+                  <p class="d-none excel-process"></p>
+                  <!-- <button type="submit" class="btn btn-primary" id="oligo-excel-btn">${oligoExcelBtnLabel}</button> -->
                 </fieldset>
               </form>
             </article>
@@ -1051,6 +1063,8 @@
 
   <!-- Custom js -->
   <script src="js/script.js"></script>
+  <script src="dist/shim.min.js"></script>
+  <script src="dist/xlsx.full.min.js"></script>
   <script src="js/lang.js"></script>
   <script src="js/scriptOligo.js"></script>
   <div>
