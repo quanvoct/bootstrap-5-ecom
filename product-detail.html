@@ -240,7 +240,7 @@
           </article> <!-- product-info-aside .// -->
         </main> <!-- col.// -->
       </div> <!-- row.// -->
-      <div class="d-none" id="oligo-type">PremiumOligo</div>
+      <div class="d-none" id="oligo-type">OligoScreeningPlate</div>
       <div class="d-none" id="base-list">A,T,G,C</div>
       <div class="d-none" id="name-length">3,16</div>
       <div class="d-none" id="string-length">6,15,36,75</div>
@@ -290,13 +290,16 @@
           <header class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
               <li class="nav-item">
-                <a data-bs-target="#tab_list" data-bs-toggle="tab" class="nav-link c-pointer nav-list active">${oligoListTabLabel}</a>
+                <a data-bs-target="#tab_list" data-bs-toggle="tab"
+                  class="nav-link c-pointer nav-list active">${oligoListTabLabel}</a>
               </li>
               <li class="nav-item">
-                <a data-bs-target="#tab_single" data-bs-toggle="tab" class="nav-link c-pointer nav-single">${oligoSingleTabLabel}</a>
+                <a data-bs-target="#tab_single" data-bs-toggle="tab"
+                  class="nav-link c-pointer nav-single">${oligoSingleTabLabel}</a>
               </li>
               <li class="nav-item">
-                <a data-bs-target="#tab_excel" data-bs-toggle="tab" class="nav-link c-pointer nav-excel">${oligoExcelTabLabel}</a>
+                <a data-bs-target="#tab_excel" data-bs-toggle="tab"
+                  class="nav-link c-pointer nav-excel">${oligoExcelTabLabel}</a>
               </li>
             </ul>
           </header>
@@ -305,8 +308,7 @@
               <form>
                 <fieldset>
                   <legend class="title-list">${oligoListTitle}</legend>
-                  <textarea class="form-control mb-3" id="oligo-list-input"
-                    placeholder="${oligoListPlaceholder}"
+                  <textarea class="form-control mb-3" id="oligo-list-input" placeholder="${oligoListPlaceholder}"
                     rows="10"></textarea>
                   <button type="submit" class="btn btn-primary" id="oligo-list-btn">${oligoListBtnLabel}</button>
                 </fieldset>
@@ -349,7 +351,8 @@
                 <fieldset>
                   <legend class="title-excel">${oligoExcelTitle}</legend>
                   <div class="mb-3">
-                    <input class="form-control" type="file" id="oligo-excel-input" placeholder="${oligoExcelPlaceholder}"
+                    <input class="form-control" type="file" id="oligo-excel-input"
+                      placeholder="${oligoExcelPlaceholder}"
                       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
                   </div>
                   <div id="drop-zone">
@@ -366,14 +369,33 @@
             </article>
           </div>
         </div>
+
         <div class="card mb-3 mx-auto card-oligo-show d-none">
           <div class="card-body">
             <div class="table-responsive-sm table-responsive-md table-responsive" id="oligo-list">
             </div>
-            <button class="btn btn-primary add-to-cart-oligo d-none">${addToCartLabel}</button>
+            <button class="btn btn-primary confirm-oligo d-none">${confirmOligoLabel}</button>
+            <!-- <button class="btn btn-primary add-to-cart-oligo d-none">${addToCartLabel}</button> -->
           </div>
         </div>
 
+        <div class="card mb-3 mx-auto card-oligo-arrange d-none">
+          <div class="card-body">
+            <div class="table-responsive-sm table-responsive-md table-responsive" id="oligo-arrange">
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <div class="btn-group d-flex mb-3" role="group">
+                  <input type="radio" class="btn-check" name="oligo-arrange" id="horizon" autocomplete="off">
+                  <label class="btn btn-outline-success btn-horizon" for="horizon">${horizonLabel}</label>
+                  <input type="radio" class="btn-check" name="oligo-arrange" id="vertical" autocomplete="off">
+                  <label class="btn btn-outline-danger btn-vertical" for="vertical">${verticalLabel}</label>
+                </div>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-primary add-to-cart-oligo d-none" disabled>${addToCartLabel}</button></div>
+          </div>
+        </div>
 
       </div> <!-- Lập danh sách sản phẩm -->
     </div> <!-- container .//  -->

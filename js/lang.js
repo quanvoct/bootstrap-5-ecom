@@ -47,6 +47,9 @@ if (window.location.href.includes('/en')) {
         oligoExcelTabLabel = 'Import from Excel',
         oligoExcelTitle = 'Import from Excel',
         oligoExcelPlaceholder = 'Drag and drop your Oligo spreadsheet here';
+        confirmOligoLabel = 'I confirm this Oligo list are all correct',
+        btnHorizonLabel = 'Horizon',
+        btnVerticalLabel = 'Vertical';
 } else {
     var colName = 'Tên',
         colSequence = 'Chuỗi trình tự',
@@ -95,5 +98,8 @@ if (window.location.href.includes('/en')) {
         oligoExcelBtnLabel = 'Nhập dữ liệu',
         oligoExcelTabLabel = 'Nhập từ Excel',
         oligoExcelTitle = 'Nhập dữ liệu từ file Excel',
-        oligoExcelPlaceholder = 'Kéo file Excel dữ liệu Oligo của bạn và thả vào đây';
+        oligoExcelPlaceholder = 'Kéo file Excel dữ liệu Oligo của bạn và thả vào đây',
+        confirmOligoLabel = 'Xác nhận tất cả thông tin đã nhập đều đúng',
+        btnHorizonLabel = 'Chiều ngang',
+        btnVerticalLabel = 'Chiều dọc';
 }

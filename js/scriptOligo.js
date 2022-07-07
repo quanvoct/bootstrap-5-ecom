@@ -38,6 +38,12 @@ var dryFee = 30000, lowNu = 25000,
     cardOligoInput = document.querySelector('.card-oligo-input'),
     cardOligoShow = document.querySelector('.card-oligo-show'),
 
+    oligoArrange = document.getElementById('oligo-arrange'),
+    cardOligoArrange = document.querySelector('.card-oligo-arrange'),
+    confirmOligo = document.querySelector('.confirm-oligo'),
+    btnHorizon = document.querySelector('.btn-horizon'),
+    btnVertical = document.querySelector('.btn-vertical'),
+
     oligoType = document.getElementById('oligo-type'),
     nameLength = document.getElementById('name-length').innerHTML.split(","),
     stringLength = document.getElementById('string-length').innerHTML.split(","),
@@ -61,6 +67,9 @@ oligoEdit.innerHTML = editBtnLabel;
 addToCartOligo.innerHTML = addToCartLabel;
 oligoExcelBtn.innerHTML = oligoExcelBtnLabel;
 oligoListBtn.innerHTML = oligoListBtnLabel;
+confirmOligo.innerHTML = confirmOligoLabel;
+btnHorizon.innerText = btnHorizonLabel;
+btnVertical.innerText = btnVerticalLabel;
 
 navList.innerText = oligoListTabLabel;
 navSingle.innerText = oligoSingleTabLabel;
@@ -117,8 +126,10 @@ oligoSubmit.addEventListener('click', function (e) {
     if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>`) {
         productArr.push(createRow(oName, oString, oStatus, oNormalization));
         oligoList.innerHTML = displayOligo(productArr);
-        addToCartOligo.classList.add('d-block');
-        addToCartOligo.classList.remove('d-none');
+
+        if (oligoType.innerText == 'OligoScreeningPlate' || oligoType.innerText == 'GenomicsOligoPlate') {
+            confirmOligo.classList.remove('d-none');
+        }
         resetForm();
     }
 })
@@ -141,18 +152,21 @@ oligoListBtn.addEventListener('click', function (e) {
     }
     if (productArr.length) {
         oligoList.innerHTML = displayOligo(productArr);
-        addToCartOligo.classList.add('d-block');
-        addToCartOligo.classList.remove('d-none');
+
+        if (oligoType.innerText == 'OligoScreeningPlate' || oligoType.innerText == 'GenomicsOligoPlate') {
+            confirmOligo.classList.remove('d-none');
+        }
         resetForm();
     }
 })
 
 oligoExcelBtn.addEventListener('click', function (e) {
     e.preventDefault();
-        excelProcess.classList.remove('d-none');
-        excelProcess.innerText = 'Đang xử lý';
-        do_file(oligoExcelInput.files);
-    }, false);
+    excelProcess.classList.remove('d-none');
+    excelProcess.innerText = 'Đang xử lý';
+    if(oligoExcelInput.files.length) { do_file(oligoExcelInput.files); }
+    else { oligoExcelInput.click(); }
+}, false);
 
 oligoName.addEventListener('change', function () {
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
@@ -193,6 +207,44 @@ oligoEdit.addEventListener('click', function (e) {
             }
         }
     }
+})
+
+confirmOligo.addEventListener('click', function (e) {
+    e.preventDefault();
+    let checkOligo = true;
+    for (let i = 0; i < productArr.length; i++) {
+        if (validateOligo(productArr[i][0], productArr[i][1]) == '' || validateOligo(productArr[i][0], productArr[i][1]) == '<li>' + existName + '</li>' || validateOligo(productArr[i][0], productArr[i][1]) == '<li>' + difficultOligo + '</li>') {
+            checkOligo = true;
+        } else {
+            checkOligo = false;
+            alert('Một số nội dung chưa chính xác! Xin kiểm tra lại');
+            break;
+        }
+    }
+    if (checkOligo) {
+        if (oligoType.innerText == 'OligoScreeningPlate' || oligoType.innerText == 'GenomicsOligoPlate') {
+            oligoArrange.innerHTML = arrangePlate(productArr, true);
+            cardOligoArrange.classList.remove('d-none');
+            cardOligoInput.classList.add('d-none');
+            confirmOligo.classList.add('d-none');
+            addToCartOligo.classList.remove('d-none');
+        }
+        else {
+            addToCartOligo.classList.remove('d-none');
+            cardOligoInput.classList.add('d-none');
+            confirmOligo.classList.add('d-none');
+        }
+    }
+})
+
+btnHorizon.addEventListener('click', function () {
+    oligoArrange.innerHTML = arrangePlate(productArr, true);
+    addToCartOligo.disabled = false;
+})
+
+btnVertical.addEventListener('click', function () {
+    oligoArrange.innerHTML = arrangePlate(productArr, false);
+    addToCartOligo.disabled = false;
 })
 
 /*---------------------------------
@@ -393,7 +445,7 @@ function dmYFormat(value) {
 Hiển thị mảng lớn dữ liệu ra màn hình
 -----------------------------------*/
 function displayOligo(arr2ways) {
-    if (arr2ways.length > 0) {
+    if (arr2ways.length) {
         let str = `
         <table class="table table-striped table-hover table-sm align-middle">
             <thead>
@@ -478,6 +530,65 @@ function displayOligo(arr2ways) {
 }
 
 
+function arrangePlate(arr2ways, direction) {
+    let tableArrange = ``;
+    if (direction) {
+        for (let k = 0; k < arr2ways.length; k += 96) {
+            tableArrange += `
+            <table class="table table-borderless align-middle text-center">
+              <thead>
+                <tr>
+                  <th style="width: 4%;"></th>`;
+            for (let i = 1; i < 13; i++) {
+                number = (i < 10) ? '0' + i : i;
+                tableArrange += `<th style="width: 8%;">${number}</th>`;
+            }
+            tableArrange += `</tr>
+              </thead>
+              <tbody>`;
+            for (let i = 0; i < 96; i += 12) {
+                letter = String.fromCharCode(i / 12 + 1 + 64);
+                tableArrange += `<tr>
+                <th>${letter}</th>`;
+                for (let j = 0; j < 12; j++) {
+                    tableArrange += (i + j + k < arr2ways.length) ? `<td>${arr2ways[i + j + k][0]}</td>` : `<td></td>`;
+                }
+                tableArrange += `</tr>`;
+            }
+            tableArrange += `
+            </tbody>
+          </table>`;
+        }
+    } else {
+        for (let k = 0; k < arr2ways.length; k += 96) {
+            tableArrange += `
+            <table class="table table-borderless align-middle text-center">
+              <thead>
+                <tr>
+                  <th style="width: 4%;"></th>`;
+            for (let i = 1; i < 13; i++) {
+                number = (i < 10) ? '0' + i : i;
+                tableArrange += `<th style="width: 8%;">${number}</th>`;
+            }
+            tableArrange += `</tr>
+              </thead>
+              <tbody>`;
+            for (let i = 0; i < 96; i += 12) {
+                letter = String.fromCharCode(i / 12 + 1 + 64);
+                tableArrange += `<tr>
+                <th>${letter}</th>`;
+                for (let j = 0; j < 12; j++) {
+                    tableArrange += ((i / 12 + k) + j * 8 < arr2ways.length) ? `<td>${arr2ways[(i / 12 + k) + j * 8][0]}</td>` : `<td></td>`;
+                }
+                tableArrange += `</tr>`;
+            }
+            tableArrange += `
+            </tbody>
+          </table>`;
+        }
+    }
+    return tableArrange;
+}
 /*---------------------------------
 Xử lý file excel
 -----------------------------------*/
@@ -515,8 +626,9 @@ var process_wb = (function () {
 
             if (productArr.length) {
                 oligoList.innerHTML = displayOligo(productArr);
-                addToCartOligo.classList.add('d-block');
-                addToCartOligo.classList.remove('d-none');
+                if (oligoType.innerText == 'OligoScreeningPlate' || oligoType.innerText == 'GenomicsOligoPlate') {
+                    confirmOligo.classList.remove('d-none');
+                }
                 resetForm();
             }
         } catch (e) {
