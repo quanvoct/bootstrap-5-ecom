@@ -66,7 +66,7 @@ if (window.location.href.includes('/en')) {
         colFee = 'Phí',
         colTotal = 'Thành tiền',
         subTotalLabel = 'Tổng thành tiền',
-        colEDD = 'Dự giao',
+        colEDD = 'Dự xuất',
         guideText = 'Nhập chuỗi Oligo vào form bên trên và nhấn',
         editBtnLabel = 'Sửa',
         addBtnLabel = 'Thêm',
