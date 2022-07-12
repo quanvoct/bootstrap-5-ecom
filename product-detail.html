@@ -311,6 +311,7 @@
                   <textarea class="form-control mb-3" id="oligo-list-input" placeholder="${oligoListPlaceholder}"
                     rows="10"></textarea>
                   <button type="submit" class="btn btn-primary" id="oligo-list-btn">${oligoListBtnLabel}</button>
+                  <ol class="text-danger" id="validate-list"></ol>
                 </fieldset>
               </form>
             </article> <!-- tab-content.// -->
@@ -340,7 +341,7 @@
                         </div>
                       </div>
                     </div>
-                    <ol class="text-danger" id="validate-form"></ol>
+                    <ol class="text-danger" id="validate-single"></ol>
                   </fieldset>
                 </form>
               </div>
@@ -364,6 +365,7 @@
                   </div>
                   <p class="d-none excel-process"></p>
                   <button type="submit" class="btn btn-primary" id="oligo-excel-btn">${oligoExcelBtnLabel}</button>
+                  <ol class="text-danger" id="validate-single"></ol>
                 </fieldset>
               </form>
             </article>

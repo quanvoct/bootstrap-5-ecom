@@ -6,18 +6,19 @@ var dryFee = 30000, lowNu = 25000,
     oligoList = document.getElementById('oligo-list'),
     oligoSubmit = document.getElementById('oligo-submit'),
     oligoEdit = document.getElementById('oligo-edit'),
-    validateForm = document.getElementById('validate-form'),
     stringCounter = document.getElementById('string-counter'),
     addToCartOligo = document.querySelector('.add-to-cart-oligo'),
     navSingle = document.querySelector('.nav-single'),
     tabSingle = document.getElementById('tab_single'),
     titleSingle = document.querySelector('.title-single'),
+    validateSingle = document.getElementById('validate-single'),
 
     titleList = document.querySelector('.title-list'),
     oligoListBtn = document.getElementById('oligo-list-btn'),
     oligoListInput = document.getElementById('oligo-list-input'),
     navList = document.querySelector('.nav-list'),
     tabList = document.getElementById('tab_list'),
+    validateList = document.getElementById('validate-list'),
 
     titleExcel = document.querySelector('.title-excel'),
     oligoExcelBtn = document.getElementById('oligo-excel-btn'),
@@ -26,6 +27,7 @@ var dryFee = 30000, lowNu = 25000,
     tabExcel = document.getElementById('tab_excel'),
     excelProcess = document.querySelector('.excel-process'),
     excelDragDrop = document.querySelector('.drag-drop-placeholder'),
+    validateExcel = document.getElementById('validate-excel'),
 
     oligoNormalization = document.getElementById('oligo-normalization'),
     checkConfirmOligoNormalization = document.getElementById('check-confirm-oligo-normalization'),
@@ -136,24 +138,9 @@ oligoSubmit.addEventListener('click', function (e) {
 
 oligoListBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    let arr = oligoListInput.value.split(/\r?\n/);
-    for (let i = 0; i < arr.length; i++) {
-        let oligo = arr[i].split('\t');
-        console.log(oligo[1]);
-        if (oligo[0] != '' && oligo[1] != '') {
-            let oName = oligo[0].replace(/\s/g, '').toUpperCase(),
-                oString = oligo[1].replace(/\s/g, '').toUpperCase(),
-                oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
-                oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
-            console.log(i, oName, validateOligo(oName, oString));
-            if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>' + difficultOligo + '</li>') {
-                productArr.push(createRow(oName, oString, oStatus, oNormalization));
-            }
-        }
-    }
+    validateListOligo(oligoListInput);
     if (productArr.length) {
         oligoList.innerHTML = displayOligo(productArr);
-
         if (oligoType.innerText == 'OligoScreeningPlate' || oligoType.innerText == 'GenomicsOligoPlate') {
             confirmOligo.classList.remove('d-none');
         }
@@ -173,7 +160,7 @@ oligoName.addEventListener('change', function () {
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
         oString = oligoString.value.replace(/\s/g, '').toUpperCase();
     oligoName.value = oName;
-    validateForm.innerHTML = validateOligo(oName, oString);
+    validateSingle.innerHTML = validateOligo(oName, oString);
 })
 
 oligoString.addEventListener('keyup', function () {
@@ -181,7 +168,7 @@ oligoString.addEventListener('keyup', function () {
         oString = oligoString.value.replace(/\s/g, '').toUpperCase();
     oligoString.value = oString;
     oligoString.focus();
-    validateForm.innerHTML = validateOligo(oName, oString);
+    validateSingle.innerHTML = validateOligo(oName, oString);
 })
 
 oligoString.addEventListener('keyup', function () {
@@ -305,6 +292,27 @@ function validateInputArray(input, list) {
 }
 
 /*---------------------------------
+Xác minh xem danh sách oligo đã nhập có hợp lệ không
+-----------------------------------*/
+function validateListOligo(listInput) {
+    let arr = listInput.value.replace(/\n\"\t/g, '\t').split(/\r?\n/);
+    for (let i = 0; i < arr.length; i++) {
+        let oligo = arr[i].split('\t');
+        if (oligo.length > 1) {
+            let oName = oligo[0].replace(/\s/g, '').replace(/\n/g, '').replace(/\"/g, '').toUpperCase(),
+                oString = oligo[1].replace(/\s/g, '').replace(/\n/g, '').replace(/\"/g, '').toUpperCase(),
+                oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
+                oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
+            if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>' + difficultOligo + '</li>') {
+                productArr.push(createRow(oName, oString, oStatus, oNormalization));
+            }
+        } else if (oligo.length <= 1) {
+            validateList.innerHTML = (oligo[0] == '') ? `<li>Đã có lỗi xảy ra! Vui lòng kiểm tra lại danh sách chuỗi của bạn.</li>` : '';
+        } 
+    }
+}
+
+/*---------------------------------
 Xác minh xem tên và chuỗi Oligo đã nhập có hợp lệ không
 -----------------------------------*/
 function validateOligo(name, string) {
@@ -382,7 +390,7 @@ function resetForm() {
     oligoString.classList.remove('border-danger');
     oligoEdit.classList.add('d-none');
     oligoSubmit.classList.remove('d-none');
-    validateForm.innerHTML = "";
+    validateSingle.innerHTML = "";
     oligoName.value = '';
     oligoName.disabled = false;
     oligoString.value = '';
@@ -599,6 +607,7 @@ function arrangePlate(arr2ways, direction) {
     }
     return tableArrange;
 }
+
 /*---------------------------------
 Xử lý file excel
 -----------------------------------*/
@@ -618,22 +627,7 @@ var process_wb = (function () {
         global_wb = wb;
         var output = to_csv(wb);
         try {
-            for (let j = 0; j < output.length; j++) {
-                let arr = output[j].split(/\r?\n/);
-                for (let i = 0; i < arr.length; i++) {
-                    let oligo = arr[i].split(',');
-                    if (oligo[0] != '' && oligo[1] != '') {
-                        let oName = oligo[0].replace(/\s/g, '').toUpperCase(),
-                            oString = oligo[1].replace(/\s/g, '').toUpperCase(),
-                            oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
-                            oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
-                        if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>' + difficultOligo + '</li>') {
-                            productArr.push(createRow(oName, oString, oStatus, oNormalization));
-                        }
-                    }
-                }
-            }
-
+            validateListOligo(output);
             if (productArr.length) {
                 oligoList.innerHTML = displayOligo(productArr);
                 if (oligoType.innerText == 'OligoScreeningPlate' || oligoType.innerText == 'GenomicsOligoPlate') {
