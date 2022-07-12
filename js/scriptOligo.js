@@ -139,6 +139,7 @@ oligoListBtn.addEventListener('click', function (e) {
     let arr = oligoListInput.value.split(/\r?\n/);
     for (let i = 0; i < arr.length; i++) {
         let oligo = arr[i].split('\t');
+        console.log(oligo[1]);
         if (oligo[0] != '' && oligo[1] != '') {
             let oName = oligo[0].replace(/\s/g, '').toUpperCase(),
                 oString = oligo[1].replace(/\s/g, '').toUpperCase(),
@@ -164,7 +165,7 @@ oligoExcelBtn.addEventListener('click', function (e) {
     e.preventDefault();
     excelProcess.classList.remove('d-none');
     excelProcess.innerText = 'Đang xử lý';
-    if(oligoExcelInput.files.length) { do_file(oligoExcelInput.files); }
+    if (oligoExcelInput.files.length) { do_file(oligoExcelInput.files); }
     else { oligoExcelInput.click(); }
 }, false);
 
@@ -210,6 +211,9 @@ oligoEdit.addEventListener('click', function (e) {
 })
 
 confirmOligo.addEventListener('click', function (e) {
+
+    var btnRemove = document.querySelectorAll('.btn-remove'),
+        btnEdit = document.querySelectorAll('.btn-edit');
     e.preventDefault();
     let checkOligo = true;
     for (let i = 0; i < productArr.length; i++) {
@@ -222,6 +226,12 @@ confirmOligo.addEventListener('click', function (e) {
         }
     }
     if (checkOligo) {
+        for (const btn of btnRemove) {
+            btn.classList.add('d-none');
+        }
+        for (const btn of btnEdit) {
+            btn.classList.add('d-none');
+        }
         if (oligoType.innerText == 'OligoScreeningPlate' || oligoType.innerText == 'GenomicsOligoPlate') {
             oligoArrange.innerHTML = arrangePlate(productArr, true);
             cardOligoArrange.classList.remove('d-none');
@@ -508,9 +518,9 @@ function displayOligo(arr2ways) {
                         <td scope="col" class="text-end">${fee.toLocaleString()}</td>
                         <td scope="col" class="text-end">${total.toLocaleString()}</td>
                         <td scope="col" class="text-center">${eDD}</td>
-                        <td scope="col class="text-center"">
-                            <button class="btn btn-link" onclick="editRow(${i})"><i class="fa-solid fa-pencil"></i></button>
-                            <button class="btn btn-link" onclick="removeRow(${i})"><i class="fa-solid fa-trash"></i></button>
+                        <td scope="col" class="text-center">
+                            <button class="btn btn-link btn-edit" onclick="editRow(${i})"><i class="fa-solid fa-pencil"></i></button>
+                            <button class="btn btn-link btn-remove" onclick="removeRow(${i})"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>`;
         }
