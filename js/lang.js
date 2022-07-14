@@ -49,7 +49,13 @@ if (window.location.href.includes('/en')) {
         oligoExcelPlaceholder = 'Drag and drop your Oligo spreadsheet here';
         confirmOligoLabel = 'I confirm this Oligo list are all correct',
         btnHorizonLabel = 'Horizon',
-        btnVerticalLabel = 'Vertical';
+        btnVerticalLabel = 'Vertical',
+        generalErrText = 'Something was wrong! Please review your data once more.',
+        plateHintText = 'Click on column, row or well plate to insert some empty well plate.',
+        plateLabelLabelText = 'Plate label',
+        plateLabelPlaceholder = 'Default: ',
+        wellLabelText = 'Create well label',
+        surchagesText = 'Surchages';
 } else {
     var colName = 'Tên',
         colSequence = 'Chuỗi trình tự',
@@ -100,6 +106,12 @@ if (window.location.href.includes('/en')) {
         oligoExcelTitle = 'Nhập dữ liệu từ file Excel',
         oligoExcelPlaceholder = 'Kéo file Excel dữ liệu Oligo của bạn và thả vào đây',
         confirmOligoLabel = 'Xác nhận tất cả thông tin đã nhập đều đúng',
-        btnHorizonLabel = 'Chiều ngang',
-        btnVerticalLabel = 'Chiều dọc';
+        btnHorizonLabel = 'Xếp ngang',
+        btnVerticalLabel = 'Xếp dọc',
+        generalErrText = 'Đã có lỗi xảy ra! Vui lòng kiểm tra lại dữ liệu của bạn.',
+        plateHintText = 'Mẹo: Bạn có thể click vào cột, hàng hoặc từng ô riêng lẻ để thêm những giếng trống vào plate.',
+        plateLabelLabelText = 'Thêm nhãn cho plate',
+        plateLabelPlaceholder = 'Mặc định là: ',
+        wellLabelText = 'Dán nhãn cho từng giếng',
+        surchagesText = 'Phụ phí: ';
 }

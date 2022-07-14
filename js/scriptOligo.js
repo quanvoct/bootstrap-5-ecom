@@ -1,4 +1,4 @@
-var dryFee = 30000, lowNu = 25000,
+var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFee = 50000,
     oligoTitleText = document.querySelector('.oligo-title'),
     noCustomLabel = document.querySelector('.no-custom'),
     oligoName = document.getElementById('oligo-name'),
@@ -41,6 +41,10 @@ var dryFee = 30000, lowNu = 25000,
     cardOligoShow = document.querySelector('.card-oligo-show'),
 
     oligoArrange = document.getElementById('oligo-arrange'),
+    plateLabel = document.querySelector('.plate-label'),
+    plateLabelLabel = document.querySelector('.plate-label-label'),
+    wellLabel = document.querySelector('.well-label'),
+    plateHint = document.querySelector('.plate-hint'),
     cardOligoArrange = document.querySelector('.card-oligo-arrange'),
     confirmOligo = document.querySelector('.confirm-oligo'),
     btnHorizon = document.querySelector('.btn-horizon'),
@@ -72,6 +76,7 @@ oligoListBtn.innerHTML = oligoListBtnLabel;
 confirmOligo.innerHTML = confirmOligoLabel;
 btnHorizon.innerText = btnHorizonLabel;
 btnVertical.innerText = btnVerticalLabel;
+btnVertical.innerText = btnVerticalLabel;
 
 navList.innerText = oligoListTabLabel;
 navSingle.innerText = oligoSingleTabLabel;
@@ -81,9 +86,10 @@ titleList.innerText = oligoListTitle;
 oligoListInput.placeholder = oligoListPlaceholder;
 titleExcel.innerText = oligoExcelTitle;
 excelDragDrop.innerText = oligoExcelPlaceholder;
+plateHint.innerText = plateHintText;
 
 var productArr = [];
-
+var productOption = [true, false, [], [], 0];
 oligoList.innerHTML = displayOligo(productArr);
 
 if (productArr.length > 0) {
@@ -117,6 +123,7 @@ dryBtn.addEventListener('click', function () {
     checkConfirmOligoNormalization.classList.add('d-none');
     labelConfirmOligoNormalization.classList.add('d-none');
     btnBeginOligo.disabled = false;
+    checkConfirmOligoNormalization.checked = false;
 })
 
 oligoSubmit.addEventListener('click', function (e) {
@@ -167,7 +174,7 @@ oligoString.addEventListener('keyup', function () {
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
         oString = oligoString.value.replace(/\s/g, '').toUpperCase();
     oligoString.value = oString;
-    oligoString.focus();
+    console.log(oName, oString);
     validateSingle.innerHTML = validateOligo(oName, oString);
 })
 
@@ -188,7 +195,7 @@ oligoEdit.addEventListener('click', function (e) {
         oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
     for (let i = 0; i < productArr.length; i++) {
         if (productArr[i][0] == oligoName.value) {
-            if (validateInputArray(oligoString.value.replace(/\s/g, ''), baseList) == '') {
+            if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>`) {
                 productArr[i] = createRow(oName, oString, oStatus, oNormalization);
                 oligoList.innerHTML = displayOligo(productArr);
                 resetForm();
@@ -198,7 +205,6 @@ oligoEdit.addEventListener('click', function (e) {
 })
 
 confirmOligo.addEventListener('click', function (e) {
-
     var btnRemove = document.querySelectorAll('.btn-remove'),
         btnEdit = document.querySelectorAll('.btn-edit');
     e.preventDefault();
@@ -220,11 +226,12 @@ confirmOligo.addEventListener('click', function (e) {
             btn.classList.add('d-none');
         }
         if (oligoType.innerText == 'OligoScreeningPlate' || oligoType.innerText == 'GenomicsOligoPlate') {
-            oligoArrange.innerHTML = arrangePlate(productArr, true);
+            oligoArrange.innerHTML = arrangePlate(productArr);
             cardOligoArrange.classList.remove('d-none');
             cardOligoInput.classList.add('d-none');
             confirmOligo.classList.add('d-none');
             addToCartOligo.classList.remove('d-none');
+
         }
         else {
             addToCartOligo.classList.remove('d-none');
@@ -235,13 +242,15 @@ confirmOligo.addEventListener('click', function (e) {
 })
 
 btnHorizon.addEventListener('click', function () {
-    oligoArrange.innerHTML = arrangePlate(productArr, true);
     addToCartOligo.disabled = false;
+    productOption[0] = true;
+    oligoArrange.innerHTML = arrangePlate(clearEmpty());
 })
 
 btnVertical.addEventListener('click', function () {
-    oligoArrange.innerHTML = arrangePlate(productArr, false);
     addToCartOligo.disabled = false;
+    productOption[0] = false;
+    oligoArrange.innerHTML = arrangePlate(clearEmpty());
 })
 
 /*---------------------------------
@@ -303,12 +312,14 @@ function validateListOligo(listInput) {
                 oString = oligo[1].replace(/\s/g, '').replace(/\n/g, '').replace(/\"/g, '').toUpperCase(),
                 oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
                 oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
+            // console.log(i, oName, validateOligo(oName, oString));
+            // console.log(productArr);
             if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>' + difficultOligo + '</li>') {
                 productArr.push(createRow(oName, oString, oStatus, oNormalization));
             }
         } else if (oligo.length <= 1) {
-            validateList.innerHTML = (oligo[0] == '') ? `<li>Đã có lỗi xảy ra! Vui lòng kiểm tra lại danh sách chuỗi của bạn.</li>` : '';
-        } 
+            validateList.innerHTML = (oligo[0] != '') ? `<li>${generalErrText}</li>` : '';
+        }
     }
 }
 
@@ -316,9 +327,10 @@ function validateListOligo(listInput) {
 Xác minh xem tên và chuỗi Oligo đã nhập có hợp lệ không
 -----------------------------------*/
 function validateOligo(name, string) {
-    let array = [], text = '';
+    let arrayName = [], arrayString = [], text = '';
     for (let i = 0; i < productArr.length; i++) {
-        array.push(productArr[i][0]);
+        arrayName.push(productArr[i][0]);
+        arrayString.push(productArr[i][0] + productArr[i][1]);
     }
     switch (true) {
         case name == "":
@@ -330,13 +342,6 @@ function validateOligo(name, string) {
             oligoName.classList.add('border-danger');
             oligoSubmit.disabled = true;
             text += `<li>${noEmptyName}</li>`;
-            break;
-        case array.includes(name):
-            if (oligoName.disabled == false) {
-                oligoName.classList.add('border-danger');
-                oligoSubmit.disabled = true;
-                text += `<li>${existName}</li>`;
-            }
             break;
         case name.length < nameLength[0]:
             oligoName.classList.add('border-danger');
@@ -376,8 +381,17 @@ function validateOligo(name, string) {
             oligoName.classList.remove('border-danger');
             oligoString.classList.remove('border-danger');
             oligoSubmit.disabled = false;
-            // highlighter.innerHTML = '';
             break;
+    }
+    if (arrayName.includes(name) && !arrayString.includes(name + string)) {
+        oligoName.classList.add('border-danger');
+        oligoString.classList.add('border-danger');
+        oligoSubmit.disabled = true;
+        text += `<li>${existName}</li>`;
+    } else {
+        oligoName.classList.remove('border-danger');
+        oligoString.classList.remove('border-danger');
+        oligoSubmit.disabled = false;
     }
     return text;
 }
@@ -457,6 +471,102 @@ function dmYFormat(value) {
         mnth = ("0" + (date.getMonth() + 1)).slice(-2),
         day = ("0" + date.getDate()).slice(-2);
     return [day, mnth, date.getFullYear()].join("/");
+}
+
+/*---------------------------------
+Hàm thêm ô rỗng
+-----------------------------------*/
+function emptyCell(action, value) {
+    if (action == 'add') {
+        productArr.splice(value, 0, '');
+    } else {
+        productArr.splice(value, 1);
+    }
+    oligoArrange.innerHTML = arrangePlate(productArr);
+}
+
+/*---------------------------------
+Hàm thêm hàng rỗng
+-----------------------------------*/
+function emptyRow(value) {
+    if (productOption[0]) {
+        for (let i = 0; i < 12; i++) {
+            if (value < productArr.length) {
+                productArr.splice(value, 0, '');
+                oligoArrange.innerHTML = arrangePlate(productArr);
+            } else {
+                break;
+            }
+        }
+    } else {
+        for (let i = 0; i < 96; i += 8) {
+            if (value + i < productArr.length) {
+                productArr.splice(value + i, 0, '');
+                oligoArrange.innerHTML = arrangePlate(productArr);
+            } else {
+                break;
+            }
+        }
+    }
+}
+/*---------------------------------
+Hàm thêm cột rỗng
+-----------------------------------*/
+function emptyCol(value) {
+    if (productOption[0]) {
+        for (let i = 0; i < 96; i += 12) {
+            if (value + i < productArr.length) {
+                productArr.splice(value + i, 0, '');
+                oligoArrange.innerHTML = arrangePlate(productArr);
+            } else {
+                break;
+            }
+        }
+    } else {
+        for (let i = 0; i < 8; i++) {
+            if (value * 8 < productArr.length) {
+                productArr.splice(value * 8 + i, 0, '');
+                oligoArrange.innerHTML = arrangePlate(productArr);
+            } else {
+                break;
+            }
+        }
+    }
+}
+
+/*---------------------------------
+Hàm xoá tất cả ô rỗng trong mảng
+-----------------------------------*/
+function clearEmpty() {
+    return productArr = productArr.filter(function (el) {
+        return el != '';
+    });
+}
+
+/*---------------------------------
+Hàm thay đổi tùy chọn cho plate
+-----------------------------------*/
+function updateOption(obj) {
+    let plateLabel = document.querySelectorAll('.plate-label'),
+        wellLabelInput = document.querySelectorAll('.well-label-input');
+    if (obj.getAttribute('type') != 'checkbox') {
+        delete productOption[2];
+        let array = [];
+        for (const label of plateLabel) {
+            array.push(label.value);
+        }
+        productOption[2] = array;
+    } else {
+        delete productOption[3];
+        let array = [];
+        for (const check of wellLabelInput) {
+            array.push(check.checked);
+        }
+        productOption[3] = array;
+    }
+    
+    oligoArrange.innerHTML = arrangePlate(productArr);
+    console.log(productOption);
 }
 
 /*---------------------------------
@@ -547,19 +657,47 @@ function displayOligo(arr2ways) {
     }
 }
 
-
-function arrangePlate(arr2ways, direction) {
+function arrangePlate(arr2ways) {
     let tableArrange = ``;
-    if (direction) {
+    if (productOption[0]) {
         for (let k = 0; k < arr2ways.length; k += 96) {
+            if (productOption[2].length >= k / 96 + 1) {
+                pName = productOption[2][k / 96];
+                pWell = productOption[3][k / 96];
+            } else {
+                pName = k / 96 + 1;
+                pWell = false;
+                productOption[2].push(pName);
+                productOption[3].push(pWell);
+            }
             tableArrange += `
-            <table class="table table-borderless align-middle text-center">
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <div class="input-group mb-3 align-middle">
+                        <span class="input-group-text plate-label-label">${plateLabelLabelText}</span>
+                        <input type="text" class="form-control plate-label" onchange="updateOption(this)" placeholder="${plateLabelPlaceholder + (k / 96 + 1)}" value="${pName}">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-check mb-3 align-middle">
+                    <input class="form-check-input well-label-input" type="checkbox" onchange="updateOption(this)" id="well-label-${k}" ${(productOption[3][k / 96]) ? 'checked' : ''}>
+                        <label class="form-check-label well-label" for="well-label-${k}">
+                            ${wellLabelText}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-borderless table-arrange align-middle text-center">
+                <colgroup>
+                    <col width="4%">
+                    <col span="12" width="8%">
+                </colgroup>
               <thead>
                 <tr>
-                  <th style="width: 4%;"></th>`;
+                  <th scope="col" style="width: 50px;"></th>`;
             for (let i = 1; i < 13; i++) {
                 number = (i < 10) ? '0' + i : i;
-                tableArrange += `<th style="width: 8%;">${number}</th>`;
+                tableArrange += `<th class="col-hover" onclick="emptyCol(${i + k - 1}, ${productOption[0]})" style="width: 100px;"><span>${number}</span></th>`;
             }
             tableArrange += `</tr>
               </thead>
@@ -567,9 +705,17 @@ function arrangePlate(arr2ways, direction) {
             for (let i = 0; i < 96; i += 12) {
                 letter = String.fromCharCode(i / 12 + 1 + 64);
                 tableArrange += `<tr>
-                <th>${letter}</th>`;
+                <th scope="row" class="row-hover c-pointer" onclick="emptyRow(${i + k}, ${productOption[0]})"><span>${letter}</span></th>`;
                 for (let j = 0; j < 12; j++) {
-                    tableArrange += (i + j + k < arr2ways.length) ? `<td>${arr2ways[i + j + k][0]}</td>` : `<td></td>`;
+                    if (i + j + k < arr2ways.length) {
+                        if (arr2ways[i + j + k][0] == undefined) {
+                            tableArrange += `<td class="cell-hover c-pointer" onclick="emptyCell('remove', ${i + j + k}, ${productOption[0]})">×</td>`;
+                        } else {
+                            tableArrange += `<td class="cell-hover c-pointer" onclick="emptyCell('add', ${i + j + k}, ${productOption[0]})">${arr2ways[i + j + k][0]}</td>`;
+                        }
+                    } else {
+                        tableArrange += `<td></td>`;
+                    }
                 }
                 tableArrange += `</tr>`;
             }
@@ -580,13 +726,29 @@ function arrangePlate(arr2ways, direction) {
     } else {
         for (let k = 0; k < arr2ways.length; k += 96) {
             tableArrange += `
-            <table class="table table-borderless align-middle text-center">
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <div class="input-group mb-3 align-middle">
+                        <span class="input-group-text plate-label-label">${plateLabelLabelText}</span>
+                        <input type="text" class="form-control plate-label" onchange="updateOption(this)" placeholder="${plateLabelPlaceholder + (k / 96 + 1)}">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-check mb-3 align-middle">
+                    <input class="form-check-input well-label-input" type="checkbox" value="" id="well-label-${k}">
+                        <label class="form-check-label well-label" for="well-label-${k}">
+                            ${wellLabelText}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-borderless table-arrange align-middle text-center">
               <thead>
                 <tr>
-                  <th style="width: 4%;"></th>`;
+                <th scope="col" style="width: 50px;"></th>`;
             for (let i = 1; i < 13; i++) {
                 number = (i < 10) ? '0' + i : i;
-                tableArrange += `<th style="width: 8%;">${number}</th>`;
+                tableArrange += `<th class="col-hover c-pointer" onclick="emptyCol(${i + k / 8 - 1}, ${productOption[0]})" style="width: 100px;"><span>${number}</span></th>`;
             }
             tableArrange += `</tr>
               </thead>
@@ -594,9 +756,17 @@ function arrangePlate(arr2ways, direction) {
             for (let i = 0; i < 96; i += 12) {
                 letter = String.fromCharCode(i / 12 + 1 + 64);
                 tableArrange += `<tr>
-                <th>${letter}</th>`;
+                <th scope="row" class="row-hover c-pointer" onclick="emptyRow(${i / 12 + k}, ${productOption[0]})"><span>${letter}</span></th>`;
                 for (let j = 0; j < 12; j++) {
-                    tableArrange += ((i / 12 + k) + j * 8 < arr2ways.length) ? `<td>${arr2ways[(i / 12 + k) + j * 8][0]}</td>` : `<td></td>`;
+                    if ((i / 12 + k) + j * 8 < arr2ways.length) {
+                        if (arr2ways[(i / 12 + k) + j * 8][0] == undefined) {
+                            tableArrange += `<td class="cell-hover c-pointer" onclick="emptyCell('remove', ${(i / 12 + k) + j * 8}, ${productOption[0]})">×</td>`;
+                        } else {
+                            tableArrange += `<td class="cell-hover c-pointer" onclick="emptyCell('add', ${(i / 12 + k) + j * 8}, ${productOption[0]})">${arr2ways[(i / 12 + k) + j * 8][0]}</td>`;
+                        }
+                    } else {
+                        tableArrange += `<td></td>`;
+                    }
                 }
                 tableArrange += `</tr>`;
             }
@@ -605,6 +775,21 @@ function arrangePlate(arr2ways, direction) {
           </table>`;
         }
     }
+    tableArrange += `<hr class="py-2"><div class="mb-3">`;
+    tableArrange += (productArr.includes('')) ? `Phí sắp xếp plate cơ bản: ${arrangeFee.toLocaleString()}<br/>` : ``;
+    let plateNameFee = 0, wellNameFee = 0;
+    for (let i = 0; i < productOption[2].length; i++) {
+        console.log(i, productOption[2][i],productOption[3][i]);
+        if (productOption[2][i] != i+1) plateNameFee += plateFee;
+        if (productOption[3][i]) wellNameFee += wellFee;
+    }
+    tableArrange += (plateNameFee != 0) ? `Phí dán nhãn khay: ${plateNameFee.toLocaleString()}<br/>`: ``;
+    tableArrange += (wellNameFee != 0) ? `Phí dán nhãn từng giếng: ${wellNameFee.toLocaleString()}<br/>`: ``;
+    tableArrange += `<hr class="py-2">`;
+    totalSurchanges = arrangeFee + plateNameFee + wellNameFee;
+    tableArrange += `Tổng phụ phí: ${totalSurchanges.toLocaleString()}<br/>`;
+    tableArrange += `</div>`;
+    productOption[4] += totalSurchanges;
     return tableArrange;
 }
 

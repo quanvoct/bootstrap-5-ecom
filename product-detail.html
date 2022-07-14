@@ -385,22 +385,24 @@
           <div class="card-body">
             <div class="table-responsive-sm table-responsive-md table-responsive" id="oligo-arrange">
             </div>
-            <div class="row">
-              <div class="col-3">
-                <div class="btn-group d-flex mb-3" role="group">
+            <div class="row mt-3 align-items-center">
+              <div class="col-2 align-middle">
+                <div class="btn-group d-flex" role="group">
                   <input type="radio" class="btn-check" name="oligo-arrange" id="horizon" autocomplete="off">
                   <label class="btn btn-outline-success btn-horizon" for="horizon">${horizonLabel}</label>
                   <input type="radio" class="btn-check" name="oligo-arrange" id="vertical" autocomplete="off">
                   <label class="btn btn-outline-danger btn-vertical" for="vertical">${verticalLabel}</label>
                 </div>
               </div>
-              <div class="col-2">
-                <button class="btn btn-primary add-to-cart-oligo d-none" disabled>${addToCartLabel}</button></div>
+              <div class="col-2 align-middle">
+                <button class="btn btn-primary add-to-cart-oligo d-none" disabled>${addToCartLabel}</button>
+              </div>
+              <div class="col-7 plate-hint align-middle">${plateHint}</div>
+            </div>
           </div>
-        </div>
 
-      </div> <!-- Lập danh sách sản phẩm -->
-    </div> <!-- container .//  -->
+        </div> <!-- Lập danh sách sản phẩm -->
+      </div> <!-- container .//  -->
   </section>
   <!-- ============== SECTION CONTENT END// ============== -->
 

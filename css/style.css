@@ -340,6 +340,79 @@ RATING STYLES
 }
 
 /*============== OLIGO ARRANGE TABLE ===============*/
-#oligo-arrange table td{
+.table-arrange {
+    overflow: hidden;
+    z-index: 2;
+    table-layout:fixed;
+}
+
+td,
+th,
+.row,
+.col {
+    position: relative;
+}
+
+.table-arrange td {
     border: 1px solid var(--bs-primary);
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cell-hover:hover {
+    background-color: #BBDEFB;
+}
+
+.row-hover:hover::before,.row-clear:hover::before {
+    content: '';
+    width: 10000px;
+    height: 100%;
+    background-color: #BBDEFB;
+    position: absolute;
+    top: 0;
+    left: -5000px;
+    z-index: 1;
+    mix-blend-mode: darken;
+}
+
+.row-hover:hover span, .row-clear:hover span {
+    display: none;
+}
+
+.row-hover:hover::after {
+    font-family: "Font Awesome 5 Free";
+    content: '\f061';
+}
+
+.row-clear:hover::after {
+    font-family: "Font Awesome 5 Free";
+    content: '\f00d';
+}
+
+.col-hover:hover::after,.col-clear:hover::after {
+    content: '';
+    width: 100%;
+    height: 10000px;
+    background-color: #BBDEFB;
+    position: absolute;
+    top: -5000px;
+    left: 0;
+    z-index: 1;
+    mix-blend-mode: darken;
+}
+
+.col-hover:hover span, .col-clear:hover span {
+    display: none;
+}
+
+.col-hover:hover::before {
+    font-family: "Font Awesome 5 Free";
+    content: '\f063';
+}
+
+.col-clear:hover::before {
+    font-family: "Font Awesome 5 Free";
+    content: '\f00d';
 }
