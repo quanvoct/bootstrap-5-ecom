@@ -174,7 +174,7 @@ oligoString.addEventListener('keyup', function () {
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
         oString = oligoString.value.replace(/\s/g, '').toUpperCase();
     oligoString.value = oString;
-    console.log(oName, oString);
+    // console.log(oName, oString);
     validateSingle.innerHTML = validateOligo(oName, oString);
 })
 
@@ -564,9 +564,9 @@ function updateOption(obj) {
         }
         productOption[3] = array;
     }
-    
+
     oligoArrange.innerHTML = arrangePlate(productArr);
-    console.log(productOption);
+    // console.log(productOption);
 }
 
 /*---------------------------------
@@ -725,17 +725,26 @@ function arrangePlate(arr2ways) {
         }
     } else {
         for (let k = 0; k < arr2ways.length; k += 96) {
+            if (productOption[2].length >= k / 96 + 1) {
+                pName = productOption[2][k / 96];
+                pWell = productOption[3][k / 96];
+            } else {
+                pName = k / 96 + 1;
+                pWell = false;
+                productOption[2].push(pName);
+                productOption[3].push(pWell);
+            }
             tableArrange += `
             <div class="row align-items-center">
                 <div class="col-3">
                     <div class="input-group mb-3 align-middle">
                         <span class="input-group-text plate-label-label">${plateLabelLabelText}</span>
-                        <input type="text" class="form-control plate-label" onchange="updateOption(this)" placeholder="${plateLabelPlaceholder + (k / 96 + 1)}">
+                        <input type="text" class="form-control plate-label" onchange="updateOption(this)" placeholder="${plateLabelPlaceholder + (k / 96 + 1)}" value="${pName}">
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-check mb-3 align-middle">
-                    <input class="form-check-input well-label-input" type="checkbox" value="" id="well-label-${k}">
+                    <input class="form-check-input well-label-input" type="checkbox" onchange="updateOption(this)" id="well-label-${k}" ${(productOption[3][k / 96]) ? 'checked' : ''}>
                         <label class="form-check-label well-label" for="well-label-${k}">
                             ${wellLabelText}
                         </label>
@@ -776,20 +785,20 @@ function arrangePlate(arr2ways) {
         }
     }
     tableArrange += `<hr class="py-2"><div class="mb-3">`;
-    tableArrange += (productArr.includes('')) ? `Phí sắp xếp plate cơ bản: ${arrangeFee.toLocaleString()}<br/>` : ``;
-    let plateNameFee = 0, wellNameFee = 0;
+    let plateArrangeFee = 0, plateNameFee = 0, wellNameFee = 0, totalSurchanges = 0;
+    plateArrangeFee += (productArr.includes('')) ? arrangeFee : 0;
     for (let i = 0; i < productOption[2].length; i++) {
-        console.log(i, productOption[2][i],productOption[3][i]);
-        if (productOption[2][i] != i+1) plateNameFee += plateFee;
+        if (productOption[2][i] != i + 1) plateNameFee += plateFee;
         if (productOption[3][i]) wellNameFee += wellFee;
     }
-    tableArrange += (plateNameFee != 0) ? `Phí dán nhãn khay: ${plateNameFee.toLocaleString()}<br/>`: ``;
-    tableArrange += (wellNameFee != 0) ? `Phí dán nhãn từng giếng: ${wellNameFee.toLocaleString()}<br/>`: ``;
+    tableArrange += (plateArrangeFee != 0) ? `Phí sắp xếp plate cơ bản: ${arrangeFee.toLocaleString()}<br/>` : ``;
+    tableArrange += (plateNameFee != 0) ? `Phí dán nhãn khay: ${plateNameFee.toLocaleString()}<br/>` : ``;
+    tableArrange += (wellNameFee != 0) ? `Phí dán nhãn từng giếng: ${wellNameFee.toLocaleString()}<br/>` : ``;
     tableArrange += `<hr class="py-2">`;
-    totalSurchanges = arrangeFee + plateNameFee + wellNameFee;
+    totalSurchanges = plateArrangeFee + plateNameFee + wellNameFee;
     tableArrange += `Tổng phụ phí: ${totalSurchanges.toLocaleString()}<br/>`;
     tableArrange += `</div>`;
-    productOption[4] += totalSurchanges;
+    productOption[4] = totalSurchanges;
     return tableArrange;
 }
 
