@@ -116,7 +116,6 @@ wetBtn.addEventListener('click', function () {
     addOption(normalizationList);
     checkConfirmOligoNormalization.addEventListener('click', function () {
         btnBeginOligo.disabled = (checkConfirmOligoNormalization.checked == true) ? false : true;
-        btnBeginOligo.getAttribute;
     })
 })
 
@@ -445,9 +444,6 @@ function editRow(num) {
     tabSingle.classList.add('show');
     tabExcel.classList.remove('show');
     tabList.classList.remove('show');
-    tabSingle.classList.add('active');
-    tabExcel.classList.remove('active');
-    tabList.classList.remove('active');
     titleSingle.innerText = oligoEditTitle;
     navSingle.innerText = oligoEditTabLabel;
 }
