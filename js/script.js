@@ -80,14 +80,14 @@ $(document).ready(function () {
   $(".btn-increase").on("click", function () {
     let parent = $(this).parents(".product-quantity");
     let value = parent.find(".quantity-input").val();
-    value++;
+    value += (value <= 5) ? 1 : 0;
     parent.find(".quantity-input").val(value);
   });
   // Decrease product quantity on cart page
   $(".btn-decrease").on("click", function () {
     let parent = $(this).parents(".product-quantity");
     let value = parent.find(".quantity-input").val();
-    value--;
+    value -= (value >= 1) ? 1 : 0;
     parent.find(".quantity-input").val(value);
   });
 
@@ -105,7 +105,7 @@ $(document).ready(function () {
     );
     $(".price-old-attr").html(
       numberFormat(parseInt($(".price-old-attr").text()) + 999967) +
-        "<sup>đ</sup>"
+      "<sup>đ</sup>"
     );
   });
 

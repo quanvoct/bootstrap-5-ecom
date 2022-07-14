@@ -55,7 +55,12 @@ if (window.location.href.includes('/en')) {
         plateLabelLabelText = 'Plate label',
         plateLabelPlaceholder = 'Default: ',
         wellLabelText = 'Create well label',
-        surchagesText = 'Surchages';
+        surchagesText = 'Surchages',
+        processing = 'processing',
+        basePlateArrangeFeeText = 'Base plate arrange fee: ',
+        plateNameFeeText = 'Plate named fee: ',
+        wellNameFeeText = 'Well labeled fee: ',
+        totalSurchagesText = 'Total surchages: ';
 } else {
     var colName = 'Tên',
         colSequence = 'Chuỗi trình tự',
@@ -113,5 +118,10 @@ if (window.location.href.includes('/en')) {
         plateLabelLabelText = 'Thêm nhãn cho plate',
         plateLabelPlaceholder = 'Mặc định là: ',
         wellLabelText = 'Dán nhãn cho từng giếng',
-        surchagesText = 'Phụ phí: ';
+        surchagesText = 'Phụ phí: ',
+        processing = 'Đang xử lý',
+        basePlateArrangeFeeText = 'Phí sắp xếp khay cơ bản: '
+        plateNameFeeText = 'Phí dán nhãn khay: ',
+        wellNameFeeText = 'Phí dán nhãn từng giếng: ',
+        totalSurchagesText = 'Tổng phụ phí: ';
 }

@@ -7,7 +7,7 @@ var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFe
     oligoSubmit = document.getElementById('oligo-submit'),
     oligoEdit = document.getElementById('oligo-edit'),
     stringCounter = document.getElementById('string-counter'),
-    addToCartOligo = document.querySelector('.add-to-cart-oligo'),
+    addToCartOligo = document.querySelectorAll('.add-to-cart-oligo'),
     navSingle = document.querySelector('.nav-single'),
     tabSingle = document.getElementById('tab_single'),
     titleSingle = document.querySelector('.title-single'),
@@ -70,12 +70,10 @@ wetBtn.innerHTML = wet;
 dryBtn.innerHTML = dry;
 oligoSubmit.innerHTML = addBtnLabel;
 oligoEdit.innerHTML = editBtnLabel;
-addToCartOligo.innerHTML = addToCartLabel;
 oligoExcelBtn.innerHTML = oligoExcelBtnLabel;
 oligoListBtn.innerHTML = oligoListBtnLabel;
 confirmOligo.innerHTML = confirmOligoLabel;
 btnHorizon.innerText = btnHorizonLabel;
-btnVertical.innerText = btnVerticalLabel;
 btnVertical.innerText = btnVerticalLabel;
 
 navList.innerText = oligoListTabLabel;
@@ -87,6 +85,10 @@ oligoListInput.placeholder = oligoListPlaceholder;
 titleExcel.innerText = oligoExcelTitle;
 excelDragDrop.innerText = oligoExcelPlaceholder;
 plateHint.innerText = plateHintText;
+
+for (const btnAddToCart of addToCartOligo) {
+    btnAddToCart.innerText = addToCartLabel;
+}
 
 var productArr = [];
 var productOption = [true, false, [], [], 0];
@@ -114,6 +116,7 @@ wetBtn.addEventListener('click', function () {
     addOption(normalizationList);
     checkConfirmOligoNormalization.addEventListener('click', function () {
         btnBeginOligo.disabled = (checkConfirmOligoNormalization.checked == true) ? false : true;
+        btnBeginOligo.getAttribute;
     })
 })
 
@@ -225,18 +228,14 @@ confirmOligo.addEventListener('click', function (e) {
         for (const btn of btnEdit) {
             btn.classList.add('d-none');
         }
+        cardOligoInput.classList.add('d-none');
+        confirmOligo.classList.add('d-none');
         if (oligoType.innerText == 'OligoScreeningPlate' || oligoType.innerText == 'GenomicsOligoPlate') {
             oligoArrange.innerHTML = arrangePlate(productArr);
             cardOligoArrange.classList.remove('d-none');
-            cardOligoInput.classList.add('d-none');
-            confirmOligo.classList.add('d-none');
-            addToCartOligo.classList.remove('d-none');
-
         }
-        else {
-            addToCartOligo.classList.remove('d-none');
-            cardOligoInput.classList.add('d-none');
-            confirmOligo.classList.add('d-none');
+        for (const btnAddToCart of addToCartOligo) {
+            btnAddToCart.classList.remove('d-none');
         }
     }
 })
@@ -791,12 +790,12 @@ function arrangePlate(arr2ways) {
         if (productOption[2][i] != i + 1) plateNameFee += plateFee;
         if (productOption[3][i]) wellNameFee += wellFee;
     }
-    tableArrange += (plateArrangeFee != 0) ? `Phí sắp xếp plate cơ bản: ${arrangeFee.toLocaleString()}<br/>` : ``;
-    tableArrange += (plateNameFee != 0) ? `Phí dán nhãn khay: ${plateNameFee.toLocaleString()}<br/>` : ``;
-    tableArrange += (wellNameFee != 0) ? `Phí dán nhãn từng giếng: ${wellNameFee.toLocaleString()}<br/>` : ``;
+    tableArrange += (plateArrangeFee != 0) ? basePlateArrangeFeeText + arrangeFee.toLocaleString() + `<br/>` : ``;
+    tableArrange += (plateNameFee != 0) ? plateNameFeeText + plateNameFee.toLocaleString() + `<br/>` : ``;
+    tableArrange += (wellNameFee != 0) ? wellNameFeeText + wellNameFee.toLocaleString() + `<br/>` : ``;
     tableArrange += `<hr class="py-2">`;
     totalSurchanges = plateArrangeFee + plateNameFee + wellNameFee;
-    tableArrange += `Tổng phụ phí: ${totalSurchanges.toLocaleString()}<br/>`;
+    tableArrange += totalSurchagesText + totalSurchanges.toLocaleString() + `<br/>`;
     tableArrange += `</div>`;
     productOption[4] = totalSurchanges;
     return tableArrange;
@@ -906,7 +905,7 @@ var do_file = (function () {
     if (!oligoExcelInput.addEventListener) return;
     oligoExcelInput.addEventListener('change', function (e) {
         excelProcess.classList.remove('d-none');
-        excelProcess.innerText = 'Đang xử lý';
+        excelProcess.innerText = processing;
         do_file(e.target.files);
     }, false);
 })();
