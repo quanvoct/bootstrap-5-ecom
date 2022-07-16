@@ -215,7 +215,7 @@
 
             <div class="row g-0">
               <div class="col-md-4 col-6 mb-3">
-                <div class="input-group input-spinner product-quantity">
+                <div class="input-group input-spinner product-quantity d-none">
                   <button class="btn btn-icon btn-light btn-decrease" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#999" viewBox="0 0 24 24">
                       <path d="M19 13H5v-2h14v2z"></path>
@@ -228,6 +228,16 @@
                     </svg>
                   </button>
                 </div> <!-- input-group.// -->
+
+                <select class="form-select" id="oligo-type">
+                  <option selected>Chọn loại oligo để test</option>
+                  <option value="PremiumOligo">oligo Tubes</option>
+                  <option value="OligoScreeningPlate">oligo Plate</option>
+                  <option value="Endo-ExoModification">oligo Modified</option>
+                  <option value="Probe">oligo Probe</option>
+                </select>
+
+
               </div> <!-- col.// -->
               <div class="col-md-4 col-6 mb-3 ">
                 <a href="#" class="btn btn-primary btn-dat-hang" data-bs-toggle="collapse"
@@ -240,8 +250,8 @@
           </article> <!-- product-info-aside .// -->
         </main> <!-- col.// -->
       </div> <!-- row.// -->
-      <div class="d-none" id="oligo-type">PremiumOligo</div>
-      <div class="d-none" id="base-list">A,T,G,C,Y,R,W,S,K,M,D,V,H,B,X,N</div>
+      <div class="d-none">Probe</div>
+      <div class="d-none" id="base-list">A,T,G,C,Y,R,W,S,K,M,D,V,H,B,X,N,I,O</div>
       <div class="d-none" id="name-length">3,15</div>
       <div class="d-none" id="string-length">6,15,36,75</div>
       <div class="d-none" id="od-list">1.5+,3+,3+</div>
@@ -249,17 +259,25 @@
       <div class="d-none" id="normalization-list">100</div>
       <div class="d-none" id="turn-around-time-list">48,48,72</div>
       <div class="d-none" id="unit-price-list">4300,4300,5000</div>
-      <div class="d-none" id="option">4300,4300,5000</div>
-      <div class="d-none" id="option">4300,4300,5000</div>
-      <div class="d-none" id="oligo-status"></div>
+      <div class="d-none" id="modified-base-list">I,O,U</div>
+      <div class="d-none" id="modified-fee-list">190000,240000,190000</div>
+      <div class="d-none" id="modified5-value-list">C6-Spacer,C3-Space,Thiol-C6-S-S,PO4-Phosphat, BIOTIN,NH2-C6,NH2-C12</div>
+      <div class="d-none" id="modified5-name-list">C6-Spacer 200 nmol,C3-Spacer 200 nmol,Thiol C6 S-S 200 nmol, Phosphorylation 200 nmol, Biotin 200 nmol,NH2 C6 200nmol,NH2 C12 200 nmol</div>
+      <div class="d-none" id="modified5-fee-list">820000,820000,2400000,584000,1170000,584000,1050000</div>
+      <div class="d-none" id="modified3-value-list">Thiol-C6-S-S,BIOTIN,C6-Spacer,C3-Spacer,Biotin-TEG,NH2-C6,NH2-C12,PO4</div>
+      <div class="d-none" id="modified3-name-list">Thiol C6 S-S 200 nmol,Biotin 200 nmol,C6-Spacer 200 nmol,C3-Spacer 200 nmol,Biotin-TEG 200 nmol,NH2 C6 200 nmol,NH2 C12 200 nmol,Phosphorylation 200 nmol</div>
+      <div class="d-none" id="modified3-fee-list">2340000,700000,820000,820000,1634000,584000,1050000,584000</div>
+      <div class="d-none" id="probe-value-list">5'FAM-3'TAMRA,5'HEX-3'TAMRA,5'TET-3'TAMRA,5'JOE-3'TAMRA,5'FAM-3'BHQ1,5'HEX-3'BHQ1,5'TET-3'BHQ1,5'JOE-3'BHQ1,5'YakimaYellow-3'BHQ1,5'Cal Fluor Orange 560-3'BHQ1,5'Cal Fluor Gold 540-3'BHQ1,5'TET-3'BHQ2,5'Cy3-3'BHQ2,5'Cy5-3'BHQ2,5'TAMRA-3'BHQ2,5'ROX-3'BHQ2,5'Texas Red-3'BHQ2,5'Cal Fluor Red 610-3'BHQ2,5'Quasar 670-3'BHQ2,5'Quasar 570-3'BHQ2,5'Quasar 705-3'BHQ2,5'Cal Flour Orange 560-3'BHQ2,5'Cy5-3'BHQ3,5'Quasar 670-3'BHQ3,5'Quasar 705-3'BHQ3</div>
+      <div class="d-none" id="probe-fee-list">4000000,4000000,4000000,4200000,2800000,4000000,4200000,4200000,4200000,4200000,6185000,4200000,4200000,6185000,4200000,6185000,6185000,6185000,6185000,6185000,6185000,6185000,6185000,6185000,6185000</div>
+      <div class="d-none" id="oligo-status">dry</div>
       <div class="collapse collapse-horizontal" id="oligo-order-list">
-        <div class="card my-3 mx-auto card-oligo-select">
+        <div class="card my-3 mx-auto card-oligo-select d-none">
           <div class="card-body">
             <form>
               <fieldset>
                 <legend class="oligo-title">${oligoTitle}</legend>
                 <div class="row">
-                  <div class="col-3">
+                  <div class="col-lg-3 col-sm-6">
                     <div class="btn-group d-flex mb-3" role="group">
                       <input type="radio" class="btn-check" name="oligo-status" id="wet" autocomplete="off">
                       <label class="btn btn-outline-success btn-wet" for="wet">${wetLabel}</label>
@@ -267,13 +285,13 @@
                       <label class="btn btn-outline-danger btn-dry" for="dry">${dryLabel}</label>
                     </div>
                   </div>
-                  <div class="col-4">
+                  <div class="col-lg-4 col-sm-6 mb-3">
                     <select id="oligo-normalization" class="form-select">
                       <option class="no-custom" value="0">${noCustom}</option>
                     </select>
                   </div>
-                  <div class="col-5">
-                      <button type="submit" class="btn btn-primary btn-begin" disabled>${beginOligoLabel}</button>
+                  <div class="col-lg-5 col-sm-12">
+                    <button type="submit" class="btn btn-primary btn-begin" disabled>${beginOligoLabel}</button>
                     <div class="form-check d-inline-block ms-3">
                       <input class="form-check-input" type="checkbox" value="" id="check-confirm-oligo-normalization">
                       <label class="form-check-label" id="label-confirm-oligo-normalization"
@@ -323,19 +341,34 @@
                   <fieldset>
                     <legend class="title-single">${oligoSingleTitle}</legend>
                     <div class="row p-0">
-                      <div class="col-lg-2 col-sm-3">
+                      <div class="col-lg-2 col-sm-3 my-3">
                         <input type="text" class="form-control" id="oligo-name" placeholder="${colName}"
                           autocomplete="off" autofocus>
                       </div>
-                      <div class="col-lg-8 col-sm-9 px-0">
-                        <input type="text" class="form-control" id="oligo-string" autocomplete="off"
-                          placeholder="${colSequence}">
+                      <div class="col-lg-2 col-sm-12 my-3 px-1 d-none">
+                          <select class="form-select" id="five-modified">
+                            <option value="" selected>5' modified</option>
+                          </select>
+                      </div>
+                      <div class="col-lg-8 col-sm-12 my-3 px-1">
+                          <input type="text" class="form-control" id="oligo-string" autocomplete="off"
+                            placeholder="${colSequence}" width="100%">
                         <span class="translate-middle badge rounded-pill bg-danger d-none" id="string-counter"
                           style="z-index: 3;">
                           99+
                         </span>
                       </div>
-                      <div class="col-lg-2 col-sm-2">
+                      <div class="col-lg-2 col-sm-12 my-3 px-1 d-none">
+                          <select class="form-select" id="three-modified">
+                            <option value="" selected>3' modified</option>
+                          </select>
+                        </div>
+                        <div class="col-lg-2 col-sm-12 my-3 px-1 d-none">
+                            <select class="form-select" id="probe-oligo">
+                              <option value="" selected>probe</option>
+                            </select>
+                          </div>
+                      <div class="col-lg-2 col-sm-2 my-3 px-0">
                         <div class="d-grid">
                           <button type="submit" class="btn btn-primary btn-block"
                             id="oligo-submit">${addBtnLabel}</button>
@@ -367,7 +400,7 @@
                   </div>
                   <p class="d-none excel-process"></p>
                   <button type="submit" class="btn btn-primary" id="oligo-excel-btn">${oligoExcelBtnLabel}</button>
-                  <ol class="text-danger" id="validate-single"></ol>
+                  <ol class="text-danger" id="validate-excel"></ol>
                 </fieldset>
               </form>
             </article>
@@ -378,7 +411,7 @@
           <div class="card-body">
             <div class="table-responsive-sm table-responsive-md table-responsive" id="oligo-list">
             </div>
-            <button class="btn btn-primary confirm-oligo">${confirmOligoLabel}</button>
+            <button class="btn btn-primary confirm-oligo d-none">${confirmOligoLabel}</button>
             <button class="btn btn-primary add-to-cart-oligo d-none">${addToCartLabel}</button>
           </div>
         </div>
