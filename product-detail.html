@@ -160,6 +160,25 @@
           <article class="ps-lg-3">
             <h4 class="title text-dark">Tên sản phẩm</h4>
             <div class="rating-wrap my-3">
+              <div class="d-none" id="base-list"></div>
+              <div class="d-none" id="name-length"></div>
+              <div class="d-none" id="string-length"></div>
+              <div class="d-none" id="od-list"></div>
+              <div class="d-none" id="type-list"></div>
+              <div class="d-none" id="normalization-list"></div>
+              <div class="d-none" id="turn-around-time-list"></div>
+              <div class="d-none" id="unit-price-list"></div>
+              <div class="d-none" id="modified-base-list"></div>
+              <div class="d-none" id="modified-fee-list"></div>
+              <div class="d-none" id="modified5-value-list"></div>
+              <div class="d-none" id="modified5-name-list"></div>
+              <div class="d-none" id="modified5-fee-list"></div>
+              <div class="d-none" id="modified3-value-list"></div>
+              <div class="d-none" id="modified3-name-list"></div>
+              <div class="d-none" id="modified3-fee-list"></div>
+              <div class="d-none" id="probe-value-list"></div>
+              <div class="d-none" id="probe-fee-list"></div>
+              <div class="d-none" id="oligo-status">dry</div>
               <ul class="rating-stars">
                 <li style="width:90%" class="stars-active"> <img src="images/misc/stars-active.svg" alt=""> </li>
                 <li> <img src="images/misc/starts-disable.svg" alt=""> </li>
@@ -230,13 +249,15 @@
                 </div> <!-- input-group.// -->
 
                 <select class="form-select" id="oligo-type">
-                  <option selected>Chọn loại oligo để test</option>
-                  <option value="PremiumOligo">oligo Tubes</option>
-                  <option value="OligoScreeningPlate">oligo Plate</option>
-                  <option value="Endo-ExoModification">oligo Modified</option>
-                  <option value="Probe">oligo Probe</option>
+                  <option value="PremiumOligo">Premium Oligo</option>
+                  <option value="LongOligo">Long Oligo</option>
+                  <option value="HIODOligo">HIOD Oligo</option>
+                  <option value="GenomicOligo">Genomic Oligo</option>
+                  <option value="OligoScreeningPlate">Oligo OligoScreening Plate</option>
+                  <option value="OligoGenomicPlate">Oligo OligoGenomic Plate</option>
+                  <option value="Endo-ExoModification">Endo-ExoModification</option>
+                  <option value="Probe">Probe Oligo</option>
                 </select>
-
 
               </div> <!-- col.// -->
               <div class="col-md-4 col-6 mb-3 ">
@@ -250,26 +271,6 @@
           </article> <!-- product-info-aside .// -->
         </main> <!-- col.// -->
       </div> <!-- row.// -->
-      <div class="d-none">Probe</div>
-      <div class="d-none" id="base-list">A,T,G,C,Y,R,W,S,K,M,D,V,H,B,X,N,I,O</div>
-      <div class="d-none" id="name-length">3,15</div>
-      <div class="d-none" id="string-length">6,15,36,75</div>
-      <div class="d-none" id="od-list">1.5+,3+,3+</div>
-      <div class="d-none" id="type-list">PremiumOligo.00,PremiumOligo.01,PremiumOligo.02</div>
-      <div class="d-none" id="normalization-list">100</div>
-      <div class="d-none" id="turn-around-time-list">48,48,72</div>
-      <div class="d-none" id="unit-price-list">4300,4300,5000</div>
-      <div class="d-none" id="modified-base-list">I,O,U</div>
-      <div class="d-none" id="modified-fee-list">190000,240000,190000</div>
-      <div class="d-none" id="modified5-value-list">C6-Spacer,C3-Space,Thiol-C6-S-S,PO4-Phosphat, BIOTIN,NH2-C6,NH2-C12</div>
-      <div class="d-none" id="modified5-name-list">C6-Spacer 200 nmol,C3-Spacer 200 nmol,Thiol C6 S-S 200 nmol, Phosphorylation 200 nmol, Biotin 200 nmol,NH2 C6 200nmol,NH2 C12 200 nmol</div>
-      <div class="d-none" id="modified5-fee-list">820000,820000,2400000,584000,1170000,584000,1050000</div>
-      <div class="d-none" id="modified3-value-list">Thiol-C6-S-S,BIOTIN,C6-Spacer,C3-Spacer,Biotin-TEG,NH2-C6,NH2-C12,PO4</div>
-      <div class="d-none" id="modified3-name-list">Thiol C6 S-S 200 nmol,Biotin 200 nmol,C6-Spacer 200 nmol,C3-Spacer 200 nmol,Biotin-TEG 200 nmol,NH2 C6 200 nmol,NH2 C12 200 nmol,Phosphorylation 200 nmol</div>
-      <div class="d-none" id="modified3-fee-list">2340000,700000,820000,820000,1634000,584000,1050000,584000</div>
-      <div class="d-none" id="probe-value-list">5'FAM-3'TAMRA,5'HEX-3'TAMRA,5'TET-3'TAMRA,5'JOE-3'TAMRA,5'FAM-3'BHQ1,5'HEX-3'BHQ1,5'TET-3'BHQ1,5'JOE-3'BHQ1,5'YakimaYellow-3'BHQ1,5'Cal Fluor Orange 560-3'BHQ1,5'Cal Fluor Gold 540-3'BHQ1,5'TET-3'BHQ2,5'Cy3-3'BHQ2,5'Cy5-3'BHQ2,5'TAMRA-3'BHQ2,5'ROX-3'BHQ2,5'Texas Red-3'BHQ2,5'Cal Fluor Red 610-3'BHQ2,5'Quasar 670-3'BHQ2,5'Quasar 570-3'BHQ2,5'Quasar 705-3'BHQ2,5'Cal Flour Orange 560-3'BHQ2,5'Cy5-3'BHQ3,5'Quasar 670-3'BHQ3,5'Quasar 705-3'BHQ3</div>
-      <div class="d-none" id="probe-fee-list">4000000,4000000,4000000,4200000,2800000,4000000,4200000,4200000,4200000,4200000,6185000,4200000,4200000,6185000,4200000,6185000,6185000,6185000,6185000,6185000,6185000,6185000,6185000,6185000,6185000</div>
-      <div class="d-none" id="oligo-status">dry</div>
       <div class="collapse collapse-horizontal" id="oligo-order-list">
         <div class="card my-3 mx-auto card-oligo-select d-none">
           <div class="card-body">
@@ -331,7 +332,7 @@
                   <textarea class="form-control mb-3" id="oligo-list-input" placeholder="${oligoListPlaceholder}"
                     rows="10"></textarea>
                   <button type="submit" class="btn btn-primary" id="oligo-list-btn">${oligoListBtnLabel}</button>
-                  <ol class="text-danger" id="validate-list"></ol>
+                  <ol class="text-danger mt-3" id="validate-list"></ol>
                 </fieldset>
               </form>
             </article> <!-- tab-content.// -->
@@ -346,28 +347,28 @@
                           autocomplete="off" autofocus>
                       </div>
                       <div class="col-lg-2 col-sm-12 my-3 px-1 d-none">
-                          <select class="form-select" id="five-modified">
-                            <option value="" selected>5' modified</option>
-                          </select>
+                        <select class="form-select" id="five-modified">
+                          <option value="" selected>5' modified</option>
+                        </select>
                       </div>
                       <div class="col-lg-8 col-sm-12 my-3 px-1">
-                          <input type="text" class="form-control" id="oligo-string" autocomplete="off"
-                            placeholder="${colSequence}" width="100%">
+                        <input type="text" class="form-control" id="oligo-string" autocomplete="off"
+                          placeholder="${colSequence}" width="100%">
                         <span class="translate-middle badge rounded-pill bg-danger d-none" id="string-counter"
                           style="z-index: 3;">
                           99+
                         </span>
                       </div>
                       <div class="col-lg-2 col-sm-12 my-3 px-1 d-none">
-                          <select class="form-select" id="three-modified">
-                            <option value="" selected>3' modified</option>
-                          </select>
-                        </div>
-                        <div class="col-lg-2 col-sm-12 my-3 px-1 d-none">
-                            <select class="form-select" id="probe-oligo">
-                              <option value="" selected>probe</option>
-                            </select>
-                          </div>
+                        <select class="form-select" id="three-modified">
+                          <option value="" selected>3' modified</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-2 col-sm-12 my-3 px-1 d-none">
+                        <select class="form-select" id="probe-oligo">
+                          <option value="" selected>probe</option>
+                        </select>
+                      </div>
                       <div class="col-lg-2 col-sm-2 my-3 px-0">
                         <div class="d-grid">
                           <button type="submit" class="btn btn-primary btn-block"
@@ -872,214 +873,219 @@
 
 
 
-<footer class="section-footer bg-primary footer-dark">
-  <div class="container">
-    <section class="footer-main padding-y">
-      <div class="row">
-        <aside class="col-md-6 col-sm-12 col-lg-4 mb-3">
-          <article class="me-lg-4">
-            <img src="images/logo-white.svg" class="logo-footer mb-3">
-            <ul class="list-menu">
-              <li>ĐC: 503, đường 30/04, P. Hưng Lợi<br /> Q. Ninh Kiều, TP. Cần Thơ</li>
-              <li>CSKH: 0292 651 5678</li>
-              <li>Kế toán: 0292 65 3388</li>
-              <li>Email: cskh@phusagenomics.com</li>
-              <li>MSDN: 1801727039<br/>Cấp ngày 08/07/2022 tại sở KH-ĐT TP. Cần Thơ</li>
-            </ul>
-          </article>
-        </aside>
-        <aside class="col-md-6 col-sm-12 col-lg-3 mb-3">
-          <h6 class="title">Các chính sách</h6>
-          <ul class="list-menu">
-            <li> <a href="#">Hướng dẫn mua hàng</a></li>
-            <li> <a href="#">Chính sách bán hàng</a></li>
-            <li> <a href="#">Chính sách giao hàng và đổi trả</a></li>
-            <li> <a href="#">Chính sách bảo mật</a></li>
-            <li> <a href="#">Hướng dẫn thanh toán</a></li>
-          </ul>
-        </aside>
-        <aside class="col-md-6 col-sm-12 col-lg-2 mb-3">
-          <h6 class="title">Danh mục chính</h6>
-          <ul class="list-menu">
-            <li> <a href="#">Trang chủ</a></li>
-            <li> <a href="#">Giới thiệu</a></li>
-            <li> <a href="#">Tuyển dụng</a></li>
-            <li> <a href="#">Tin tức</a></li>
-            <li> <a href="#">Liên hệ</a></li>
-          </ul>
-        </aside>
-        <aside class="col-md-6 col-sm-12 col-lg-3 mb-3">
-          <h6 class="title">Danh mục sản phẩm</h6>
-          <ul class="list-menu">
-            <li> <a href="#">Oligo/Primer</a></li>
-            <li> <a href="#">Sars-COV-2</a></li>
-            <li> <a href="#">Hóa chất BIO</a></li>
-            <li> <a href="#">KIT chẩn đoán BIO</a></li>
-            <li> <a href="#">Tổng hợp Gene</a></li>
-            <li> <a href="#">Thiết bị</a></li>
-          </ul>
-        </aside>
-      </div> <!-- row.// -->
-    </section> <!-- footer-top.// -->
-    <hr class="my-0">
-    <section class="footer-bottom d-flex justify-content-lg-between">
-      <div class="container">
+  <footer class="section-footer bg-primary footer-dark">
+    <div class="container">
+      <section class="footer-main padding-y">
         <div class="row">
-          <div class="col-lg-4 col-md-12 col-sm-12">
-            <div>
-              <i class="fa-brands fa-cc-visa"></i>
-              <i class="fa-solid fa-credit-card"></i>
-              <i class="fa-brands fa-cc-mastercard"></i>
-              <i class="fa-brands fa-cc-jcb"></i>
-              <i class="fa-solid fa-money-check-dollar"></i>
+          <aside class="col-md-6 col-sm-12 col-lg-4 mb-3">
+            <article class="me-lg-4">
+              <img src="images/logo-white.svg" class="logo-footer mb-3">
+              <ul class="list-menu">
+                <li>ĐC: 503, đường 30/04, P. Hưng Lợi<br /> Q. Ninh Kiều, TP. Cần Thơ</li>
+                <li>CSKH: 0292 651 5678</li>
+                <li>Kế toán: 0292 65 3388</li>
+                <li>Email: cskh@phusagenomics.com</li>
+                <li>MSDN: 1801727039<br />Cấp ngày 08/07/2022 tại sở KH-ĐT TP. Cần Thơ</li>
+              </ul>
+            </article>
+          </aside>
+          <aside class="col-md-6 col-sm-12 col-lg-3 mb-3">
+            <h6 class="title">Các chính sách</h6>
+            <ul class="list-menu">
+              <li> <a href="#">Hướng dẫn mua hàng</a></li>
+              <li> <a href="#">Chính sách bán hàng</a></li>
+              <li> <a href="#">Chính sách giao hàng và đổi trả</a></li>
+              <li> <a href="#">Chính sách bảo mật</a></li>
+              <li> <a href="#">Hướng dẫn thanh toán</a></li>
+            </ul>
+          </aside>
+          <aside class="col-md-6 col-sm-12 col-lg-2 mb-3">
+            <h6 class="title">Danh mục chính</h6>
+            <ul class="list-menu">
+              <li> <a href="#">Trang chủ</a></li>
+              <li> <a href="#">Giới thiệu</a></li>
+              <li> <a href="#">Tuyển dụng</a></li>
+              <li> <a href="#">Tin tức</a></li>
+              <li> <a href="#">Liên hệ</a></li>
+            </ul>
+          </aside>
+          <aside class="col-md-6 col-sm-12 col-lg-3 mb-3">
+            <h6 class="title">Danh mục sản phẩm</h6>
+            <ul class="list-menu">
+              <li> <a href="#">Oligo/Primer</a></li>
+              <li> <a href="#">Sars-COV-2</a></li>
+              <li> <a href="#">Hóa chất BIO</a></li>
+              <li> <a href="#">KIT chẩn đoán BIO</a></li>
+              <li> <a href="#">Tổng hợp Gene</a></li>
+              <li> <a href="#">Thiết bị</a></li>
+            </ul>
+          </aside>
+        </div> <!-- row.// -->
+      </section> <!-- footer-top.// -->
+      <hr class="my-0">
+      <section class="footer-bottom d-flex justify-content-lg-between">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12">
+              <div>
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-solid fa-credit-card"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-jcb"></i>
+                <i class="fa-solid fa-money-check-dollar"></i>
+              </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12">
+              <!-- <p class="text-lg-end">Phù Sa BIOCHEM © 2022. All right reserved. Design and build by Key Digital</p> -->
             </div>
           </div>
-          <div class="col-lg-8 col-md-12 col-sm-12">
-            <!-- <p class="text-lg-end">Phù Sa BIOCHEM © 2022. All right reserved. Design and build by Key Digital</p> -->
-          </div>
         </div>
-      </div>
-    </section>
-  </div> <!-- container end.// -->
-</footer>
+      </section>
+    </div> <!-- container end.// -->
+  </footer>
 
-<!-- Modal Login -->
-<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+  <!-- Modal Login -->
+  <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLoginLabel">Đăng nhập</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLoginLabel">Đăng nhập</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post">
+            <div class="mb-3">
+              <input type="email" class="form-control" id="username" placeholder="Email đăng nhập" autocomplete="off">
             </div>
-            <div class="modal-body">
-                <form action="" method="post">
-                    <div class="mb-3">
-                        <input type="email" class="form-control" id="username" placeholder="Email đăng nhập" autocomplete="off">
-                    </div>
-                    <div class="mb-3">
-                        <input type="password" class="form-control" id="password" placeholder="Mật khẩu">
-                    </div>
-                    <div class="mb-3 d-inline-block">
-                        <!-- <button type="submit" class="btn btn-primary">Đăng nhập</button> -->
-                        <a href="account.html" class="btn btn-primary">Đăng nhập</a>
-                    </div>
-                    <div class="mb-3 form-check d-inline-block ms-3">
-                      <input type="checkbox" class="form-check-input" id="saveCookies">
-                      <label class="form-check-label" for="saveCookies">Lưu thông tin</label>
-                    </div>
-                </form>
+            <div class="mb-3">
+              <input type="password" class="form-control" id="password" placeholder="Mật khẩu">
             </div>
-            <div class="modal-footer text-center">
-                <p class="text-center mb-2">Chưa có tài khoản? <a href="signup.html">Đăng ký</a></p>
+            <div class="mb-3 d-inline-block">
+              <!-- <button type="submit" class="btn btn-primary">Đăng nhập</button> -->
+              <a href="account.html" class="btn btn-primary">Đăng nhập</a>
             </div>
+            <div class="mb-3 form-check d-inline-block ms-3">
+              <input type="checkbox" class="form-check-input" id="saveCookies">
+              <label class="form-check-label" for="saveCookies">Lưu thông tin</label>
+            </div>
+          </form>
         </div>
-    </div>
-</div>
-<!-- END Modal Login -->
-
-<!-- BEGIN Offcanvas Cart -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="cart" aria-labelledby="cartLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="cartLabel">Giỏ hàng của bạn</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <div class="img-crop crop-100">
-            <img src="images/items/detail1/big.jpg" class="rounded-start cart-sidebar-img" alt="Hình ảnh sản phẩm">
-          </div>
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">Tên sản phẩm</h5>
-            <p class="text-secondary fs-5 mb-0">1 ×
-              <var class="price h5">33.000.000<sup>đ</sup></var>
-            </p>
-            <button type="button" class="btn btn-link btn-sm text-decoration-none"><i class="fa-solid fa-trash"></i> Xóa khỏi giỏ hàng</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <div class="img-crop crop-100">
-            <img src="images/items/detail-realestate/big.jpg" class="rounded-start cart-sidebar-img" alt="Hình ảnh sản phẩm">
-          </div>
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">Tên sản phẩm</h5>
-            <p class="text-secondary fs-5 mb-0">1 ×
-              <var class="price h5">33.000.000<sup>đ</sup></var>
-            </p>
-            <button type="button" class="btn btn-link btn-sm text-decoration-none"><i class="fa-solid fa-trash"></i> Xóa khỏi giỏ hàng</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <div class="img-crop crop-100">
-            <img src="images/items/detail3/big.jpg" class="rounded-start cart-sidebar-img" alt="Hình ảnh sản phẩm">
-          </div>
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">Tên sản phẩm</h5>
-            <p class="text-secondary fs-5 mb-0">1 ×
-              <var class="price h5">33.000.000<sup>đ</sup></var>
-            </p>
-            <button type="button" class="btn btn-link btn-sm text-decoration-none"><i class="fa-solid fa-trash"></i> Xóa khỏi giỏ hàng</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <div class="img-crop crop-100">
-            <img src="images/items/detail2/big.jpg" class="rounded-start cart-sidebar-img" alt="Hình ảnh sản phẩm">
-          </div>
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">Tên sản phẩm</h5>
-            <p class="text-secondary fs-5 mb-0">1 ×
-              <var class="price h5">33.000.000<sup>đ</sup></var>
-            </p>
-            <button type="button" class="btn btn-link btn-sm text-decoration-none"><i class="fa-solid fa-trash"></i> Xóa khỏi giỏ hàng</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <div class="offcanvas-footer border-top">
-    <h5 class="offcanvas-title text-center" id="cartLabel">Tạm tính: <var
-        class="price h5">125.000.000<sup>đ</sup></var></h5>
-    <div class="row g-1">
-      <div class="col-6">
-        <div class="d-grid my-3 ms-3">
-          <a href="cart.html" class="btn btn-primary" type="button">Giỏ hàng</a>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="d-grid my-3 me-3">
-          <a href="checkout.html" class="btn btn-primary" type="button">Thanh toán</a>
+        <div class="modal-footer text-center">
+          <p class="text-center mb-2">Chưa có tài khoản? <a href="signup.html">Đăng ký</a></p>
         </div>
       </div>
     </div>
   </div>
-</div>
-<!-- END Offcanvas Cart -->
+  <!-- END Modal Login -->
+
+  <!-- BEGIN Offcanvas Cart -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cart" aria-labelledby="cartLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="cartLabel">Giỏ hàng của bạn</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <div class="img-crop crop-100">
+              <img src="images/items/detail1/big.jpg" class="rounded-start cart-sidebar-img" alt="Hình ảnh sản phẩm">
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Tên sản phẩm</h5>
+              <p class="text-secondary fs-5 mb-0">1 ×
+                <var class="price h5">33.000.000<sup>đ</sup></var>
+              </p>
+              <button type="button" class="btn btn-link btn-sm text-decoration-none"><i class="fa-solid fa-trash"></i>
+                Xóa khỏi giỏ hàng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <div class="img-crop crop-100">
+              <img src="images/items/detail-realestate/big.jpg" class="rounded-start cart-sidebar-img"
+                alt="Hình ảnh sản phẩm">
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Tên sản phẩm</h5>
+              <p class="text-secondary fs-5 mb-0">1 ×
+                <var class="price h5">33.000.000<sup>đ</sup></var>
+              </p>
+              <button type="button" class="btn btn-link btn-sm text-decoration-none"><i class="fa-solid fa-trash"></i>
+                Xóa khỏi giỏ hàng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <div class="img-crop crop-100">
+              <img src="images/items/detail3/big.jpg" class="rounded-start cart-sidebar-img" alt="Hình ảnh sản phẩm">
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Tên sản phẩm</h5>
+              <p class="text-secondary fs-5 mb-0">1 ×
+                <var class="price h5">33.000.000<sup>đ</sup></var>
+              </p>
+              <button type="button" class="btn btn-link btn-sm text-decoration-none"><i class="fa-solid fa-trash"></i>
+                Xóa khỏi giỏ hàng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <div class="img-crop crop-100">
+              <img src="images/items/detail2/big.jpg" class="rounded-start cart-sidebar-img" alt="Hình ảnh sản phẩm">
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Tên sản phẩm</h5>
+              <p class="text-secondary fs-5 mb-0">1 ×
+                <var class="price h5">33.000.000<sup>đ</sup></var>
+              </p>
+              <button type="button" class="btn btn-link btn-sm text-decoration-none"><i class="fa-solid fa-trash"></i>
+                Xóa khỏi giỏ hàng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="offcanvas-footer border-top">
+      <h5 class="offcanvas-title text-center" id="cartLabel">Tạm tính: <var
+          class="price h5">125.000.000<sup>đ</sup></var></h5>
+      <div class="row g-1">
+        <div class="col-6">
+          <div class="d-grid my-3 ms-3">
+            <a href="cart.html" class="btn btn-primary" type="button">Giỏ hàng</a>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="d-grid my-3 me-3">
+            <a href="checkout.html" class="btn btn-primary" type="button">Thanh toán</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END Offcanvas Cart -->
 
   <!-- Bootstrap js -->
   <script src="js/bootstrap/bootstrap.bundle.min.js"
