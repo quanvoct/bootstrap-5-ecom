@@ -120,6 +120,7 @@ if (productArr.length > 0) {
     };
 }
 btnDatHang.addEventListener('click', function () {
+    console.log( '1' );
     if (isProbe() || isModified()) {
         cardOligoInput.classList.remove('d-none');
         cardOligoShow.classList.remove('d-none');
