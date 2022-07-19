@@ -8,7 +8,7 @@ var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFe
     oligoSubmit = document.getElementById('oligo-submit'),
     oligoEdit = document.getElementById('oligo-edit'),
     stringCounter = document.getElementById('string-counter'),
-    addToCartOligo = document.querySelectorAll('.add-to-cart-oligo'),
+    addToCartOligo = document.querySelector('.add-to-cart-oligo'),
     navSingle = document.querySelector('.nav-single'),
     tabSingle = document.getElementById('tab_single'),
     titleSingle = document.querySelector('.title-single'),
@@ -16,6 +16,7 @@ var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFe
     fiveModified = document.getElementById('five-modified'),
     threeModified = document.getElementById('three-modified'),
     probeOligo = document.getElementById('probe-oligo'),
+    oligoType = document.getElementById('oligo-type'),
 
     titleList = document.querySelector('.title-list'),
     oligoListBtn = document.getElementById('oligo-list-btn'),
@@ -43,40 +44,19 @@ var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFe
     cardOligoSelect = document.querySelector('.card-oligo-select'),
     cardOligoInput = document.querySelector('.card-oligo-input'),
     cardOligoShow = document.querySelector('.card-oligo-show'),
+    btnArrangeGroup = document.querySelector('.btn-arrange-group'),
 
     oligoArrange = document.getElementById('oligo-arrange'),
     plateLabel = document.querySelector('.plate-label'),
     plateLabelLabel = document.querySelector('.plate-label-label'),
     wellLabel = document.querySelector('.well-label'),
     plateHint = document.querySelector('.plate-hint'),
-    cardOligoArrange = document.querySelector('.card-oligo-arrange'),
     confirmOligo = document.querySelector('.confirm-oligo'),
     btnHorizon = document.querySelector('.btn-horizon'),
     btnVertical = document.querySelector('.btn-vertical'),
 
-    oligoType = document.getElementById('oligo-type'),
-    nameLength = document.getElementById('name-length'),
-    stringLength = document.getElementById('string-length'),
-    odList = document.getElementById('od-list'),
-    typeList = document.getElementById('type-list'),
-    normalizationList = document.getElementById('normalization-list'),
-    turnAroundTimeList = document.getElementById('turn-around-time-list'),
-    unitPriceList = document.getElementById('unit-price-list'),
-    baseList = document.getElementById('base-list'),
-
-    modifiedBaseList = document.getElementById('modified-base-list'),
-    modifiedFeeList = document.getElementById('modified-fee-list'),
-
-    modified5ValueList = document.getElementById('modified5-value-list'),
-    modified5NameList = document.getElementById('modified5-name-list'),
-    modified5FeeList = document.getElementById('modified5-fee-list'),
-
-    modified3ValueList = document.getElementById('modified3-value-list'),
-    modified3NameList = document.getElementById('modified3-name-list'),
-    modified3FeeList = document.getElementById('modified3-fee-list'),
-
-    probeValueList = document.getElementById('probe-value-list'),
-    probeFeeList = document.getElementById('probe-fee-list');
+    oligoSummary = document.getElementById('oligo-summary'),
+    priceOligo = document.getElementById('product-oligo-price');
 
 oligoTitleText.innerText = oligoTitle;
 noCustomLabel.innerHTML = noCustom;
@@ -104,9 +84,7 @@ titleExcel.innerText = oligoExcelTitle;
 excelDragDrop.innerText = oligoExcelPlaceholder;
 plateHint.innerText = plateHintText;
 
-for (const btnAddToCart of addToCartOligo) {
-    btnAddToCart.innerText = addToCartLabel;
-}
+addToCartOligo.innerText = addToCartLabel;
 var productArr = [];
 var productOption = [true, false, [], [], 0];
 oligoList.innerHTML = displayOligo(productArr);
@@ -119,123 +97,118 @@ if (productArr.length > 0) {
 btnDatHang.addEventListener('click', function () {
     switch (oligoType.value) {
         case 'PremiumOligo':
-            baseList.innerText = 'A,T,C,G,Y,R,W,S,K,M,D,V,H,B,X,N';
-            nameLength.innerText = '3,15';
-            stringLength.innerText = '6,15,36,75';
-            odList.innerText = '1.5+,3+,3+';
-            typeList.innerText = 'PremiumOligo.00,PremiumOligo.01,PremiumOligo.02';
-            normalizationList.innerText = '100';
-            turnAroundTimeList.innerText = '48,48,72';
-            unitPriceList.innerText = '4300,4300,5000';
+            baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
+            nameLength = [3, 15];
+            stringLength = [6, 15, 36, 75];
+            odList = ['1.5+', '3+', '3+'];
+            typeList = ['PremiumOligo.00', 'PremiumOligo.01', 'PremiumOligo.02'];
+            normalizationList = [100];
+            turnAroundTimeList = [48, 48, 72];
+            unitPriceList = [4900, 4900, 5700];
             break;
 
         case 'LongOligo':
-            baseList.innerText = 'A,T,C,G,Y,R,W,S,K,M,D,V,H,B,X,N';
-            nameLength.innerText = '3,15';
-            stringLength.innerText = '76,122,135';
-            odList.innerText = '5+,5+';
-            typeList.innerText = 'LongOligo.01,LongOligo.02';
-            normalizationList.innerText = '50';
-            turnAroundTimeList.innerText = '96,96';
-            unitPriceList.innerText = '7100,8400';
+            baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
+            nameLength = [3, 15];
+            stringLength = [76, 121, 135];
+            odList = ['5+', '5+'];
+            typeList = ['LongOligo.01', 'LongOligo.02'];
+            normalizationList = [50];
+            turnAroundTimeList = [96, 96];
+            unitPriceList = [8200, 9600];
             break;
 
         case 'HIODOligo':
-            baseList.innerText = 'A,T,C,G,Y,R,W,S,K,M,D,V,H,B,X,N';
-            nameLength.innerText = '3,15';
-            stringLength.innerText = '15,31,70';
-            odList.innerText = '30,30';
-            typeList.innerText = 'HiOD Oligo.01.30,HiOD Oligo.02.30';
-            normalizationList.innerText = '';
-            turnAroundTimeList.innerText = '48,72';
-            unitPriceList.innerText = '15700,18900';
+            baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
+            nameLength = [3, 15];
+            stringLength = [15, 31, 70];
+            odList = ['30', '30'];
+            typeList = ['HiOD Oligo.01.30', 'HiOD Oligo.02.30'];
+            normalizationList = [];
+            turnAroundTimeList = [48, 72];
+            unitPriceList = [18000, 21800];
             break;
 
         case 'GenomicOligo':
-            baseList.innerText = 'A,T,C,G,Y,R,W,S,K,M,D,V,H,B,X,N';
-            nameLength.innerText = '3,15';
-            stringLength.innerText = '6,15,36,51,80';
-            odList.innerText = '1+,1.5+,1.5+,1.5+';
-            typeList.innerText = 'GenomicOligoGA.00,GenomicOligoGA.01,GenomicOligoGA.02,GenomicOligoGA.03';
-            normalizationList.innerText = '50';
-            turnAroundTimeList.innerText = '48,48,72,72';
-            unitPriceList.innerText = '4700,4700,5200,5400';
+            baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
+            nameLength = [3, 15];
+            stringLength = [6, 15, 36, 51, 80];
+            odList = ['1+', '1.5+', '1.5+', '1.5+'];
+            typeList = ['GenomicOligoGA.00', 'GenomicOligoGA.01', 'GenomicOligoGA.02', 'GenomicOligoGA.03'];
+            normalizationList = [50];
+            turnAroundTimeList = [48, 48, 72, 72];
+            unitPriceList = [5400, 5400, 6000, 6200];
             break;
         case 'OligoScreeningPlate':
-            baseList.innerText = 'A,T,C,G,Y,R,W,S,K,M,D,V,H,B,X,N';
-            nameLength.innerText = '3,15';
-            stringLength.innerText = '15,36,75';
-            odList.innerText = '0.5+,0.5+';
-            typeList.innerText = 'OSP.01.02,OSP.02.02';
-            normalizationList.innerText = '';
-            turnAroundTimeList.innerText = '48,72';
-            unitPriceList.innerText = '2400,2800';
+            baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
+            nameLength = [3, 15];
+            stringLength = [15, 36, 75];
+            odList = ['0.5+', '0.5+'];
+            typeList = ['OSP.01.02', 'OSP.02.02'];
+            normalizationList = [];
+            turnAroundTimeList = [48, 72];
+            unitPriceList = [2800, 3200];
             break;
 
         case 'OligoGenomicPlate':
-            baseList.innerText = 'A,T,C,G,Y,R,W,S,K,M,D,V,H,B,X,N';
-            nameLength.innerText = '3,15';
-            stringLength.innerText = '15,36,75';
-            odList.innerText = '0.5+,0.5+';
-            typeList.innerText = 'GSPGA.01.02,GSPGA.02.02';
-            normalizationList.innerText = '';
-            turnAroundTimeList.innerText = '48,72';
-            unitPriceList.innerText = '2900,3300';
+            baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
+            nameLength = [3, 15];
+            stringLength = [15, 36, 75];
+            odList = ['0.5+', '0.5+'];
+            typeList = ['GSPGA.01.02', 'GSPGA.02.02'];
+            normalizationList = [];
+            turnAroundTimeList = [48, 72];
+            unitPriceList = [3300, 3800];
             break;
 
         case 'Endo-ExoModification':
-            baseList.innerText = 'A,T,C,G,Y,R,W,S,K,M,D,V,H,B,X,N';
-            nameLength.innerText = '3,15';
-            stringLength.innerText = '6,36,50';
-            odList.innerText = '5,5';
-            typeList.innerText = 'Modi.premium.01Modi.premium.02';
-            normalizationList.innerText = '';
-            turnAroundTimeList.innerText = '480,480';
-            unitPriceList.innerText = '4300,5000';
-            modifiedBaseList.innerText = 'I,O,U';
-            modifiedFeeList.innerText = '190000,240000,190000';
-            modified5ValueList.innerText = 'C6-Spacer,C3-Space,Thiol-C6-S-S,PO4-Phosphat, BIOTIN,NH2-C6,NH2-C12';
-            modified5NameList.innerText = 'C6-Spacer 200 nmol,C3-Spacer 200 nmol,Thiol C6 S-S 200 nmol, Phosphorylation 200 nmol, Biotin 200 nmol,NH2 C6 200nmol,NH2 C12 200 nmol';
-            modified5FeeList.innerText = '820000,820000,2400000,584000,1170000,584000,1050000';
-            modified3ValueList.innerText = 'Thiol-C6-S-S,BIOTIN,C6-Spacer,C3-Spacer,Biotin-TEG,NH2-C6,NH2-C12,PO4';
-            modified3NameList.innerText = 'Thiol C6 S-S 200 nmol,Biotin 200 nmol,C6-Spacer 200 nmol,C3-Spacer 200 nmol,Biotin-TEG 200 nmol,NH2 C6 200 nmol,NH2 C12 200 nmol,Phosphorylation 200 nmol';
-            modified3FeeList.innerText = '2340000,700000,820000,820000,1634000,584000,1050000,584000';
+            baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
+            nameLength = [3, 15];
+            stringLength = [6, 36, 50];
+            odList = ['5', '5'];
+            typeList = ['Modi.premium.01', 'Modi.premium.02'];
+            normalizationList = [];
+            turnAroundTimeList = [168, 168];
+            unitPriceList = [4900, 5700];
+            modifiedBaseList = ['I', 'O', 'U'];
+            modifiedFeeList = [190000, 240000, 190000];
+            modified5ValueList = ['Thiol-C6-S-S', 'Biotin', 'C6-Spacer', 'C3-Spacer', 'NH2-C6', 'NH2-C12', 'PO4-Phosphat'];
+            modified5NameList = ['Thiol C6 S-S 200 nmol', 'Biotin 200 nmol', 'C6-Spacer 200 nmol', 'C3-Spacer 200 nmol', 'NH2 C6 200 nmol', 'NH2 C12 200 nmol', 'Phosphorylation 200 nmol'];
+            modified5FeeList = [2400000, 1170000, 820000, 820000, 584000, 1050000, 584000];
+            modified3ValueList = ['C6-Spacer', 'C3-Spacer', 'Thiol-C6-S-S', 'PO4-Phosphat', 'Biotin', 'Biotin-TEG', 'NH2-C6', 'NH2-C12'];
+            modified3NameList = ['C6-Spacer 200 nmol', 'C3-Spacer 200 nmol', 'Thiol C6 S-S 200 nmol', 'Phosphorylation 200 nmol', 'Biotin 200 nmol', 'Biotin-TEG 200 nmol', 'NH2 C6 200nmol', 'NH2 C12 200 nmol'];
+            modified3FeeList = [820000, 820000, 2340000, 584000, 700000, 1634000, 584000, 1050000];
             break;
         case 'Probe':
-            baseList.innerText = 'A,T,C,G,Y,R,W,S,K,M,D,V,H,B,X,N';
-            nameLength.innerText = '3,15';
-            stringLength.innerText = '6,36,50';
-            odList.innerText = '5,5';
-            typeList.innerText = 'Probe.Premium 01,Probe.Premium 02';
-            normalizationList.innerText = '';
-            turnAroundTimeList.innerText = '576,576';
-            unitPriceList.innerText = '4300,5000';
-            probeValueList.innerText = '5\'FAM-3\'TAMRA,5\'HEX-3\'TAMRA,5\'TET-3\'TAMRA,5\'JOE-3\'TAMRA,5\'FAM-3\'BHQ1,5\'HEX-3\'BHQ1,5\'TET-3\'BHQ1,5\'JOE-3\'BHQ1,5\'YakimaYellow-3\'BHQ1,5\'Cal Fluor Orange 560-3\'BHQ1,5\'Cal Fluor Gold 540-3\'BHQ1,5\'TET-3\'BHQ2,5\'Cy3-3\'BHQ2,5\'Cy5-3\'BHQ2,5\'TAMRA-3\'BHQ2,5\'ROX-3\'BHQ2,5\'Texas Red-3\'BHQ2,5\'Cal Fluor Red 610-3\'BHQ2,5\'Quasar 670-3\'BHQ2,5\'Quasar 570-3\'BHQ2,5\'Quasar 705-3\'BHQ2,5\'Cal Flour Orange 560-3\'BHQ2,5\'Cy5-3\'BHQ3,5\'Quasar 670-3\'BHQ3,5\'Quasar 705-3\'BHQ3';
-            probeFeeList.innerText = '4000000,4000000,4000000,4200000,2800000,4000000,4200000,4200000,4200000,4200000,6185000,4200000,4200000,6185000,4200000,6185000,6185000,6185000,6185000,6185000,6185000,6185000,6185000,6185000,6185000';
+            baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
+            nameLength = [3, 15];
+            stringLength = [6, 36, 50];
+            odList = ['5', '5'];
+            typeList = ['Probe.Premium 01', 'Probe.Premium 02'];
+            normalizationList = [];
+            turnAroundTimeList = [576, 576];
+            unitPriceList = [4300, 5000];
+            probeValueList = ['5\'FAM-3\'TAMRA', '5\'HEX-3\'TAMRA', '5\'TET-3\'TAMRA', '5\'JOE-3\'TAMRA', '5\'FAM-3\'BHQ1', '5\'HEX-3\'BHQ1', '5\'TET-3\'BHQ1', '5\'JOE-3\'BHQ1', '5\'YakimaYellow-3\'BHQ1', '5\'Cal Fluor Orange 560-3\'BHQ1', '5\'Cal Fluor Gold 540-3\'BHQ1', '5\'TET-3\'BHQ2', '5\'Cy3-3\'BHQ2', '5\'Cy5-3\'BHQ2', '5\'TAMRA-3\'BHQ2', '5\'ROX-3\'BHQ2', '5\'Texas Red-3\'BHQ2', '5\'Cal Fluor Red 610-3\'BHQ2', '5\'Quasar 670-3\'BHQ2', '5\'Quasar 570-3\'BHQ2', '5\'Quasar 705-3\'BHQ2', '5\'Cal Flour Orange 560-3\'BHQ2', '5\'Cy5-3\'BHQ3', '5\'Quasar 670-3\'BHQ3', '5\'Quasar 705-3\'BHQ3'];
+            probeFeeList = [4000000, 4000000, 4000000, 4200000, 2800000, 4000000, 4200000, 4200000, 4200000, 4200000, 6185000, 4200000, 4200000, 6185000, 4200000, 6185000, 6185000, 6185000, 6185000, 6185000, 6185000, 6185000, 6185000, 6185000, 6185000];
             break;
         default:
             break;
     }
     if (isProbe() || isModified()) {
-        let m5ValueList = modified5ValueList.innerHTML.split(","),
-            m5NameList = modified5NameList.innerHTML.split(","),
-            m3ValueList = modified3ValueList.innerHTML.split(","),
-            m3NameList = modified3NameList.innerHTML.split(","),
-            pValueList = probeValueList.innerHTML.split(",");
         cardOligoInput.classList.remove('d-none');
         cardOligoShow.classList.remove('d-none');
         if (isModified()) {
             fiveModified.parentElement.classList.remove('d-none');
-            addOption(fiveModified, m5ValueList, m5NameList);
+            addOption(fiveModified, modified5ValueList, modified5NameList);
             oligoString.parentElement.classList.remove('col-lg-8');
             oligoString.parentElement.classList.add('col-lg-4');
             threeModified.parentElement.classList.remove('d-none');
-            addOption(threeModified, m3ValueList, m3NameList);
+            addOption(threeModified, modified3ValueList, modified3NameList);
         } else if (isProbe()) {
             oligoString.parentElement.classList.remove('col-lg-8');
             oligoString.parentElement.classList.add('col-lg-6');
             probeOligo.parentElement.classList.remove('d-none');
-            addOption(probeOligo, pValueList, pValueList);
+            addOption(probeOligo, probeValueList, probeValueList);
         }
     } else {
         cardOligoSelect.classList.remove('d-none');
@@ -250,13 +223,12 @@ btnBeginOligo.addEventListener('click', function (e) {
 })
 
 wetBtn.addEventListener('click', function () {
-    let nList = normalizationList.innerHTML.split(",");
     oligoStatus.innerText = 'wet';
     oligoNormalization.classList.remove('d-none');
     checkConfirmOligoNormalization.classList.remove('d-none');
     labelConfirmOligoNormalization.classList.remove('d-none');
     btnBeginOligo.disabled = true;
-    addOption(oligoNormalization, nList, nList, ' pmol/µL');
+    addOption(oligoNormalization, normalizationList, normalizationList, ' pmol/µL');
     checkConfirmOligoNormalization.addEventListener('click', function () {
         btnBeginOligo.disabled = (checkConfirmOligoNormalization.checked == true) ? false : true;
     })
@@ -281,7 +253,6 @@ oligoSubmit.addEventListener('click', function (e) {
     if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>`) {
         productArr.push(createRow(oName, oString, oStatus, oNormalization, mod5, mod3, oProbe));
         oligoList.innerHTML = displayOligo(productArr);
-
         if (isPlate()) {
             confirmOligo.classList.remove('d-none');
         }
@@ -294,9 +265,7 @@ oligoListBtn.addEventListener('click', function (e) {
     validateListOligo(oligoListInput.value);
     if (productArr.length) {
         oligoList.innerHTML = displayOligo(productArr);
-        if (isPlate()) {
-            confirmOligo.classList.remove('d-none');
-        }
+        confirmOligo.classList.remove('d-none');
         resetForm();
     }
 })
@@ -325,8 +294,7 @@ oligoString.addEventListener('keyup', function () {
 })
 
 oligoString.addEventListener('keyup', function () {
-    let sLength = stringLength.innerHTML.split(",");
-    if (oligoString.value.replace(/\s/g, '').toUpperCase().length > sLength[sLength.length - 1] - 5) {
+    if (oligoString.value.replace(/\s/g, '').toUpperCase().length > stringLength[stringLength.length - 1] - 5) {
         stringCounter.classList.remove('d-none');
         stringCounter.innerText = oligoString.value.replace(/\s/g, '').toUpperCase().length;
     } else {
@@ -376,11 +344,19 @@ confirmOligo.addEventListener('click', function (e) {
         confirmOligo.classList.add('d-none');
         if (isPlate()) {
             oligoArrange.innerHTML = arrangePlate(productArr);
-            cardOligoArrange.classList.remove('d-none');
+            addToCartOligo.disabled = true;
+            btnArrangeGroup.classList.remove('d-none');
+        } else {
+            let a, b, c, d, e;
+            a = (productArr.length % 20 != 0) ? (productArr.length % 20) / 20 : 1;
+            b = (productArr.length % 45 != 0) ? (productArr.length % 45) / 45 : 1;
+            c = (productArr.length % 96 != 0) ? (productArr.length % 96) / 96 : 1;
+            d = (Math.max(a, b, c) == a) ? 20 : (Math.max(a, b, c) == b) ? 45 : 96;
+            e = (productArr.length % d == 0) ? productArr.length % d : (productArr.length - (productArr.length % d)) / d + 1;
+            oligoSummary.innerHTML = productArr.length + quantityOligoText + `<span id=product-oligo-quantity> ${e} </span>` + box + d;
+            priceOligo.innerText = parseInt(document.getElementById('product-oligo-subtotal').innerText) / e;
         }
-        for (const btnAddToCart of addToCartOligo) {
-            btnAddToCart.classList.remove('d-none');
-        }
+        addToCartOligo.classList.remove('d-none');
     }
 })
 
@@ -415,15 +391,13 @@ Hàm kiểm tra từng ký tự trong chuỗi nhập vào có trong danh sách c
 -----------------------------------*/
 function validateInputArray(input, list) {
     input = input.replace(/\s/g, '').toUpperCase(); //Viết hoa chuỗi input lên
-    list = list.toUpperCase(); //Viết hoa chuỗi list lên
     let inputArr = input.split("");
-    let listArr = list.split(",");
     let result;
     let vitri = [];
     for (let i = 0; i < inputArr.length; i++) {
         let check = false;
-        for (let j = 0; j < listArr.length; j++) {
-            if (inputArr[i] == listArr[j]) {
+        for (let j = 0; j < list.length; j++) {
+            if (inputArr[i] == list[j].toUpperCase()) {
                 check = true;
             }
         }
@@ -455,10 +429,10 @@ function validateListOligo(listInput) {
                 oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
                 oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
             // console.log(i, oName, validateOligo(oName, oString));
-            if(validateOligo(oName, oString) != '') {
+            if (validateOligo(oName, oString) != '') {
                 textErr += validateOligo(oName, oString);
             }
-            if(validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>' + difficultOligo + '</li>') {
+            if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>' + difficultOligo + '</li>') {
                 productArr.push(createRow(oName, oString, oStatus, oNormalization));
             }
         } else if (oligo.length <= 1) {
@@ -472,10 +446,7 @@ function validateListOligo(listInput) {
 Xác minh xem tên và chuỗi Oligo đã nhập có hợp lệ không
 -----------------------------------*/
 function validateOligo(name, string) {
-    let arrayName = [], arrayString = [], text = '',
-        nLength = nameLength.innerHTML.split(","),
-        sLength = stringLength.innerHTML.split(","),
-        bList = baseList.innerHTML;
+    let arrayName = [], arrayString = [], text = '';
     for (let i = 0; i < productArr.length; i++) {
         arrayName.push(productArr[i][0]);
         arrayString.push(productArr[i][0] + productArr[i][1]);
@@ -491,34 +462,34 @@ function validateOligo(name, string) {
             oligoSubmit.disabled = true;
             text += `<li>${noEmptyName}</li>`;
             break;
-        case name.length < nLength[0]:
+        case name.length < nameLength[0]:
             oligoName.classList.add('border-danger');
             oligoSubmit.disabled = true;
-            text += `<li>Line ${name}: ${minNameLengthText}${nLength[0]}${letter}</li>`;
-        case name.length > nLength[1]:
+            text += `<li>Line ${name}: ${minNameLengthText}${nameLength[0]}${letter}</li>`;
+        case name.length > nameLength[1]:
             oligoName.classList.add('border-danger');
             oligoSubmit.disabled = true;
-            text += `<li>Line ${name}: ${maxNameLengthText}${nLength[1]}${letter}</li>`;
+            text += `<li>Line ${name}: ${maxNameLengthText}${nameLength[1]}${letter}</li>`;
             break;
         case string == "":
             oligoString.classList.add('border-danger');
             oligoSubmit.disabled = true;
             text += `<li>Line ${name}: ${noEmptyString}</li>`;
             break;
-        case validateInputArray(string, bList) != '':
+        case validateInputArray(string, baseList) != '':
             oligoString.classList.add('border-danger');
             oligoSubmit.disabled = true;
-            text += `<li>Line ${name}: ${validateInputArray(string, bList)}</li>`;
+            text += `<li>Line ${name}: ${validateInputArray(string, baseList)}</li>`;
             break;
-        case string.length < sLength[0]:
+        case string.length < stringLength[0]:
             oligoString.classList.add('border-danger');
             oligoSubmit.disabled = true;
-            text += `<li>Line ${name}: ${minStringLengthText}${sLength[0]}${base}</li>`;
+            text += `<li>Line ${name}: ${minStringLengthText}${stringLength[0]}${base}</li>`;
             break;
-        case string.length > sLength[sLength.length - 1]:
+        case string.length > stringLength[stringLength.length - 1]:
             oligoString.classList.add('border-danger');
             oligoSubmit.disabled = true;
-            text += `<li>Line ${name}: ${maxStringLengthText}${sLength[sLength.length - 1]}${base}</li>`;
+            text += `<li>Line ${name}: ${maxStringLengthText}${stringLength[stringLength.length - 1]}${base}</li>`;
             break;
         case string.includes('GGGGGG'):
             oligoString.classList.add('border-danger');
@@ -564,16 +535,19 @@ function resetForm() {
     excelProcess.classList.add('d-none');
     titleSingle.innerText = oligoSingleTitle;
     navSingle.innerText = oligoSingleTabLabel;
+    fiveModified.value = '';
+    threeModified.value = '';
+    probeOligo.value = '';
 }
 
 /*---------------------------------
 Tạo thêm một mảng con (hàng dữ liệu)
 -----------------------------------*/
-function createRow(name, sequence, dry, normalization, m5 = '', m3 = '', prb = '') {
+function createRow(name, sequence, dry, normalization, modified5 = '', modified3 = '', prb = '') {
     let array = [];
     name = name.replace(/\s/g, '').toUpperCase();
     sequence = sequence.replace(/\s/g, '').toUpperCase();
-    array.push(name, sequence, dry, normalization, m5, m3, prb);
+    array.push(name, sequence, dry, normalization, modified5, modified3, prb);
     return array;
 }
 
@@ -739,19 +713,6 @@ function updateOption(obj) {
 Hiển thị mảng lớn dữ liệu ra màn hình
 -----------------------------------*/
 function displayOligo(arr2ways) {
-    let sLength = stringLength.innerHTML.split(","),
-        oList = odList.innerHTML.split(","),
-        tList = typeList.innerHTML.split(","),
-        tAroundTimeList = turnAroundTimeList.innerHTML.split(","),
-        uPriceList = unitPriceList.innerHTML.split(","),
-        mBaseList = modifiedBaseList.innerHTML.split(","),
-        mFeeList = modifiedFeeList.innerHTML.split(","),
-        m5ValueList = modified5ValueList.innerHTML.split(","),
-        m5FeeList = modified5FeeList.innerHTML.split(","),
-        m3ValueList = modified3ValueList.innerHTML.split(","),
-        m3FeeList = modified3FeeList.innerHTML.split(","),
-        pValueList = probeValueList.innerHTML.split(","),
-        pFeeList = probeFeeList.innerHTML.split(",");
     if (arr2ways.length) {
         let subTotal = 0,
             str = `
@@ -781,37 +742,50 @@ function displayOligo(arr2ways) {
             const d = new Date();
             let time = d.getTime();
             switch (true) {
-                case (!isNaN(sLength[1]) && arr2ways[i][1].length >= sLength[0] && arr2ways[i][1].length <= sLength[1]):
-                    od = oList[0];
-                    type = tList[0];
-                    eDD = dmYFormat(new Date(3600000 * tAroundTimeList[0] + time));
-                    unitPrice = uPriceList[0];
+                case (!isNaN(stringLength[1]) && arr2ways[i][1].length >= stringLength[0] && arr2ways[i][1].length <= stringLength[1]):
+                    od = odList[0];
+                    type = typeList[0];
+                    eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[0] + time));
+                    unitPrice = unitPriceList[0];
                     break;
-                case (!isNaN(sLength[2]) && arr2ways[i][1].length > sLength[1] && arr2ways[i][1].length <= sLength[2]):
-                    od = oList[1];
-                    type = tList[1];
-                    eDD = dmYFormat(new Date(3600000 * tAroundTimeList[1] + time));
-                    unitPrice = uPriceList[1];
+                case (!isNaN(stringLength[2]) && arr2ways[i][1].length > stringLength[1] && arr2ways[i][1].length <= stringLength[2]):
+                    od = odList[1];
+                    type = typeList[1];
+                    eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[1] + time));
+                    unitPrice = unitPriceList[1];
                     break;
-                case (!isNaN(sLength[3]) && arr2ways[i][1].length > sLength[2] && arr2ways[i][1].length <= sLength[3]):
-                    od = oList[2];
-                    type = tList[2];
-                    eDD = dmYFormat(new Date(3600000 * tAroundTimeList[2] + time));
-                    unitPrice = uPriceList[2];
+                case (!isNaN(stringLength[3]) && arr2ways[i][1].length > stringLength[2] && arr2ways[i][1].length <= stringLength[3]):
+                    od = odList[2];
+                    type = typeList[2];
+                    eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[2] + time));
+                    unitPrice = unitPriceList[2];
+                    break;
+                case (!isNaN(stringLength[4]) && arr2ways[i][1].length > stringLength[3] && arr2ways[i][1].length <= stringLength[4]):
+                    od = odList[3];
+                    type = typeList[3];
+                    eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[3] + time));
+                    unitPrice = unitPriceList[3];
+                    break;
+                case (!isNaN(stringLength[5]) && arr2ways[i][1].length > stringLength[4] && arr2ways[i][1].length <= stringLength[5]):
+                    od = odList[4];
+                    type = typeList[4];
+                    eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[4] + time));
+                    unitPrice = unitPriceList[4];
                     break;
                 default:
                     break;
             }
+            // console.log(arr2ways[i][1].length, arr2ways[i][0], unitPrice);
             fee += (arr2ways[i][1].length <= 14) ? lowNu : 0;
             fee += (arr2ways[i][2] == yes) ? dryFee : 0;
             if (isModified()) {
-                fee += (arr2ways[i][4] != '') ? parseInt(m5FeeList[m5ValueList.indexOf(arr2ways[i][4])]) : 0;
-                fee += (arr2ways[i][5] != '') ? parseInt(m3FeeList[m3ValueList.indexOf(arr2ways[i][5])]) : 0;
-                for (let j = 0; j < mBaseList.length; j++) {
-                    fee += (arr2ways[i][1].includes(mBaseList[j])) ? (arr2ways[i][1].match(new RegExp(mBaseList[j], "g")) || []).length * parseInt(mFeeList[j]) : 0;
+                fee += (arr2ways[i][4] != '') ? parseInt(modified5FeeList[modified5ValueList.indexOf(arr2ways[i][4])]) : 0;
+                fee += (arr2ways[i][5] != '') ? parseInt(modified3FeeList[modified3ValueList.indexOf(arr2ways[i][5])]) : 0;
+                for (let j = 0; j < modifiedBaseList.length; j++) {
+                    fee += (arr2ways[i][1].includes(modifiedBaseList[j])) ? (arr2ways[i][1].match(new RegExp(modifiedBaseList[j], "g")) || []).length * parseInt(modifiedFeeList[j]) : 0;
                 }
             } else if (isProbe()) {
-                fee += (arr2ways[i][6] != '') ? parseInt(pFeeList[pValueList.indexOf(arr2ways[i][6])]) : 0;
+                fee += (arr2ways[i][6] != '') ? parseInt(probeFeeList[probeValueList.indexOf(arr2ways[i][6])]) : 0;
             }
             total = unitPrice * arr2ways[i][1].length + fee;
             subTotal += total;
@@ -826,7 +800,7 @@ function displayOligo(arr2ways) {
                         <td scope="col" class="text-center">${type}</td>`;
             str += (isModified() || isProbe()) ? `` : `<td scope="col" class="text-center">${arr2ways[i][2]}</td>`;
             str += (isModified() || isProbe()) ? `` : `<td scope="col" class="text-center">${arr2ways[i][3]}</td>`;
-            str += `    <td scope = "col" class="text-end" > ${unitPrice.toLocaleString()}</ >
+            str += `    <td scope = "col" class="text-end" > ${unitPrice.toLocaleString()}</td>
                         <td scope="col" class="text-end">${fee.toLocaleString()}</td>
                         <td scope="col" class="text-end">${total.toLocaleString()}</td>
                         <td scope="col" class="text-center">${eDD}</td>
@@ -844,7 +818,8 @@ function displayOligo(arr2ways) {
                         <th colspan="3"></th>
                     </tr>
                 </tfoot>
-        </table > `;
+        </table > 
+        <div id="product-oligo-subtotal" class="d-none">${subTotal}</div>`;
         return str;
     } else {
         return `<p> ${guideText} <span class="badge bg-primary text-light">${addBtnLabel}</span></p> `;
@@ -865,7 +840,7 @@ function arrangePlate(arr2ways) {
                 productOption[3].push(pWell);
             }
             tableArrange += `
-                < div class="row align-items-center" >
+                <div class="row align-items-center">
                 <div class="col-3">
                     <div class="input-group mb-3 align-middle">
                         <span class="input-group-text plate-label-label">${plateLabelLabelText}</span>
@@ -880,7 +855,7 @@ function arrangePlate(arr2ways) {
                         </label>
                     </div>
                 </div>
-            </ >
+            </div>
                 <table class="table table-borderless table-arrange align-middle text-center">
                     <colgroup>
                         <col width="4%">
@@ -979,7 +954,7 @@ function arrangePlate(arr2ways) {
         }
     }
     tableArrange += `<hr class="py-2"><div class="mb-3">`;
-    let plateArrangeFee = 0, plateNameFee = 0, wellNameFee = 0, totalSurchanges = 0;
+    let plateArrangeFee = 0, plateNameFee = 0, wellNameFee = 0, totalSurchanges = 0, subTotalAmount = 0;
     plateArrangeFee += (productArr.includes('')) ? arrangeFee : 0;
     for (let i = 0; i < productOption[2].length; i++) {
         if (productOption[2][i] != i + 1) plateNameFee += plateFee;
@@ -990,6 +965,11 @@ function arrangePlate(arr2ways) {
     tableArrange += (wellNameFee != 0) ? wellNameFeeText + wellNameFee.toLocaleString() + `<br />` : ``;
     tableArrange += `<hr class="py-2">`;
     totalSurchanges = plateArrangeFee + plateNameFee + wellNameFee;
+    subTotalAmount = parseInt(document.getElementById('product-oligo-subtotal').innerText) + totalSurchanges;
+
+    oligoSummary.innerHTML = productArr.length + quantityOligoText + `<span id=product-oligo-quantity> ${productOption[2].length} </span>` + box + `96`;
+    priceOligo.innerText = subTotalAmount / productOption[2].length;
+    
     tableArrange += totalSurchagesText + totalSurchanges.toLocaleString() + `<br />`;
     tableArrange += `</div>`;
     productOption[4] = totalSurchanges;

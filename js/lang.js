@@ -60,7 +60,9 @@ if (window.location.href.includes('/en')) {
         basePlateArrangeFeeText = 'Base plate arrange fee: ',
         plateNameFeeText = 'Plate named fee: ',
         wellNameFeeText = 'Well labeled fee: ',
-        totalSurchagesText = 'Total surchages: ';
+        totalSurchagesText = 'Total surchages: ',
+        quantityOligoText = ' oligos are going to fill in ',
+        box = ' box(es) ';
 } else {
     var colName = 'Tên',
         colSequence = 'Chuỗi trình tự',
@@ -123,5 +125,7 @@ if (window.location.href.includes('/en')) {
         basePlateArrangeFeeText = 'Phí sắp xếp khay cơ bản: ',
         plateNameFeeText = 'Phí dán nhãn khay: ',
         wellNameFeeText = 'Phí dán nhãn từng giếng: ',
-        totalSurchagesText = 'Tổng phụ phí: ';
+        totalSurchagesText = 'Tổng phụ phí: ',
+        quantityOligoText = ' trình tự sẽ được chứa trong ',
+        box = ' hộp ';
 }

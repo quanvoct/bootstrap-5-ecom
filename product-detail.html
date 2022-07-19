@@ -159,25 +159,8 @@
         <main class="col-lg-6">
           <article class="ps-lg-3">
             <h4 class="title text-dark">Tên sản phẩm</h4>
+            <h6 class="title text-dark">Mã sản phẩm: <span id="product-sku">Premium Oligo</span></h6>
             <div class="rating-wrap my-3">
-              <div class="d-none" id="base-list"></div>
-              <div class="d-none" id="name-length"></div>
-              <div class="d-none" id="string-length"></div>
-              <div class="d-none" id="od-list"></div>
-              <div class="d-none" id="type-list"></div>
-              <div class="d-none" id="normalization-list"></div>
-              <div class="d-none" id="turn-around-time-list"></div>
-              <div class="d-none" id="unit-price-list"></div>
-              <div class="d-none" id="modified-base-list"></div>
-              <div class="d-none" id="modified-fee-list"></div>
-              <div class="d-none" id="modified5-value-list"></div>
-              <div class="d-none" id="modified5-name-list"></div>
-              <div class="d-none" id="modified5-fee-list"></div>
-              <div class="d-none" id="modified3-value-list"></div>
-              <div class="d-none" id="modified3-name-list"></div>
-              <div class="d-none" id="modified3-fee-list"></div>
-              <div class="d-none" id="probe-value-list"></div>
-              <div class="d-none" id="probe-fee-list"></div>
               <div class="d-none" id="oligo-status">dry</div>
               <ul class="rating-stars">
                 <li style="width:90%" class="stars-active"> <img src="images/misc/stars-active.svg" alt=""> </li>
@@ -366,7 +349,7 @@
                       </div>
                       <div class="col-lg-2 col-sm-12 my-3 px-1 d-none">
                         <select class="form-select" id="probe-oligo">
-                          <option value="" selected>probe</option>
+                          <option value="" selected>Probe</option>
                         </select>
                       </div>
                       <div class="col-lg-2 col-sm-2 my-3 px-0">
@@ -410,19 +393,19 @@
 
         <div class="card mb-3 mx-auto card-oligo-show d-none">
           <div class="card-body">
-            <div class="table-responsive-sm table-responsive-md table-responsive" id="oligo-list">
-            </div>
-            <button class="btn btn-primary confirm-oligo d-none">${confirmOligoLabel}</button>
-            <button class="btn btn-primary add-to-cart-oligo d-none">${addToCartLabel}</button>
-          </div>
-        </div>
+            <div id="product-oligo-description">
+              <div class="table-responsive-sm table-responsive-md table-responsive" id="oligo-list">
+              </div>
 
-        <div class="card mb-3 mx-auto card-oligo-arrange d-none">
-          <div class="card-body">
-            <div class="table-responsive-sm table-responsive-md table-responsive" id="oligo-arrange">
+              <div class="table-responsive-sm table-responsive-md table-responsive" id="oligo-arrange">
+              </div>
+            <div id="oligo-summary">
+              
             </div>
+            </div>
+            <div id="product-oligo-price" class="d-none"></div>
             <div class="row mt-3 align-items-center">
-              <div class="col-2 align-middle">
+              <div class="col-2 align-middle d-none btn-arrange-group">
                 <div class="btn-group d-flex" role="group">
                   <input type="radio" class="btn-check" name="oligo-arrange" id="horizon" autocomplete="off">
                   <label class="btn btn-outline-success btn-horizon" for="horizon">${horizonLabel}</label>
@@ -431,14 +414,16 @@
                 </div>
               </div>
               <div class="col-2 align-middle">
-                <button class="btn btn-primary add-to-cart-oligo d-none" disabled>${addToCartLabel}</button>
+                <button class="btn btn-primary add-to-cart-oligo d-none">${addToCartLabel}</button>
+                <button class="btn btn-primary confirm-oligo d-none">${confirmOligoLabel}</button>
               </div>
               <div class="col-7 plate-hint align-middle">${plateHint}</div>
             </div>
           </div>
+        </div>
 
-        </div> <!-- Lập danh sách sản phẩm -->
-      </div> <!-- container .//  -->
+      </div> <!-- Lập danh sách sản phẩm -->
+    </div> <!-- container .//  -->
   </section>
   <!-- ============== SECTION CONTENT END// ============== -->
 
