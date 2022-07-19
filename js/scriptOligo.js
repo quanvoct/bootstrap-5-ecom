@@ -17,6 +17,7 @@ var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFe
     threeModified = document.getElementById('three-modified'),
     probeOligo = document.getElementById('probe-oligo'),
     oligoType = document.getElementById('oligo-type'),
+    productSku = document.getElementById('product-sku'),
 
     titleList = document.querySelector('.title-list'),
     oligoListBtn = document.getElementById('oligo-list-btn'),
@@ -95,7 +96,7 @@ if (productArr.length > 0) {
     };
 }
 btnDatHang.addEventListener('click', function () {
-    switch (oligoType.value) {
+    switch (productSku.innerText) {
         case 'PremiumOligo':
             baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
             nameLength = [3, 15];
@@ -253,9 +254,7 @@ oligoSubmit.addEventListener('click', function (e) {
     if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>`) {
         productArr.push(createRow(oName, oString, oStatus, oNormalization, mod5, mod3, oProbe));
         oligoList.innerHTML = displayOligo(productArr);
-        if (isPlate()) {
-            confirmOligo.classList.remove('d-none');
-        }
+        confirmOligo.classList.remove('d-none');
         resetForm();
     }
 })
@@ -353,7 +352,7 @@ confirmOligo.addEventListener('click', function (e) {
             c = (productArr.length % 96 != 0) ? (productArr.length % 96) / 96 : 1;
             d = (Math.max(a, b, c) == a) ? 20 : (Math.max(a, b, c) == b) ? 45 : 96;
             e = (productArr.length % d == 0) ? productArr.length % d : (productArr.length - (productArr.length % d)) / d + 1;
-            oligoSummary.innerHTML = productArr.length + quantityOligoText + `<span id=product-oligo-quantity> ${e} </span>` + box + d;
+            oligoSummary.innerHTML = productArr.length + quantityOligoText + ` <span id=product-oligo-quantity>${e}</span> ` + box + d;
             priceOligo.innerText = parseInt(document.getElementById('product-oligo-subtotal').innerText) / e;
         }
         addToCartOligo.classList.remove('d-none');
@@ -586,21 +585,21 @@ function removeRow(value) {
 Kiểm tra coi có phải plate không
 -----------------------------------*/
 function isPlate() {
-    return (oligoType.value == 'OligoScreeningPlate' || oligoType.value == 'OligoGenomicPlate') ? true : false;
+    return (productSku.innerText == 'OligoScreeningPlate' || productSku.innerText == 'OligoGenomicPlate') ? true : false;
 }
 
 /*---------------------------------
 Kiểm tra coi có phải modified không
 -----------------------------------*/
 function isModified() {
-    return (oligoType.value == 'Endo-ExoModification') ? true : false;
+    return (productSku.innerText == 'Endo-ExoModification') ? true : false;
 }
 
 /*---------------------------------
 Kiểm tra coi có phải modified không
 -----------------------------------*/
 function isProbe() {
-    return (oligoType.value == 'Probe') ? true : false;
+    return (productSku.innerText == 'Probe') ? true : false;
 }
 
 /*---------------------------------
@@ -967,9 +966,9 @@ function arrangePlate(arr2ways) {
     totalSurchanges = plateArrangeFee + plateNameFee + wellNameFee;
     subTotalAmount = parseInt(document.getElementById('product-oligo-subtotal').innerText) + totalSurchanges;
 
-    oligoSummary.innerHTML = productArr.length + quantityOligoText + `<span id=product-oligo-quantity> ${productOption[2].length} </span>` + box + `96`;
+    oligoSummary.innerHTML = productArr.length + quantityOligoText + ` <span id=product-oligo-quantity>${productOption[2].length}</span> ` + box + `96`;
     priceOligo.innerText = subTotalAmount / productOption[2].length;
-    
+
     tableArrange += totalSurchagesText + totalSurchanges.toLocaleString() + `<br />`;
     tableArrange += `</div>`;
     productOption[4] = totalSurchanges;

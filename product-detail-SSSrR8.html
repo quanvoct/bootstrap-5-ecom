@@ -159,7 +159,7 @@
         <main class="col-lg-6">
           <article class="ps-lg-3">
             <h4 class="title text-dark">Tên sản phẩm</h4>
-            <h6 class="title text-dark">Mã sản phẩm: <span id="product-sku">PremiumOligo</span></h6>
+            <h6 class="title text-dark">Mã sản phẩm: <span id="product-sku">SSSrR8</span></h6>
             <div class="rating-wrap my-3">
               <div class="d-none" id="oligo-status">dry</div>
               <ul class="rating-stars">
@@ -243,12 +243,37 @@
                 </select> -->
 
               </div> <!-- col.// -->
-              <div class="col-md-4 col-6 mb-3 ">
-                <a href="#" class="btn btn-primary btn-dat-hang" data-bs-toggle="collapse"
-                  data-bs-target="#oligo-order-list" aria-expanded="false" aria-controls="oligo-order-list">
-                  <i class="me-1 fa fa-shopping-basket"></i> Đặt hàng
-                </a>
-              </div> <!-- col.// -->
+              <div class="row g-0">
+                <div class="col-md-4 col-6 mb-3">
+                  <div class="input-group input-spinner product-quantity quantity-input">
+                    <button class="btn btn-icon btn-light btn-decrease" type="button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#999" viewBox="0 0 24 24">
+                        <path d="M19 13H5v-2h14v2z"></path>
+                      </svg>
+                    </button>
+                    <input class="form-control text-center quantity-input" type="text" name="product-quatity"
+                      id="show-quatity" value="1" pattern="[0-9]*">
+                    <button class="btn btn-icon btn-light btn-increase" type="button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#999" viewBox="0 0 24 24">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                      </svg>
+                    </button>
+                  </div> <!-- input-group.// -->
+                </div> <!-- col.// -->
+                <div class="col-md-4 col-6 mb-3 ">
+
+                  <form action="http://phusagenomics.com/public/cart" method="post">
+                    <input type="hidden" name="_token" value="bSWDsDfAZHJcIZgtcjqOwzZhsLW24OCBXZphco2k">
+                    <input type="hidden" name="productID" value="7">
+                    <input type="hidden" name="productTypeID" id="productTypeID" value="">
+                    <input type="hidden" name="productName" value="Premium Oligo">
+                    <input type="hidden" name="productPrice" id="productPrice" value="0.00">
+                    <input type="hidden" name="productQuatity" id="productQuatity" value="1">
+                    <button type="submit" class="btn btn-primary add-to-cart"><i class="me-1 fa fa-shopping-basket"></i>
+                      Thêm vào giỏ hàng</button>
+                  </form>
+                </div> <!-- col.// -->
+              </div>
             </div> <!-- row.// -->
 
           </article> <!-- product-info-aside .// -->
@@ -399,9 +424,9 @@
 
               <div class="table-responsive-sm table-responsive-md table-responsive" id="oligo-arrange">
               </div>
-            <div id="oligo-summary">
-              
-            </div>
+              <div id="oligo-summary">
+
+              </div>
             </div>
             <div id="product-oligo-price" class="d-none"></div>
             <div class="row mt-3 align-items-center">
