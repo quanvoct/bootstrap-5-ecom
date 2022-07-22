@@ -34,10 +34,7 @@ var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFe
     excelProcess = document.querySelector('.excel-process'),
     excelDragDrop = document.querySelector('.drag-drop-placeholder'),
     validateExcel = document.getElementById('validate-excel'),
-
-    oligoNormalization = document.getElementById('oligo-normalization'),
-    checkConfirmOligoNormalization = document.getElementById('check-confirm-oligo-normalization'),
-    labelConfirmOligoNormalization = document.getElementById('label-confirm-oligo-normalization'),
+    
     wetBtn = document.querySelector('.btn-wet'),
     dryBtn = document.querySelector('.btn-dry'),
     oligoStatus = document.getElementById('oligo-status'),
@@ -60,8 +57,6 @@ var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFe
     priceOligo = document.getElementById('product-oligo-price');
 
 oligoTitleText.innerText = oligoTitle;
-noCustomLabel.innerHTML = noCustom;
-labelConfirmOligoNormalization.innerText = confirmChosenLabel;
 oligoName.placeholder = colName;
 oligoString.placeholder = colSequence;
 btnBeginOligo.innerHTML = beginOligoLabel;
@@ -103,7 +98,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [6, 15, 36, 75];
             odList = ['1.5+', '3+', '3+'];
             typeList = ['PremiumOligo.00', 'PremiumOligo.01', 'PremiumOligo.02'];
-            normalizationList = [100];
+            normalizationList = [100,100,50];
             turnAroundTimeList = [48, 48, 72];
             unitPriceList = [4900, 4900, 5700];
             break;
@@ -114,7 +109,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [76, 121, 135];
             odList = ['5+', '5+'];
             typeList = ['LongOligo.01', 'LongOligo.02'];
-            normalizationList = [50];
+            normalizationList = [0,0];
             turnAroundTimeList = [96, 96];
             unitPriceList = [8200, 9600];
             break;
@@ -125,7 +120,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [15, 31, 70];
             odList = ['30', '30'];
             typeList = ['HiOD Oligo.01.30', 'HiOD Oligo.02.30'];
-            normalizationList = [];
+            normalizationList = [0,0];
             turnAroundTimeList = [48, 72];
             unitPriceList = [18000, 21800];
             break;
@@ -136,7 +131,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [6, 15, 36, 51, 80];
             odList = ['1+', '1.5+', '1.5+', '1.5+'];
             typeList = ['GenomicOligoGA.00', 'GenomicOligoGA.01', 'GenomicOligoGA.02', 'GenomicOligoGA.03'];
-            normalizationList = [50];
+            normalizationList = [0,0,0,0];
             turnAroundTimeList = [48, 48, 72, 72];
             unitPriceList = [5400, 5400, 6000, 6200];
             break;
@@ -146,7 +141,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [15, 36, 75];
             odList = ['0.5+', '0.5+'];
             typeList = ['OSP.01.02', 'OSP.02.02'];
-            normalizationList = [];
+            normalizationList = [0,0];
             turnAroundTimeList = [48, 72];
             unitPriceList = [2800, 3200];
             break;
@@ -157,7 +152,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [15, 36, 75];
             odList = ['0.5+', '0.5+'];
             typeList = ['GSPGA.01.02', 'GSPGA.02.02'];
-            normalizationList = [];
+            normalizationList = [0,0];
             turnAroundTimeList = [48, 72];
             unitPriceList = [3300, 3800];
             break;
@@ -168,17 +163,67 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [6, 36, 50];
             odList = ['5', '5'];
             typeList = ['Modi.premium.01', 'Modi.premium.02'];
-            normalizationList = [];
+            normalizationList = [0,0];
             turnAroundTimeList = [168, 168];
             unitPriceList = [4900, 5700];
             modifiedBaseList = ['I', 'O', 'U'];
             modifiedFeeList = [190000, 240000, 190000];
-            modified5ValueList = ['Thiol-C6-S-S', 'Biotin', 'C6-Spacer', 'C3-Spacer', 'NH2-C6', 'NH2-C12', 'PO4-Phosphat'];
-            modified5NameList = ['Thiol C6 S-S 200 nmol', 'Biotin 200 nmol', 'C6-Spacer 200 nmol', 'C3-Spacer 200 nmol', 'NH2 C6 200 nmol', 'NH2 C12 200 nmol', 'Phosphorylation 200 nmol'];
-            modified5FeeList = [2400000, 1170000, 820000, 820000, 584000, 1050000, 584000];
-            modified3ValueList = ['C6-Spacer', 'C3-Spacer', 'Thiol-C6-S-S', 'PO4-Phosphat', 'Biotin', 'Biotin-TEG', 'NH2-C6', 'NH2-C12'];
-            modified3NameList = ['C6-Spacer 200 nmol', 'C3-Spacer 200 nmol', 'Thiol C6 S-S 200 nmol', 'Phosphorylation 200 nmol', 'Biotin 200 nmol', 'Biotin-TEG 200 nmol', 'NH2 C6 200nmol', 'NH2 C12 200 nmol'];
-            modified3FeeList = [820000, 820000, 2340000, 584000, 700000, 1634000, 584000, 1050000];
+            modified5ValueList = [
+                'Thiol-C6-S-S', 
+                'Biotin', 
+                'C6-Spacer', 
+                'C3-Spacer', 
+                'NH2-C6', 
+                'NH2-C12', 
+                'PO4-Phosphat'
+            ];
+            modified5NameList = [
+                'Thiol C6 S-S 200 nmol', 
+                'Biotin 200 nmol', 
+                'C6-Spacer 200 nmol', 
+                'C3-Spacer 200 nmol', 
+                'NH2 C6 200 nmol', 
+                'NH2 C12 200 nmol', 
+                'Phosphorylation 200 nmol'
+            ];
+            modified5FeeList = [
+                2400000, 
+                1170000, 
+                820000, 
+                820000, 
+                584000, 
+                1050000, 
+                584000
+            ];
+            modified3ValueList = [
+                'C6-Spacer', 
+                'C3-Spacer', 
+                'Thiol-C6-S-S', 
+                'PO4-Phosphat', 
+                'Biotin', 
+                'Biotin-TEG', 
+                'NH2-C6', 
+                'NH2-C12'
+            ];
+            modified3NameList = [
+                'C6-Spacer 200 nmol', 
+                'C3-Spacer 200 nmol', 
+                'Thiol C6 S-S 200 nmol', 
+                'Phosphorylation 200 nmol', 
+                'Biotin 200 nmol', 
+                'Biotin-TEG 200 nmol', 
+                'NH2 C6 200nmol', 
+                'NH2 C12 200 nmol'
+            ];
+            modified3FeeList = [
+                820000, 
+                820000, 
+                2340000, 
+                584000, 
+                700000, 
+                1634000, 
+                584000, 
+                1050000];
             break;
         case 'Probe':
             baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
@@ -186,7 +231,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [6, 36, 50];
             odList = ['5', '5'];
             typeList = ['Probe.Premium 01', 'Probe.Premium 02'];
-            normalizationList = [];
+            normalizationList = [0,0];
             turnAroundTimeList = [576, 576];
             unitPriceList = [4900, 5700];
             probeValueList = [
@@ -277,34 +322,22 @@ btnBeginOligo.addEventListener('click', function (e) {
 
 wetBtn.addEventListener('click', function () {
     oligoStatus.innerText = 'wet';
-    oligoNormalization.classList.remove('d-none');
-    checkConfirmOligoNormalization.classList.remove('d-none');
-    labelConfirmOligoNormalization.classList.remove('d-none');
-    btnBeginOligo.disabled = true;
-    addOption(oligoNormalization, normalizationList, normalizationList, ' pmol/µL');
-    checkConfirmOligoNormalization.addEventListener('click', function () {
-        btnBeginOligo.disabled = (checkConfirmOligoNormalization.checked == true) ? false : true;
-    })
+    btnBeginOligo.disabled = false;
 })
 
 dryBtn.addEventListener('click', function () {
     oligoStatus.innerText = 'dry';
-    oligoNormalization.classList.add('d-none');
-    checkConfirmOligoNormalization.classList.add('d-none');
-    labelConfirmOligoNormalization.classList.add('d-none');
     btnBeginOligo.disabled = false;
-    checkConfirmOligoNormalization.checked = false;
 })
 
 oligoSubmit.addEventListener('click', function (e) {
     e.preventDefault();
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
         oString = oligoString.value.replace(/\s/g, '').toUpperCase(),
-        oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
         oStatus = (oligoStatus.innerText == 'dry') ? yes : no,
         mod5 = fiveModified.value, mod3 = threeModified.value, oProbe = probeOligo.value;
     if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>`) {
-        productArr.push(createRow(oName, oString, oStatus, oNormalization, mod5, mod3, oProbe));
+        productArr.push(createRow(oName, oString, oStatus, mod5, mod3, oProbe));
         oligoList.innerHTML = displayOligo(productArr);
         confirmOligo.classList.remove('d-none');
         resetForm();
@@ -357,12 +390,11 @@ oligoEdit.addEventListener('click', function (e) {
     e.preventDefault();
     let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
         oString = oligoString.value.replace(/\s/g, '').toUpperCase(),
-        oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
         oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
     for (let i = 0; i < productArr.length; i++) {
         if (productArr[i][0] == oligoName.value) {
             if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>`) {
-                productArr[i] = createRow(oName, oString, oStatus, oNormalization);
+                productArr[i] = createRow(oName, oString, oStatus);
                 oligoList.innerHTML = displayOligo(productArr);
                 resetForm();
             }
@@ -477,14 +509,13 @@ function validateListOligo(listInput) {
         if (oligo.length > 1) {
             let oName = oligo[0].replace(/\s/g, '').replace(/\n/g, '').replace(/\"/g, '').toUpperCase(),
                 oString = oligo[1].replace(/\s/g, '').replace(/\n/g, '').replace(/\"/g, '').toUpperCase(),
-                oNormalization = (oligoStatus.innerText == "wet") ? oligoNormalization.value : '0',
                 oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
             // console.log(i, oName, validateOligo(oName, oString));
             if (validateOligo(oName, oString) != '') {
                 textErr += validateOligo(oName, oString);
             }
             if (validateOligo(oName, oString) == '' || validateOligo(oName, oString) == '<li>' + difficultOligo + '</li>') {
-                productArr.push(createRow(oName, oString, oStatus, oNormalization));
+                productArr.push(createRow(oName, oString, oStatus));
             }
         } else if (oligo.length <= 1) {
             textErr += (oligo[0] != '') ? `<li>${generalErrText}</li>` : '';
@@ -592,11 +623,11 @@ function resetForm() {
 /*---------------------------------
 Tạo thêm một mảng con (hàng dữ liệu)
 -----------------------------------*/
-function createRow(name, sequence, dry, normalization, modified5 = '', modified3 = '', prb = '') {
+function createRow(name, sequence, dry, modified5 = '', modified3 = '', prb = '') {
     let array = [];
     name = name.replace(/\s/g, '').toUpperCase();
     sequence = sequence.replace(/\s/g, '').toUpperCase();
-    array.push(name, sequence, dry, normalization, modified5, modified3, prb);
+    array.push(name, sequence, dry, modified5, modified3, prb);
     return array;
 }
 
@@ -794,30 +825,35 @@ function displayOligo(arr2ways) {
                 case (!isNaN(stringLength[1]) && arr2ways[i][1].length >= stringLength[0] && arr2ways[i][1].length <= stringLength[1]):
                     od = odList[0];
                     type = typeList[0];
+                    norrmalization = normalizationList[0];
                     eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[0] + time));
                     unitPrice = unitPriceList[0];
                     break;
                 case (!isNaN(stringLength[2]) && arr2ways[i][1].length > stringLength[1] && arr2ways[i][1].length <= stringLength[2]):
                     od = odList[1];
                     type = typeList[1];
+                    norrmalization = normalizationList[1];
                     eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[1] + time));
                     unitPrice = unitPriceList[1];
                     break;
                 case (!isNaN(stringLength[3]) && arr2ways[i][1].length > stringLength[2] && arr2ways[i][1].length <= stringLength[3]):
                     od = odList[2];
                     type = typeList[2];
+                    norrmalization = normalizationList[2];
                     eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[2] + time));
                     unitPrice = unitPriceList[2];
                     break;
                 case (!isNaN(stringLength[4]) && arr2ways[i][1].length > stringLength[3] && arr2ways[i][1].length <= stringLength[4]):
                     od = odList[3];
                     type = typeList[3];
+                    norrmalization = normalizationList[3];
                     eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[3] + time));
                     unitPrice = unitPriceList[3];
                     break;
                 case (!isNaN(stringLength[5]) && arr2ways[i][1].length > stringLength[4] && arr2ways[i][1].length <= stringLength[5]):
                     od = odList[4];
                     type = typeList[4];
+                    norrmalization = normalizationList[4];
                     eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[4] + time));
                     unitPrice = unitPriceList[4];
                     break;
@@ -848,7 +884,7 @@ function displayOligo(arr2ways) {
                         <td scope="col" class="text-center">${od}</td>
                         <td scope="col" class="text-center">${type}</td>`;
             str += (isModified() || isProbe()) ? `` : `<td scope="col" class="text-center">${arr2ways[i][2]}</td>`;
-            str += (isModified() || isProbe()) ? `` : `<td scope="col" class="text-center">${arr2ways[i][3]}</td>`;
+            str += (isModified() || isProbe()) ? `` : `<td scope="col" class="text-center">${norrmalization}</td>`;
             str += `    <td scope = "col" class="text-end" > ${unitPrice.toLocaleString()}</td>
                         <td scope="col" class="text-end">${fee.toLocaleString()}</td>
                         <td scope="col" class="text-end">${total.toLocaleString()}</td>
