@@ -188,9 +188,61 @@ btnDatHang.addEventListener('click', function () {
             typeList = ['Probe.Premium 01', 'Probe.Premium 02'];
             normalizationList = [];
             turnAroundTimeList = [576, 576];
-            unitPriceList = [4300, 5000];
-            probeValueList = ['5\'FAM-3\'TAMRA', '5\'HEX-3\'TAMRA', '5\'TET-3\'TAMRA', '5\'JOE-3\'TAMRA', '5\'FAM-3\'BHQ1', '5\'HEX-3\'BHQ1', '5\'TET-3\'BHQ1', '5\'JOE-3\'BHQ1', '5\'YakimaYellow-3\'BHQ1', '5\'Cal Fluor Orange 560-3\'BHQ1', '5\'Cal Fluor Gold 540-3\'BHQ1', '5\'TET-3\'BHQ2', '5\'Cy3-3\'BHQ2', '5\'Cy5-3\'BHQ2', '5\'TAMRA-3\'BHQ2', '5\'ROX-3\'BHQ2', '5\'Texas Red-3\'BHQ2', '5\'Cal Fluor Red 610-3\'BHQ2', '5\'Quasar 670-3\'BHQ2', '5\'Quasar 570-3\'BHQ2', '5\'Quasar 705-3\'BHQ2', '5\'Cal Flour Orange 560-3\'BHQ2', '5\'Cy5-3\'BHQ3', '5\'Quasar 670-3\'BHQ3', '5\'Quasar 705-3\'BHQ3'];
-            probeFeeList = [4000000, 4000000, 4000000, 4200000, 2800000, 4000000, 4200000, 4200000, 4200000, 4200000, 6185000, 4200000, 4200000, 6185000, 4200000, 6185000, 6185000, 6185000, 6185000, 6185000, 6185000, 6185000, 6185000, 6185000, 6185000];
+            unitPriceList = [4900, 5700];
+            probeValueList = [
+                '5\'FAM-3\'TAMRA', 
+                '5\'HEX-3\'TAMRA', 
+                '5\'TET-3\'TAMRA', 
+                '5\'JOE-3\'TAMRA', 
+                '5\'FAM-3\'BHQ1', 
+                '5\'HEX-3\'BHQ1', 
+                '5\'TET-3\'BHQ1', 
+                '5\'JOE-3\'BHQ1', 
+                '5\'YakimaYellow-3\'BHQ1', 
+                '5\'Cal Fluor Orange 560-3\'BHQ1', 
+                '5\'Cal Fluor Gold 540-3\'BHQ1', 
+                '5\'TET-3\'BHQ2', 
+                '5\'Cy3-3\'BHQ2', 
+                '5\'Cy5-3\'BHQ2', 
+                '5\'TAMRA-3\'BHQ2', 
+                '5\'ROX-3\'BHQ2', 
+                '5\'Texas Red-3\'BHQ2', 
+                '5\'Cal Fluor Red 610-3\'BHQ2', 
+                '5\'Quasar 670-3\'BHQ2', 
+                '5\'Quasar 570-3\'BHQ2', 
+                '5\'Quasar 705-3\'BHQ2', 
+                '5\'Cal Flour Orange 560-3\'BHQ2', 
+                '5\'Cy5-3\'BHQ3', 
+                '5\'Quasar 670-3\'BHQ3', 
+                '5\'Quasar 705-3\'BHQ3'
+            ];
+            probeFeeList = [
+                4000000, 
+                4000000, 
+                4000000, 
+                4200000, 
+                2800000, 
+                4000000, 
+                4200000, 
+                4200000, 
+                4200000, 
+                4200000, 
+                6185000, 
+                4200000, 
+                4200000, 
+                6185000, 
+                4200000, 
+                6185000, 
+                6185000, 
+                6185000, 
+                6185000, 
+                6185000, 
+                6185000, 
+                6185000, 
+                6185000, 
+                6185000, 
+                6185000
+            ];
             break;
         default:
             break;
@@ -526,8 +578,6 @@ function resetForm() {
     oligoName.value = '';
     oligoName.disabled = false;
     oligoString.value = '';
-    oligoStatus.checked = false;
-    oligoNormalization.value = 0;
     oligoName.focus();
     stringCounter.classList.add('d-none');
     oligoListInput.value = '';

@@ -116,7 +116,7 @@
       <ol class="breadcrumb ondark mb-0">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
         <li class="breadcrumb-item"><a href="/account.html">Tài khoản</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Cài đặt tài khoản</li>
+        <li class="breadcrumb-item active" aria-current="page">Quỹ tích luỹ</li>
       </ol>
 
     </div> <!-- container //  -->
@@ -133,89 +133,155 @@
           <nav class="nav flex-lg-column nav-pills mb-4 sticky">
             <a class="nav-link" href="account.html">Thông tin tài khoản</a>
             <a class="nav-link" href="account-orders.html">Các đơn hàng</a>
-            <a class="nav-link" href="account-funds.html">Quỹ tích luỹ</a>
-            <a class="nav-link active c-pointer">Cập nhật thông tin</a>
+            <a class="nav-link active c-pointer">Quỹ tích luỹ</a>
+            <a class="nav-link" href="account-settings.html">Cập nhật thông tin</a>
             <a class="nav-link" href="account-password.html">Đổi mật khẩu</a>
             <a class="nav-link" href="index.html">Đăng xuất tài khoản</a>
           </nav>
           <!--   COMPONENT MENU LIST END .//   -->
         </aside>
-        <main class="col-lg-9  col-xl-9">
-          <article class="card">
-            <div class="card-header">
-              <h5 class="card-title mt-2 text-center">Cập nhật thông tin</h5>
-            </div>
-            <div class="content-body">
-              <form>
-                <div class="mb-3">
-                  <label for="fullname" class="form-label">Họ và tên</label>
-                  <input type="text" class="form-control" id="fullname" placeholder="Nguyễn Văn A" required>
-                </div>
-                <div class="mb-3">
-                  <label for="address" class="form-label">Địa chỉ</label>
-                  <input type="text" class="form-control" id="address"
-                    placeholder="Số tầng, toà nhà, số nhà, đường phố, phường xã">
-                </div>
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="mb-3">
-                      <select class="form-select" id="city" class="form-control mb-3 d-block" required>
-                        <option value="" selected>Chọn tỉnh / thành phố</option>
-                        <option value="CTA">Cần Thơ</option>
-                        <option value="HCM">Hồ Chí Minh</option>
-                        <option value="HAN">Hà Nội</option>
-                        <option value="HPH">Hải Phòng</option>
-                        <option value="DAD">Đà Nẵng</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="mb-3">
-                      <select class="form-select" id="district" class="form-control mb-3 d-block" required>
-                        <option value="">Chọn quận / huyện</option>
-                        <option value="CTA">Ninh Kiều</option>
-                        <option value="HCM">Cái Răng</option>
-                        <option value="HAN">Bình Thủy</option>
-                        <option value="HPH">Phong Điền</option>
-                        <option value="DAD">Thốt Nốt</option>
-                        <option value="DAD">Vĩnh Thạnh</option>
-                        <option value="DAD">Thới Lai</option>
-                        <option value="DAD">Cờ Đỏ</option>
-                        <option value="DAD">Ô Môn</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label for="phone" class="form-label">Điện thoại</label>
-                  <input type="text" class="form-control" id="phone" placeholder="Số điện thoại của bạn" required>
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control" id="email" placeholder="Email của bạn" required>
-                </div>
-                <div class="mb-3">
-                  <label for="orgname" class="form-label">Cơ quan / Tổ chức / Đơn vị / Công ty</label>
-                  <input type="text" class="form-control" id="orgname" placeholder="Thông tin xuất hoá đơn VAT"
-                    required>
-                </div>
-                <div class="mb-3">
-                  <label for="taxid" class="form-label">Mã số thuế</label>
-                  <input type="text" class="form-control" id="taxid" placeholder="Mã số thuế" required>
-                </div>
-                <div class="mb-3">
-                  <label for="taxadd" class="form-label">Địa chỉ đăng ký thuế</label>
-                  <input type="text" class="form-control" id="taxadd" placeholder="Địa chỉ đăng ký thuế" required>
-                </div>
-                <hr class="my-5">
-                <div class="mb-3">
-                  <label for="confirm" class="form-label">Xác minh tài khoản</label>
-                  <input type="password" class="form-control" id="confirm"
-                    placeholder="Nhập mật khẩu để xác nhận thông tin" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Cập nhật</button>
-              </form>
 
+        <main class="col-lg-9  col-xl-9">
+
+          <article class="card">
+            <div class="content-body">
+
+
+              <div class="icontext d-flex align-items-start my-4">
+                <span class="icon icon-md rounded-circle border text-primary me-3">
+                  <i class="fa-solid fa-piggy-bank"></i>
+                </span>
+                <div class="text">
+                  <p class="text-muted">Số dư tích lũy</p>
+                  <h3>4.512.000đ</h3>
+                </div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-nap-tien" onclick="reset()">Nạp
+                  tiền</button>
+              </div> <!-- iconbox // -->
+
+
+              <!-- Modal Nạp tiền -->
+              <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="modal-nap-tien" tabindex="-1" aria-labelledby="modal-nap-tien__title"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+
+
+                  <div class="modal-content step-1">
+                    <form action="">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="modal-nap-tien__title">Nạp tiền tích lũy</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <label for="input-money" class="form-label">Nhập số tiền cần nạp</label>
+                        <input type="number" id="input-money" class="form-control">
+                        <div class="form-text">
+                          Giao dịch sẽ được ghi nhận và được xác nhận trong vòng 24 giờ làm việc.
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <p class="text-danger" id="modal-nap-tien__response"></p>
+                        <button type="submit" class="btn btn-primary btn-nap-tien">Nạp tiền</button>
+                      </div>
+                    </form>
+                  </div>
+
+
+                  <div class="modal-content text-center d-none step-2">
+                  </div>
+
+
+                </div>
+              </div>
+              <!-- Modal Nạp tiền -->
+
+              <hr class="my-3">
+
+              <h2>Lịch sử tích lũy</h2>
+              <div class="tracking-list">
+
+
+                <div class="tracking-item">
+                  <div class="tracking-icon status-intransit">
+                    <svg class="svg-inline--fa fa-circle fa-w-16" aria-hidden="true" data-prefix="fas"
+                      data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                      data-fa-i2svg="">
+                      <path fill="currentColor"
+                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>
+                    </svg>
+                    <!-- <i class="fas fa-circle"></i> -->
+                  </div>
+                  <div class="tracking-date">16/05/2022<span>04:48</span></div>
+                  <div class="tracking-content">+1.500.000đ • Võ Minh Quân nạp tiền tích lũy<span>Mã giao dịch: 4387 •
+                      Số dư sau giao dịch: 4.512.000đ • IP giao dịch: 102.158.25.44</span></div>
+                </div>
+
+
+                <div class="tracking-item">
+                  <div class="tracking-icon status-intransit">
+                    <svg class="svg-inline--fa fa-circle fa-w-16" aria-hidden="true" data-prefix="fas"
+                      data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                      data-fa-i2svg="">
+                      <path fill="currentColor"
+                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>
+                    </svg>
+                    <!-- <i class="fas fa-circle"></i> -->
+                  </div>
+                  <div class="tracking-date">16/05/2022<span>04:48</span></div>
+                  <div class="tracking-content">+12.000đ • Tiền thừa phí giao hàng<span>Mã giao dịch: 4325 • Số dư sau
+                      giao dịch: 3.012.000đ • IP giao dịch: 102.158.25.44</span></div>
+                </div>
+
+
+                <div class="tracking-item">
+                  <div class="tracking-icon status-intransit">
+                    <svg class="svg-inline--fa fa-circle fa-w-16" aria-hidden="true" data-prefix="fas"
+                      data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                      data-fa-i2svg="">
+                      <path fill="currentColor"
+                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>
+                    </svg>
+                    <!-- <i class="fas fa-circle"></i> -->
+                  </div>
+                  <div class="tracking-date">16/05/2022<span>04:48</span></div>
+                  <div class="tracking-content">-2.200.000đ • Thanh toán đơn hàng 3682<span>Mã giao dịch: 4215 • Số dư
+                      sau giao dịch: 3.000.000đ • IP giao dịch: 102.158.25.44</span></div>
+                </div>
+
+
+                <div class="tracking-item">
+                  <div class="tracking-icon status-intransit">
+                    <svg class="svg-inline--fa fa-circle fa-w-16" aria-hidden="true" data-prefix="fas"
+                      data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                      data-fa-i2svg="">
+                      <path fill="currentColor"
+                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>
+                    </svg>
+                    <!-- <i class="fas fa-circle"></i> -->
+                  </div>
+                  <div class="tracking-date">16/05/2022<span>04:48</span></div>
+                  <div class="tracking-content">+5.000.000đ • Võ Minh Quân nạp tiền tích lũy<span>Mã giao dịch: 4209 •
+                      Số dư sau giao dịch: 5.200.000đ • IP giao dịch: 102.158.25.44</span></div>
+                </div>
+
+
+                <div class="tracking-item">
+                  <div class="tracking-icon status-intransit">
+                    <svg class="svg-inline--fa fa-circle fa-w-16" aria-hidden="true" data-prefix="fas"
+                      data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                      data-fa-i2svg="">
+                      <path fill="currentColor"
+                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>
+                    </svg>
+                    <!-- <i class="fas fa-circle"></i> -->
+                  </div>
+                  <div class="tracking-date">16/05/2022<span>04:48</span></div>
+                  <div class="tracking-content">+200.000đ • Dành cho tài khoản mới<span>Mã giao dịch: 4203 • Số dư sau
+                      giao dịch: 200.000đ • IP giao dịch: 102.158.25.44</span></div>
+                </div>
+
+
+              </div>
             </div> <!-- card-body .// -->
           </article> <!-- card .// -->
         </main>
@@ -463,6 +529,45 @@
   <script src="js/sheetjs/xlsx.full.min.js"></script>
   <script src="js/lang.js"></script>
   <script src="js/scriptOligo.js"></script>
+
+  <script>
+    var step1 = document.querySelector('.step-1'),
+      step2 = document.querySelector('.step-2'),
+      submitMoney = document.querySelector('.btn-nap-tien'),
+      inputMoney = document.getElementById('input-money');
+    function reset() {
+      step1.classList.remove('d-none');
+      step2.classList.add('d-none');
+      document.getElementById('modal-nap-tien__response').innerText = '';
+    }
+    submitMoney.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (inputMoney.value.length >= 6) {
+        content = `   <img
+                        src="https://img.vietqr.io/image/970437-007704070024764-WznlrF.jpg?accountName=C%C3%B4ng%20ty%20TNHH%20MTV%20Sinh%20H%C3%B3a%20Ph%C3%B9%20Sa&amount=${inputMoney.value}&addInfo=nap-tien-tich-luy"
+                        alt="" srcset="">
+                        <p class="text-primary">Vui lòng sử dụng ứng dụng mobile banking của bạn. Quét mã bên dưới và hoàn
+                        tất quá trình chuyển khoản để nạp tiền tích lũy.</p>
+                        <hr class="py-3">
+                      <p>Hoặc chuyển khoản theo thông tin bên dưới:
+                      <ul style="list-style-type: none;" class="p-0">
+                        <li>Ngân hàng: HD Bank</li>
+                        <li>Số tài khoản: 0077 0407 0024 764</li>
+                        <li>Tên tài khoản: Công ty TNHH MTV Sinh Hóa Phù Sa</li>
+                        <li>Số tiền: ${inputMoney.value.toLocaleString()}</li>
+                        <li>Nội dung: Nạp tiền tích lũy</li>
+                      </ul>
+                      </p>
+                      
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Hoàn thành</button>`;
+        step2.innerHTML = content;
+        step1.classList.add('d-none');
+        step2.classList.remove('d-none');
+      } else {
+        document.getElementById('modal-nap-tien__response').innerText = 'Số tiền tối thiểu phải từ 100.000đ';
+      }
+    })
+  </script>
   <div>
 </body>
 
