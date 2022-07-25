@@ -295,6 +295,8 @@ btnDatHang.addEventListener('click', function () {
     if (isProbe() || isModified()) {
         cardOligoInput.classList.remove('d-none');
         cardOligoShow.classList.remove('d-none');
+        document.querySelector('.card-oligo-input ul>li:first-child').classList.add('d-none');
+        document.querySelector('.card-oligo-input ul>li:last-child').classList.add('d-none');
         if (isModified()) {
             fiveModified.parentElement.classList.remove('d-none');
             addOption(fiveModified, modified5ValueList, modified5NameList);
@@ -937,7 +939,7 @@ function arrangePlate(arr2ways) {
                         <input type="text" class="form-control plate-label" onchange="updateOption(this)" placeholder="${plateLabelPlaceholder + (k / 96 + 1)}" value="${pName}">
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-3 d-none">
                     <div class="form-check mb-3 align-middle">
                     <input class="form-check-input well-label-input" type="checkbox" onchange="updateOption(this)" id="well-label-${k}" ${(productOption[3][k / 96]) ? 'checked' : ''}>
                         <label class="form-check-label well-label" for="well-label-${k}">
@@ -1001,7 +1003,7 @@ function arrangePlate(arr2ways) {
                                     <input type="text" class="form-control plate-label" onchange="updateOption(this)" placeholder="${plateLabelPlaceholder + (k / 96 + 1)}" value="${pName}">
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-3 d-none">
                                 <div class="form-check mb-3 align-middle">
                                     <input class="form-check-input well-label-input" type="checkbox" onchange="updateOption(this)" id="well-label-${k}" ${(productOption[3][k / 96]) ? 'checked' : ''}>
                                         <label class="form-check-label well-label" for="well-label-${k}">

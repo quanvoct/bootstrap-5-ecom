@@ -283,11 +283,11 @@
             <ul class="nav nav-tabs card-header-tabs">
               <li class="nav-item">
                 <a data-bs-target="#tab_list" data-bs-toggle="tab"
-                  class="nav-link c-pointer nav-list active">${oligoListTabLabel}</a>
+                  class="nav-link c-pointer nav-list">${oligoListTabLabel}</a>
               </li>
               <li class="nav-item">
                 <a data-bs-target="#tab_single" data-bs-toggle="tab"
-                  class="nav-link c-pointer nav-single">${oligoSingleTabLabel}</a>
+                  class="nav-link c-pointer nav-single active">${oligoSingleTabLabel}</a>
               </li>
               <li class="nav-item">
                 <a data-bs-target="#tab_excel" data-bs-toggle="tab"
@@ -296,7 +296,7 @@
             </ul>
           </header>
           <div class="tab-content">
-            <article id="tab_list" class="tab-pane show active card-body">
+            <article id="tab_list" class="tab-pane card-body">
               <form>
                 <fieldset>
                   <legend class="title-list">${oligoListTitle}</legend>
@@ -307,7 +307,7 @@
                 </fieldset>
               </form>
             </article> <!-- tab-content.// -->
-            <article id="tab_single" class="tab-pane card-body">
+            <article id="tab_single" class="tab-pane card-body show active">
               <div class="card-body">
                 <form>
                   <fieldset>
