@@ -91,7 +91,7 @@ if (productArr.length > 0) {
     };
 }
 btnDatHang.addEventListener('click', function () {
-    switch (productSku.innerText) {
+    switch (oligoType.value) {
         case 'PremiumOligo':
             baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
             nameLength = [3, 15];
@@ -427,6 +427,7 @@ confirmOligo.addEventListener('click', function (e) {
         confirmOligo.classList.add('d-none');
         if (isPlate()) {
             oligoArrange.innerHTML = arrangePlate(productArr);
+            plateHint.classList.remove('d-none');
             addToCartOligo.disabled = true;
             btnArrangeGroup.classList.remove('d-none');
         } else {
@@ -666,21 +667,21 @@ function removeRow(value) {
 Kiểm tra coi có phải plate không
 -----------------------------------*/
 function isPlate() {
-    return (productSku.innerText == 'OligoScreeningPlate' || productSku.innerText == 'OligoGenomicPlate') ? true : false;
+    return (oligoType.value == 'OligoScreeningPlate' || oligoType.value == 'OligoGenomicPlate') ? true : false;
 }
 
 /*---------------------------------
 Kiểm tra coi có phải modified không
 -----------------------------------*/
 function isModified() {
-    return (productSku.innerText == 'Endo-ExoModification') ? true : false;
+    return (oligoType.value == 'Endo-ExoModification') ? true : false;
 }
 
 /*---------------------------------
 Kiểm tra coi có phải modified không
 -----------------------------------*/
 function isProbe() {
-    return (productSku.innerText == 'Probe') ? true : false;
+    return (oligoType.value == 'Probe') ? true : false;
 }
 
 /*---------------------------------
@@ -799,6 +800,7 @@ function displayOligo(arr2ways) {
         <table class="table table-striped table-hover table-sm align-middle">
             <thead>
                 <tr>
+                <th scope="col" class="text-center">&#8470;<th>
                     <th scope="col" class="text-center">${colName}</th>`;
         str += (isModified()) ? `<th scope="col" class="text-center">5\' modified</th>` : ``;
         str += `    <th scope="col" style="max-width: 25rem;">${colSequence}</th>`;
@@ -812,7 +814,7 @@ function displayOligo(arr2ways) {
         str += `    <th scope="col" class="text-end">${colUnitPrice}</th>
                     <th scope="col" class="text-end">${colFee}</th>
                     <th scope="col" class="text-end">${colTotal}</th>
-                    <th scope="col" class="text-center">${colEDD}</th>
+                    <!--th scope="col" class="text-center">${colEDD}<th-->
                     <th scope="col">&nbsp;</th>
                 </tr>
             </thead>
@@ -864,18 +866,20 @@ function displayOligo(arr2ways) {
             fee += (arr2ways[i][1].length <= 14) ? lowNu : 0;
             fee += (arr2ways[i][2] == yes) ? dryFee : 0;
             if (isModified()) {
-                fee += (arr2ways[i][4] != '') ? parseInt(modified5FeeList[modified5ValueList.indexOf(arr2ways[i][4])]) : 0;
-                fee += (arr2ways[i][5] != '') ? parseInt(modified3FeeList[modified3ValueList.indexOf(arr2ways[i][5])]) : 0;
+                fee += (arr2ways[i][3] != '') ? parseInt(modified5FeeList[modified5ValueList.indexOf(arr2ways[i][4])]) : 0;
+                fee += (arr2ways[i][4] != '') ? parseInt(modified3FeeList[modified3ValueList.indexOf(arr2ways[i][5])]) : 0;
                 for (let j = 0; j < modifiedBaseList.length; j++) {
                     fee += (arr2ways[i][1].includes(modifiedBaseList[j])) ? (arr2ways[i][1].match(new RegExp(modifiedBaseList[j], "g")) || []).length * parseInt(modifiedFeeList[j]) : 0;
                 }
             } else if (isProbe()) {
-                fee += (arr2ways[i][6] != '') ? parseInt(probeFeeList[probeValueList.indexOf(arr2ways[i][6])]) : 0;
+                fee += (arr2ways[i][5] != '') ? parseInt(probeFeeList[probeValueList.indexOf(arr2ways[i][5])]) : 0;
+                console.log(arr2ways[i]);
             }
             total = unitPrice * arr2ways[i][1].length + fee;
             subTotal += total;
             str += `<tr>
-                        <td scope="col" class="text-center">${arr2ways[i][0]}</td>`;
+            <td scope="col" class="text-center">${i}</td>
+            <td scope="col" class="text-center">${arr2ways[i][0]}</td>`;
             str += (isModified()) ? `<td scope="col" class="text-center">${arr2ways[i][4]}</td>` : ``;
             str += `    <td scope="col" style="max-width: 25rem;">${arr2ways[i][1]}</td>`;
             str += (isModified()) ? `<td scope="col" class="text-center">${arr2ways[i][5]}</td>` : ``;
@@ -888,7 +892,7 @@ function displayOligo(arr2ways) {
             str += `    <td scope = "col" class="text-end" > ${unitPrice.toLocaleString()}</td>
                         <td scope="col" class="text-end">${fee.toLocaleString()}</td>
                         <td scope="col" class="text-end">${total.toLocaleString()}</td>
-                        <td scope="col" class="text-center">${eDD}</td>
+                        <!--td scope="col" class="text-center">${eDD}<td-->
                         <td scope="col" class="text-center">
                             <button class="btn btn-link btn-edit" onclick="editRow(${i})"><i class="fa-solid fa-pencil"></i></button>
                             <button class="btn btn-link btn-remove" onclick="removeRow(${i})"><i class="fa-solid fa-trash"></i></button>
@@ -1103,7 +1107,7 @@ var do_file = (function () {
         use_utf8 = true;
 
     var xw = function xw(data, cb) {
-        var worker = new Worker('./js/sheetjs/xlsxworker.js');
+        var worker = new Worker('http://phusagenomics.com/public/fe/js/sheetjs/xlsxworker.js');
         worker.onmessage = function (e) {
             switch (e.data.t) {
                 case 'ready': break;
