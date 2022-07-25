@@ -1,4 +1,4 @@
-var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFee = 50000,
+var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFee = 50000, normalizationFee = 2000,
     btnDatHang = document.querySelector('.btn-dat-hang'),
     oligoTitleText = document.querySelector('.oligo-title'),
     noCustomLabel = document.querySelector('.no-custom'),
@@ -34,7 +34,7 @@ var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFe
     excelProcess = document.querySelector('.excel-process'),
     excelDragDrop = document.querySelector('.drag-drop-placeholder'),
     validateExcel = document.getElementById('validate-excel'),
-    
+
     wetBtn = document.querySelector('.btn-wet'),
     dryBtn = document.querySelector('.btn-dry'),
     oligoStatus = document.getElementById('oligo-status'),
@@ -98,7 +98,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [6, 15, 36, 75];
             odList = ['1.5+', '3+', '3+'];
             typeList = ['PremiumOligo.00', 'PremiumOligo.01', 'PremiumOligo.02'];
-            normalizationList = [100,100,50];
+            normalizationList = [100, 100, 50];
             turnAroundTimeList = [48, 48, 72];
             unitPriceList = [4900, 4900, 5700];
             break;
@@ -109,7 +109,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [76, 121, 135];
             odList = ['5+', '5+'];
             typeList = ['LongOligo.01', 'LongOligo.02'];
-            normalizationList = [0,0];
+            normalizationList = [0, 0];
             turnAroundTimeList = [96, 96];
             unitPriceList = [8200, 9600];
             break;
@@ -120,7 +120,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [15, 31, 70];
             odList = ['30', '30'];
             typeList = ['HiOD Oligo.01.30', 'HiOD Oligo.02.30'];
-            normalizationList = [0,0];
+            normalizationList = [0, 0];
             turnAroundTimeList = [48, 72];
             unitPriceList = [18000, 21800];
             break;
@@ -131,7 +131,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [6, 15, 36, 51, 80];
             odList = ['1+', '1.5+', '1.5+', '1.5+'];
             typeList = ['GenomicOligoGA.00', 'GenomicOligoGA.01', 'GenomicOligoGA.02', 'GenomicOligoGA.03'];
-            normalizationList = [0,0,0,0];
+            normalizationList = [0, 0, 0, 0];
             turnAroundTimeList = [48, 48, 72, 72];
             unitPriceList = [5400, 5400, 6000, 6200];
             break;
@@ -141,7 +141,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [15, 36, 75];
             odList = ['0.5+', '0.5+'];
             typeList = ['OSP.01.02', 'OSP.02.02'];
-            normalizationList = [0,0];
+            normalizationList = [0, 0];
             turnAroundTimeList = [48, 72];
             unitPriceList = [2800, 3200];
             break;
@@ -152,7 +152,7 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [15, 36, 75];
             odList = ['0.5+', '0.5+'];
             typeList = ['GSPGA.01.02', 'GSPGA.02.02'];
-            normalizationList = [0,0];
+            normalizationList = [0, 0];
             turnAroundTimeList = [48, 72];
             unitPriceList = [3300, 3800];
             break;
@@ -163,66 +163,66 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [6, 36, 50];
             odList = ['5', '5'];
             typeList = ['Modi.premium.01', 'Modi.premium.02'];
-            normalizationList = [0,0];
+            normalizationList = [0, 0];
             turnAroundTimeList = [168, 168];
             unitPriceList = [4900, 5700];
             modifiedBaseList = ['I', 'O', 'U'];
             modifiedFeeList = [190000, 240000, 190000];
             modified5ValueList = [
-                'Thiol-C6-S-S', 
-                'Biotin', 
-                'C6-Spacer', 
-                'C3-Spacer', 
-                'NH2-C6', 
-                'NH2-C12', 
+                'Thiol-C6-S-S',
+                'Biotin',
+                'C6-Spacer',
+                'C3-Spacer',
+                'NH2-C6',
+                'NH2-C12',
                 'PO4-Phosphat'
             ];
             modified5NameList = [
-                'Thiol C6 S-S 200 nmol', 
-                'Biotin 200 nmol', 
-                'C6-Spacer 200 nmol', 
-                'C3-Spacer 200 nmol', 
-                'NH2 C6 200 nmol', 
-                'NH2 C12 200 nmol', 
+                'Thiol C6 S-S 200 nmol',
+                'Biotin 200 nmol',
+                'C6-Spacer 200 nmol',
+                'C3-Spacer 200 nmol',
+                'NH2 C6 200 nmol',
+                'NH2 C12 200 nmol',
                 'Phosphorylation 200 nmol'
             ];
             modified5FeeList = [
-                2400000, 
-                1170000, 
-                820000, 
-                820000, 
-                584000, 
-                1050000, 
+                2400000,
+                1170000,
+                820000,
+                820000,
+                584000,
+                1050000,
                 584000
             ];
             modified3ValueList = [
-                'C6-Spacer', 
-                'C3-Spacer', 
-                'Thiol-C6-S-S', 
-                'PO4-Phosphat', 
-                'Biotin', 
-                'Biotin-TEG', 
-                'NH2-C6', 
+                'C6-Spacer',
+                'C3-Spacer',
+                'Thiol-C6-S-S',
+                'PO4-Phosphat',
+                'Biotin',
+                'Biotin-TEG',
+                'NH2-C6',
                 'NH2-C12'
             ];
             modified3NameList = [
-                'C6-Spacer 200 nmol', 
-                'C3-Spacer 200 nmol', 
-                'Thiol C6 S-S 200 nmol', 
-                'Phosphorylation 200 nmol', 
-                'Biotin 200 nmol', 
-                'Biotin-TEG 200 nmol', 
-                'NH2 C6 200nmol', 
+                'C6-Spacer 200 nmol',
+                'C3-Spacer 200 nmol',
+                'Thiol C6 S-S 200 nmol',
+                'Phosphorylation 200 nmol',
+                'Biotin 200 nmol',
+                'Biotin-TEG 200 nmol',
+                'NH2 C6 200nmol',
                 'NH2 C12 200 nmol'
             ];
             modified3FeeList = [
-                820000, 
-                820000, 
-                2340000, 
-                584000, 
-                700000, 
-                1634000, 
-                584000, 
+                820000,
+                820000,
+                2340000,
+                584000,
+                700000,
+                1634000,
+                584000,
                 1050000];
             break;
         case 'Probe':
@@ -231,61 +231,61 @@ btnDatHang.addEventListener('click', function () {
             stringLength = [6, 36, 50];
             odList = ['5', '5'];
             typeList = ['Probe.Premium 01', 'Probe.Premium 02'];
-            normalizationList = [0,0];
+            normalizationList = [0, 0];
             turnAroundTimeList = [576, 576];
             unitPriceList = [4900, 5700];
             probeValueList = [
-                '5\'FAM-3\'TAMRA', 
-                '5\'HEX-3\'TAMRA', 
-                '5\'TET-3\'TAMRA', 
-                '5\'JOE-3\'TAMRA', 
-                '5\'FAM-3\'BHQ1', 
-                '5\'HEX-3\'BHQ1', 
-                '5\'TET-3\'BHQ1', 
-                '5\'JOE-3\'BHQ1', 
-                '5\'YakimaYellow-3\'BHQ1', 
-                '5\'Cal Fluor Orange 560-3\'BHQ1', 
-                '5\'Cal Fluor Gold 540-3\'BHQ1', 
-                '5\'TET-3\'BHQ2', 
-                '5\'Cy3-3\'BHQ2', 
-                '5\'Cy5-3\'BHQ2', 
-                '5\'TAMRA-3\'BHQ2', 
-                '5\'ROX-3\'BHQ2', 
-                '5\'Texas Red-3\'BHQ2', 
-                '5\'Cal Fluor Red 610-3\'BHQ2', 
-                '5\'Quasar 670-3\'BHQ2', 
-                '5\'Quasar 570-3\'BHQ2', 
-                '5\'Quasar 705-3\'BHQ2', 
-                '5\'Cal Flour Orange 560-3\'BHQ2', 
-                '5\'Cy5-3\'BHQ3', 
-                '5\'Quasar 670-3\'BHQ3', 
+                '5\'FAM-3\'TAMRA',
+                '5\'HEX-3\'TAMRA',
+                '5\'TET-3\'TAMRA',
+                '5\'JOE-3\'TAMRA',
+                '5\'FAM-3\'BHQ1',
+                '5\'HEX-3\'BHQ1',
+                '5\'TET-3\'BHQ1',
+                '5\'JOE-3\'BHQ1',
+                '5\'YakimaYellow-3\'BHQ1',
+                '5\'Cal Fluor Orange 560-3\'BHQ1',
+                '5\'Cal Fluor Gold 540-3\'BHQ1',
+                '5\'TET-3\'BHQ2',
+                '5\'Cy3-3\'BHQ2',
+                '5\'Cy5-3\'BHQ2',
+                '5\'TAMRA-3\'BHQ2',
+                '5\'ROX-3\'BHQ2',
+                '5\'Texas Red-3\'BHQ2',
+                '5\'Cal Fluor Red 610-3\'BHQ2',
+                '5\'Quasar 670-3\'BHQ2',
+                '5\'Quasar 570-3\'BHQ2',
+                '5\'Quasar 705-3\'BHQ2',
+                '5\'Cal Flour Orange 560-3\'BHQ2',
+                '5\'Cy5-3\'BHQ3',
+                '5\'Quasar 670-3\'BHQ3',
                 '5\'Quasar 705-3\'BHQ3'
             ];
             probeFeeList = [
-                4000000, 
-                4000000, 
-                4000000, 
-                4200000, 
-                2800000, 
-                4000000, 
-                4200000, 
-                4200000, 
-                4200000, 
-                4200000, 
-                6185000, 
-                4200000, 
-                4200000, 
-                6185000, 
-                4200000, 
-                6185000, 
-                6185000, 
-                6185000, 
-                6185000, 
-                6185000, 
-                6185000, 
-                6185000, 
-                6185000, 
-                6185000, 
+                4000000,
+                4000000,
+                4000000,
+                4200000,
+                2800000,
+                4000000,
+                4200000,
+                4200000,
+                4200000,
+                4200000,
+                6185000,
+                4200000,
+                4200000,
+                6185000,
+                4200000,
+                6185000,
+                6185000,
+                6185000,
+                6185000,
+                6185000,
+                6185000,
+                6185000,
+                6185000,
+                6185000,
                 6185000
             ];
             break;
@@ -800,7 +800,7 @@ function displayOligo(arr2ways) {
         <table class="table table-striped table-hover table-sm align-middle">
             <thead>
                 <tr>
-                <th scope="col" class="text-center">&#8470;<th>
+                    <th scope="col" class="text-center">&#8470;</th>
                     <th scope="col" class="text-center">${colName}</th>`;
         str += (isModified()) ? `<th scope="col" class="text-center">5\' modified</th>` : ``;
         str += `    <th scope="col" style="max-width: 25rem;">${colSequence}</th>`;
@@ -827,35 +827,35 @@ function displayOligo(arr2ways) {
                 case (!isNaN(stringLength[1]) && arr2ways[i][1].length >= stringLength[0] && arr2ways[i][1].length <= stringLength[1]):
                     od = odList[0];
                     type = typeList[0];
-                    norrmalization = normalizationList[0];
+                    norrmalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[0];
                     eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[0] + time));
                     unitPrice = unitPriceList[0];
                     break;
                 case (!isNaN(stringLength[2]) && arr2ways[i][1].length > stringLength[1] && arr2ways[i][1].length <= stringLength[2]):
                     od = odList[1];
                     type = typeList[1];
-                    norrmalization = normalizationList[1];
+                    norrmalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[1];
                     eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[1] + time));
                     unitPrice = unitPriceList[1];
                     break;
                 case (!isNaN(stringLength[3]) && arr2ways[i][1].length > stringLength[2] && arr2ways[i][1].length <= stringLength[3]):
                     od = odList[2];
                     type = typeList[2];
-                    norrmalization = normalizationList[2];
+                    norrmalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[2];
                     eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[2] + time));
                     unitPrice = unitPriceList[2];
                     break;
                 case (!isNaN(stringLength[4]) && arr2ways[i][1].length > stringLength[3] && arr2ways[i][1].length <= stringLength[4]):
                     od = odList[3];
                     type = typeList[3];
-                    norrmalization = normalizationList[3];
+                    norrmalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[3];
                     eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[3] + time));
                     unitPrice = unitPriceList[3];
                     break;
                 case (!isNaN(stringLength[5]) && arr2ways[i][1].length > stringLength[4] && arr2ways[i][1].length <= stringLength[5]):
                     od = odList[4];
                     type = typeList[4];
-                    norrmalization = normalizationList[4];
+                    norrmalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[4];
                     eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[4] + time));
                     unitPrice = unitPriceList[4];
                     break;
@@ -865,6 +865,7 @@ function displayOligo(arr2ways) {
             // console.log(arr2ways[i][1].length, arr2ways[i][0], unitPrice);
             fee += (arr2ways[i][1].length <= 14) ? lowNu : 0;
             fee += (arr2ways[i][2] == yes) ? dryFee : 0;
+            fee += (norrmalization > 0) ? 2000 : 0;
             if (isModified()) {
                 fee += (arr2ways[i][3] != '') ? parseInt(modified5FeeList[modified5ValueList.indexOf(arr2ways[i][4])]) : 0;
                 fee += (arr2ways[i][4] != '') ? parseInt(modified3FeeList[modified3ValueList.indexOf(arr2ways[i][5])]) : 0;
@@ -878,8 +879,8 @@ function displayOligo(arr2ways) {
             total = unitPrice * arr2ways[i][1].length + fee;
             subTotal += total;
             str += `<tr>
-            <td scope="col" class="text-center">${i}</td>
-            <td scope="col" class="text-center">${arr2ways[i][0]}</td>`;
+                        <td scope="col" class="text-center">${i}</td>
+                        <td scope="col" class="text-center">${arr2ways[i][0]}</td>`;
             str += (isModified()) ? `<td scope="col" class="text-center">${arr2ways[i][4]}</td>` : ``;
             str += `    <td scope="col" style="max-width: 25rem;">${arr2ways[i][1]}</td>`;
             str += (isModified()) ? `<td scope="col" class="text-center">${arr2ways[i][5]}</td>` : ``;
