@@ -1,4 +1,4 @@
-var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFee = 50000, normalizationFee = 2000,
+var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFee = 50000, normalizationFee = 2000, packageFee = 20000, minOrderValue = 500000,
     btnDatHang = document.querySelector('.btn-dat-hang'),
     oligoTitleText = document.querySelector('.oligo-title'),
     noCustomLabel = document.querySelector('.no-custom'),
@@ -54,6 +54,7 @@ var dryFee = 30000, lowNu = 25000, plateFee = 50000, wellFee = 240000, arrangeFe
     btnVertical = document.querySelector('.btn-vertical'),
 
     oligoSummary = document.getElementById('oligo-summary'),
+    quantityOligo = document.getElementById('product-oligo-quantity'),
     priceOligo = document.getElementById('product-oligo-price');
 
 oligoTitleText.innerText = oligoTitle;
@@ -85,11 +86,6 @@ var productArr = [];
 var productOption = [true, false, [], [], 0];
 oligoList.innerHTML = displayOligo(productArr);
 
-if (productArr.length > 0) {
-    window.onbeforeunload = function (e) {
-        return 'Bạn có chắc chắn không?';
-    };
-}
 btnDatHang.addEventListener('click', function () {
     switch (oligoType.value) {
         case 'PremiumOligo':
@@ -158,7 +154,7 @@ btnDatHang.addEventListener('click', function () {
             break;
 
         case 'Endo-ExoModification':
-            baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N'];
+            baseList = ['A', 'T', 'C', 'G', 'Y', 'R', 'W', 'S', 'K', 'M', 'D', 'V', 'H', 'B', 'X', 'N', 'I', 'O', 'U'];
             nameLength = [3, 15];
             stringLength = [6, 36, 50];
             odList = ['5', '5'];
@@ -295,6 +291,7 @@ btnDatHang.addEventListener('click', function () {
     if (isProbe() || isModified()) {
         cardOligoInput.classList.remove('d-none');
         cardOligoShow.classList.remove('d-none');
+        oligoStatus.innerText = 'dry';
         document.querySelector('.card-oligo-input ul>li:first-child').classList.add('d-none');
         document.querySelector('.card-oligo-input ul>li:last-child').classList.add('d-none');
         if (isModified()) {
@@ -310,6 +307,10 @@ btnDatHang.addEventListener('click', function () {
             probeOligo.parentElement.classList.remove('d-none');
             addOption(probeOligo, probeValueList, probeValueList);
         }
+    } else if (isPlate()) {
+        cardOligoInput.classList.remove('d-none');
+        cardOligoShow.classList.remove('d-none');
+        oligoStatus.innerText = 'wet';
     } else {
         cardOligoSelect.classList.remove('d-none');
     }
@@ -334,12 +335,8 @@ dryBtn.addEventListener('click', function () {
 
 oligoSubmit.addEventListener('click', function (e) {
     e.preventDefault();
-    let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.value.replace(/\s/g, '').toUpperCase(),
-        oStatus = (oligoStatus.innerText == 'dry') ? yes : no,
-        mod5 = fiveModified.value, mod3 = threeModified.value, oProbe = probeOligo.value;
-    if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>`) {
-        productArr.push(createRow(oName, oString, oStatus, mod5, mod3, oProbe));
+    if (validateOligo(oligoName.value, oligoString.value, null, fiveModified.value, threeModified.value, probeOligo.value) == `` || validateOligo(oligoName.value, oligoString.value, null, fiveModified.value, threeModified.value, probeOligo.value) == `<li>Line ${oligoName.value}: ${difficultOligo}</li>`) {
+        productArr.push(createRow(oligoName.value, oligoString.value, (oligoStatus.innerText == 'dry') ? yes : no, fiveModified.value, threeModified.value, probeOligo.value));
         oligoList.innerHTML = displayOligo(productArr);
         confirmOligo.classList.remove('d-none');
         resetForm();
@@ -364,43 +361,21 @@ oligoExcelBtn.addEventListener('click', function (e) {
     else { oligoExcelInput.click(); }
 }, false);
 
-oligoName.addEventListener('change', function () {
-    let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.value.replace(/\s/g, '').toUpperCase();
-    oligoName.value = oName;
-    validateSingle.innerHTML = validateOligo(oName, oString);
+tabSingle.addEventListener('change', function () {
+    let num = (oligoName.disabled == true) ? 0 : null;
+    validateSingle.innerHTML = validateOligo(oligoName.value, oligoString.value, num, fiveModified.value, threeModified.value, probeOligo.value);
 })
 
 oligoString.addEventListener('keyup', function () {
-    let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.value.replace(/\s/g, '').toUpperCase();
-    oligoString.value = oString;
-    // console.log(oName, oString);
-    validateSingle.innerHTML = validateOligo(oName, oString);
-})
+    let num = (oligoName.disabled == true) ? 0 : null;
+    validateSingle.innerHTML = validateOligo(oligoName.value, oligoString.value, num, fiveModified.value, threeModified.value, probeOligo.value);
 
-oligoString.addEventListener('keyup', function () {
-    if (oligoString.value.replace(/\s/g, '').toUpperCase().length > stringLength[stringLength.length - 1] - 5) {
+    //Bật bộ đếm ký tự nếu vượt quá số lượng cho phép
+    if (oligoString.value.replace(/\s/g, '').length > stringLength[stringLength.length - 1]) {
         stringCounter.classList.remove('d-none');
         stringCounter.innerText = oligoString.value.replace(/\s/g, '').toUpperCase().length;
     } else {
         stringCounter.classList.add('d-none');
-    }
-})
-
-oligoEdit.addEventListener('click', function (e) {
-    e.preventDefault();
-    let oName = oligoName.value.replace(/\s/g, '').toUpperCase(),
-        oString = oligoString.value.replace(/\s/g, '').toUpperCase(),
-        oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
-    for (let i = 0; i < productArr.length; i++) {
-        if (productArr[i][0] == oligoName.value) {
-            if (validateOligo(oName, oString) == `` || validateOligo(oName, oString) == `<li>${difficultOligo}</li>`) {
-                productArr[i] = createRow(oName, oString, oStatus);
-                oligoList.innerHTML = displayOligo(productArr);
-                resetForm();
-            }
-        }
     }
 })
 
@@ -410,7 +385,7 @@ confirmOligo.addEventListener('click', function (e) {
     e.preventDefault();
     let checkOligo = true;
     for (let i = 0; i < productArr.length; i++) {
-        if (validateOligo(productArr[i][0], productArr[i][1]) == '' || validateOligo(productArr[i][0], productArr[i][1]) == '<li>' + existName + '</li>' || validateOligo(productArr[i][0], productArr[i][1]) == '<li>' + difficultOligo + '</li>') {
+        if (validateOligo(productArr[i][0], productArr[i][1], null, productArr[i][3], productArr[i][4], productArr[i][5]) == `` || validateOligo(productArr[i][0], productArr[i][1], null, productArr[i][3], productArr[i][4], productArr[i][5]) == `<li>${difficultOligo}</li>`) {
             checkOligo = true;
         } else {
             checkOligo = false;
@@ -427,20 +402,12 @@ confirmOligo.addEventListener('click', function (e) {
         }
         cardOligoInput.classList.add('d-none');
         confirmOligo.classList.add('d-none');
+        oligoSummary.innerHTML = summaryOligo();
         if (isPlate()) {
             oligoArrange.innerHTML = arrangePlate(productArr);
             plateHint.classList.remove('d-none');
             addToCartOligo.disabled = true;
             btnArrangeGroup.classList.remove('d-none');
-        } else {
-            let a, b, c, d, e;
-            a = (productArr.length % 20 != 0) ? (productArr.length % 20) / 20 : 1;
-            b = (productArr.length % 45 != 0) ? (productArr.length % 45) / 45 : 1;
-            c = (productArr.length % 96 != 0) ? (productArr.length % 96) / 96 : 1;
-            d = (Math.max(a, b, c) == a) ? 20 : (Math.max(a, b, c) == b) ? 45 : 96;
-            e = (productArr.length % d == 0) ? productArr.length % d : (productArr.length - (productArr.length % d)) / d + 1;
-            oligoSummary.innerHTML = productArr.length + quantityOligoText + ` <span id=product-oligo-quantity>${e}</span> ` + box + d;
-            priceOligo.innerText = parseInt(document.getElementById('product-oligo-subtotal').innerText) / e;
         }
         addToCartOligo.classList.remove('d-none');
     }
@@ -450,12 +417,14 @@ btnHorizon.addEventListener('click', function () {
     addToCartOligo.disabled = false;
     productOption[0] = true;
     oligoArrange.innerHTML = arrangePlate(clearEmpty());
+    oligoSummary.innerHTML = summaryOligo();
 })
 
 btnVertical.addEventListener('click', function () {
     addToCartOligo.disabled = false;
     productOption[0] = false;
     oligoArrange.innerHTML = arrangePlate(clearEmpty());
+    oligoSummary.innerHTML = summaryOligo();
 })
 
 /*---------------------------------
@@ -476,7 +445,6 @@ function addOption(select, valueArr, nameArr, unit = '') {
 Hàm kiểm tra từng ký tự trong chuỗi nhập vào có trong danh sách cho sẵn không
 -----------------------------------*/
 function validateInputArray(input, list) {
-    input = input.replace(/\s/g, '').toUpperCase(); //Viết hoa chuỗi input lên
     let inputArr = input.split("");
     let result;
     let vitri = [];
@@ -510,10 +478,9 @@ function validateListOligo(listInput) {
     for (let i = 0; i < arr.length; i++) {
         let oligo = arr[i].split('\t');
         if (oligo.length > 1) {
-            let oName = oligo[0].replace(/\s/g, '').replace(/\n/g, '').replace(/\"/g, '').toUpperCase(),
-                oString = oligo[1].replace(/\s/g, '').replace(/\n/g, '').replace(/\"/g, '').toUpperCase(),
+            let oName = oligo[0].replace(/\s/g, '').replace(/\n/g, '').replace(/\"/g, ''),
+                oString = oligo[1].replace(/\s/g, '').replace(/\n/g, '').replace(/\"/g, ''),
                 oStatus = (oligoStatus.innerText == 'dry') ? yes : no;
-            // console.log(i, oName, validateOligo(oName, oString));
             if (validateOligo(oName, oString) != '') {
                 textErr += validateOligo(oName, oString);
             }
@@ -530,72 +497,99 @@ function validateListOligo(listInput) {
 /*---------------------------------
 Xác minh xem tên và chuỗi Oligo đã nhập có hợp lệ không
 -----------------------------------*/
-function validateOligo(name, string) {
+function validateOligo(name, string, num = null, mod5 = ``, mod3 = ``, prb = ``) {
     let arrayName = [], arrayString = [], text = '';
+
+    name = name.replace(/\s/g, '').toUpperCase();
+    string = string.replace(/\s/g, '').toUpperCase();
+    oligoName.value = name;
+    oligoString.value = string;
+
     for (let i = 0; i < productArr.length; i++) {
         arrayName.push(productArr[i][0]);
-        arrayString.push(productArr[i][0] + productArr[i][1]);
+        arrayString.push(productArr[i][0] + productArr[i][1] + productArr[i][3] + productArr[i][4] + productArr[i][5]);
     }
-    switch (true) {
-        case name == "":
-            oligoName.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>${noEmptyName}</li>`;
-            break;
-        case name == null:
-            oligoName.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>${noEmptyName}</li>`;
-            break;
-        case name.length < nameLength[0]:
-            oligoName.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>Line ${name}: ${minNameLengthText}${nameLength[0]}${letter}</li>`;
-        case name.length > nameLength[1]:
-            oligoName.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>Line ${name}: ${maxNameLengthText}${nameLength[1]}${letter}</li>`;
-            break;
-        case string == "":
-            oligoString.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>Line ${name}: ${noEmptyString}</li>`;
-            break;
-        case validateInputArray(string, baseList) != '':
-            oligoString.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>Line ${name}: ${validateInputArray(string, baseList)}</li>`;
-            break;
-        case string.length < stringLength[0]:
-            oligoString.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>Line ${name}: ${minStringLengthText}${stringLength[0]}${base}</li>`;
-            break;
-        case string.length > stringLength[stringLength.length - 1]:
-            oligoString.classList.add('border-danger');
-            oligoSubmit.disabled = true;
-            text += `<li>Line ${name}: ${maxStringLengthText}${stringLength[stringLength.length - 1]}${base}</li>`;
-            break;
-        case string.includes('GGGGGG'):
-            oligoString.classList.add('border-danger');
-            oligoSubmit.disabled = false;
-            text += `<li>Line ${name}: ${difficultOligo}</li>`;
-            break;
-        default:
-            oligoName.classList.remove('border-danger');
-            oligoString.classList.remove('border-danger');
-            oligoSubmit.disabled = false;
-            break;
+
+    if (name == ``) {
+        oligoName.classList.add('border-danger');
+        oligoSubmit.disabled = true;
+        oligoEdit.disabled = true;
+        text += `<li>${noEmptyName}</li>`;
     }
-    if (arrayName.includes(name) && !arrayString.includes(name + string)) {
+    if (name == null) {
+        oligoName.classList.add('border-danger');
+        oligoSubmit.disabled = true;
+        oligoEdit.disabled = true;
+        text += `<li>${noEmptyName}</li>`;
+    }
+    if (name.length < nameLength[0]) {
+        oligoName.classList.add('border-danger');
+        oligoSubmit.disabled = true;
+        oligoEdit.disabled = true;
+        text += `<li>Line ${name}: ${minNameLengthText + nameLength[0] + letter}</li>`;
+    }
+    if (name.length > nameLength[1]) {
+        oligoName.classList.add('border-danger');
+        oligoSubmit.disabled = true;
+        oligoEdit.disabled = true;
+        text += `<li>Line ${name}: ${maxNameLengthText + nameLength[1] + letter}</li>`;
+    }
+    if (string == "") {
+        oligoString.classList.add('border-danger');
+        oligoSubmit.disabled = true;
+        oligoEdit.disabled = true;
+        text += `<li>Line ${name}: ${noEmptyString}</li>`;
+    }
+    if (validateInputArray(string, baseList) != '') {
+        oligoString.classList.add('border-danger');
+        oligoSubmit.disabled = true;
+        oligoEdit.disabled = true;
+        text += `<li>Line ${name}: ${validateInputArray(string, baseList)}</li>`;
+    }
+    if (string.length < stringLength[0]) {
+        oligoString.classList.add('border-danger');
+        oligoSubmit.disabled = true;
+        oligoEdit.disabled = true;
+        text += `<li>Line ${name}: ${minStringLengthText + stringLength[0] + base}</li>`;
+    }
+    if (string.length > stringLength[stringLength.length - 1]) {
+        oligoString.classList.add('border-danger');
+        oligoSubmit.disabled = true;
+        oligoEdit.disabled = true;
+        text += `<li>Line ${name}: ${maxStringLengthText + stringLength[stringLength.length - 1] + base}</li>`;
+    }
+    if (string.includes('GGGGGG')) {
+        oligoString.classList.add('border-danger');
+        text += `<li>Line ${name}: ${difficultOligo}</li>`;
+    }
+    if (num == null && arrayName.includes(name) && !arrayString.includes(name + string + mod5 + mod3 + prb)) {
         oligoName.classList.add('border-danger');
         oligoString.classList.add('border-danger');
         oligoSubmit.disabled = true;
+        oligoEdit.disabled = true;
         text += `<li>Line ${name}: ${existName}</li>`;
-    } else {
+    }
+    if (isModified() && mod5 == '' && mod3 == '') {
+        fiveModified.classList.add('border-danger');
+        threeModified.classList.add('border-danger');
+        text += `<li>Line ${name}: ${noEmptyModified}</li>`;
+        oligoSubmit.disabled = true;
+        oligoEdit.disabled = true;
+    }
+    if (isProbe() && prb == '') {
+        probeOligo.classList.add('border-danger');
+        text += `<li>Line ${name}: ${noEmptyProbe}</li>`;
+        oligoSubmit.disabled = true;
+        oligoEdit.disabled = true;
+    }
+    if (text == `` || text == `<li>Line ${name}: ${difficultOligo}</li>`) {
         oligoName.classList.remove('border-danger');
         oligoString.classList.remove('border-danger');
+        fiveModified.classList.remove('border-danger');
+        threeModified.classList.remove('border-danger');
+        probeOligo.classList.remove('border-danger');
         oligoSubmit.disabled = false;
+        oligoEdit.disabled = false;
     }
     return text;
 }
@@ -620,7 +614,6 @@ function resetForm() {
     navSingle.innerText = oligoSingleTabLabel;
     fiveModified.value = '';
     threeModified.value = '';
-    probeOligo.value = '';
 }
 
 /*---------------------------------
@@ -641,18 +634,41 @@ function editRow(num) {
     oligoName.value = productArr[num][0];
     oligoName.disabled = true;
     oligoString.value = productArr[num][1];
-    oligoStatus.checked = (productArr[num][2] == 1) ? true : false;
-    oligoNormalization.value = productArr[num][3];
+    if (isModified()) {
+        fiveModified.value = productArr[num][3];
+        threeModified.value = productArr[num][4];
+    } else if (isProbe()) {
+        probeOligo.value = productArr[num][5];
+    }
+    oligoStatus.innerText = (productArr[num][2] == yes) ? `dry` : `wet`;
     oligoEdit.classList.remove('d-none');
+    oligoEdit.setAttribute("onclick", `updateRow(event)`);
     oligoSubmit.classList.add('d-none');
     navSingle.classList.add('active');
     navExcel.classList.remove('active');
     navList.classList.remove('active');
-    tabSingle.classList.add('show');
-    tabExcel.classList.remove('show');
-    tabList.classList.remove('show');
+    tabSingle.classList.add('active');
+    tabExcel.classList.remove('active');
+    tabList.classList.remove('active');
     titleSingle.innerText = oligoEditTitle;
     navSingle.innerText = oligoEditTabLabel;
+    oligoString.focus();
+}
+
+/*---------------------------------
+Cập nhật dữ liệu đã sửa vào lại bảng
+-----------------------------------*/
+function updateRow(e) {
+    e.preventDefault();
+    if (validateOligo(oligoName.value, oligoString.value, 0, fiveModified.value, threeModified.value, probeOligo.value) == `` || validateOligo(oligoName.value, oligoString.value, 0, fiveModified.value, threeModified.value, probeOligo.value) == `<li>Line ${oligoName.value}: ${difficultOligo}</li>`) {
+        for (let i = 0; i < productArr.length; i++) {
+            if (productArr[i][0] == oligoName.value) {
+                productArr[i] = createRow(oligoName.value, oligoString.value, (oligoStatus.innerText == 'dry') ? yes : no, fiveModified.value, threeModified.value, probeOligo.value);
+            }
+        }
+        oligoList.innerHTML = displayOligo(productArr);
+        resetForm();
+    }
 }
 
 /*---------------------------------
@@ -706,6 +722,7 @@ function emptyCell(action, value) {
         productArr.splice(value, 1);
     }
     oligoArrange.innerHTML = arrangePlate(productArr);
+    oligoSummary.innerHTML = summaryOligo();
 }
 
 /*---------------------------------
@@ -717,6 +734,7 @@ function emptyRow(value) {
             if (value < productArr.length) {
                 productArr.splice(value, 0, '');
                 oligoArrange.innerHTML = arrangePlate(productArr);
+                oligoSummary.innerHTML = summaryOligo();
             } else {
                 break;
             }
@@ -726,6 +744,7 @@ function emptyRow(value) {
             if (value + i < productArr.length) {
                 productArr.splice(value + i, 0, '');
                 oligoArrange.innerHTML = arrangePlate(productArr);
+                oligoSummary.innerHTML = summaryOligo();
             } else {
                 break;
             }
@@ -741,6 +760,7 @@ function emptyCol(value) {
             if (value + i < productArr.length) {
                 productArr.splice(value + i, 0, '');
                 oligoArrange.innerHTML = arrangePlate(productArr);
+                oligoSummary.innerHTML = summaryOligo();
             } else {
                 break;
             }
@@ -750,6 +770,7 @@ function emptyCol(value) {
             if (value * 8 < productArr.length) {
                 productArr.splice(value * 8 + i, 0, '');
                 oligoArrange.innerHTML = arrangePlate(productArr);
+                oligoSummary.innerHTML = summaryOligo();
             } else {
                 break;
             }
@@ -789,13 +810,15 @@ function updateOption(obj) {
     }
 
     oligoArrange.innerHTML = arrangePlate(productArr);
+    oligoSummary.innerHTML = summaryOligo();
     // console.log(productOption);
 }
+
 
 /*---------------------------------
 Hiển thị mảng lớn dữ liệu ra màn hình
 -----------------------------------*/
-function displayOligo(arr2ways) {
+function displayOligo(arr2ways, editable = true) {
     if (arr2ways.length) {
         let subTotal = 0,
             str = `
@@ -815,92 +838,96 @@ function displayOligo(arr2ways) {
         str += (isModified() || isProbe()) ? `` : `<th scope="col" class="text-center">${colNormalization}</th>`;
         str += `    <th scope="col" class="text-end">${colUnitPrice}</th>
                     <th scope="col" class="text-end">${colFee}</th>
-                    <th scope="col" class="text-end">${colTotal}</th>
-                    <!--th scope="col" class="text-center">${colEDD}<th-->
-                    <th scope="col">&nbsp;</th>
-                </tr>
+                    <th scope="col" class="text-end">${colTotal}</th>`;
+        str += (arr2ways[0][6] == undefined && arr2ways[arr2ways.length-1][6] == undefined) ? `` : `<th scope="col" class="text-end">${platePlace}</th>`;
+        str += `    <!--th scope="col" class="text-center">${colEDD}<th-->`;
+        str += (editable) ? `<th scope="col">&nbsp;</th>` : ``;
+        str += `    </tr>
             </thead>
             <tbody>`;
         for (let i = 0; i < arr2ways.length; i++) {
-            let od, type, unitPrice, eDD, fee = 0;
-            const d = new Date();
-            let time = d.getTime();
-            switch (true) {
-                case (!isNaN(stringLength[1]) && arr2ways[i][1].length >= stringLength[0] && arr2ways[i][1].length <= stringLength[1]):
-                    od = odList[0];
-                    type = typeList[0];
-                    norrmalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[0];
-                    eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[0] + time));
-                    unitPrice = unitPriceList[0];
-                    break;
-                case (!isNaN(stringLength[2]) && arr2ways[i][1].length > stringLength[1] && arr2ways[i][1].length <= stringLength[2]):
-                    od = odList[1];
-                    type = typeList[1];
-                    norrmalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[1];
-                    eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[1] + time));
-                    unitPrice = unitPriceList[1];
-                    break;
-                case (!isNaN(stringLength[3]) && arr2ways[i][1].length > stringLength[2] && arr2ways[i][1].length <= stringLength[3]):
-                    od = odList[2];
-                    type = typeList[2];
-                    norrmalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[2];
-                    eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[2] + time));
-                    unitPrice = unitPriceList[2];
-                    break;
-                case (!isNaN(stringLength[4]) && arr2ways[i][1].length > stringLength[3] && arr2ways[i][1].length <= stringLength[4]):
-                    od = odList[3];
-                    type = typeList[3];
-                    norrmalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[3];
-                    eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[3] + time));
-                    unitPrice = unitPriceList[3];
-                    break;
-                case (!isNaN(stringLength[5]) && arr2ways[i][1].length > stringLength[4] && arr2ways[i][1].length <= stringLength[5]):
-                    od = odList[4];
-                    type = typeList[4];
-                    norrmalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[4];
-                    eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[4] + time));
-                    unitPrice = unitPriceList[4];
-                    break;
-                default:
-                    break;
-            }
-            // console.log(arr2ways[i][1].length, arr2ways[i][0], unitPrice);
-            fee += (arr2ways[i][1].length <= 14) ? lowNu : 0;
-            fee += (arr2ways[i][2] == yes) ? dryFee : 0;
-            fee += (norrmalization > 0) ? 2000 : 0;
-            if (isModified()) {
-                fee += (arr2ways[i][3] != '') ? parseInt(modified5FeeList[modified5ValueList.indexOf(arr2ways[i][4])]) : 0;
-                fee += (arr2ways[i][4] != '') ? parseInt(modified3FeeList[modified3ValueList.indexOf(arr2ways[i][5])]) : 0;
-                for (let j = 0; j < modifiedBaseList.length; j++) {
-                    fee += (arr2ways[i][1].includes(modifiedBaseList[j])) ? (arr2ways[i][1].match(new RegExp(modifiedBaseList[j], "g")) || []).length * parseInt(modifiedFeeList[j]) : 0;
+            if (arr2ways[i] != ``) {
+                let od, type, normalization, unitPrice, eDD, fee = 0;
+                const d = new Date();
+                let time = d.getTime();
+                switch (true) {
+                    case (!isNaN(stringLength[1]) && arr2ways[i][1].length >= stringLength[0] && arr2ways[i][1].length <= stringLength[1]):
+                        od = odList[0];
+                        type = typeList[0];
+                        normalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[0];
+                        eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[0] + time));
+                        unitPrice = unitPriceList[0];
+                        break;
+                    case (!isNaN(stringLength[2]) && arr2ways[i][1].length > stringLength[1] && arr2ways[i][1].length <= stringLength[2]):
+                        od = odList[1];
+                        type = typeList[1];
+                        normalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[1];
+                        eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[1] + time));
+                        unitPrice = unitPriceList[1];
+                        break;
+                    case (!isNaN(stringLength[3]) && arr2ways[i][1].length > stringLength[2] && arr2ways[i][1].length <= stringLength[3]):
+                        od = odList[2];
+                        type = typeList[2];
+                        normalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[2];
+                        eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[2] + time));
+                        unitPrice = unitPriceList[2];
+                        break;
+                    case (!isNaN(stringLength[4]) && arr2ways[i][1].length > stringLength[3] && arr2ways[i][1].length <= stringLength[4]):
+                        od = odList[3];
+                        type = typeList[3];
+                        normalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[3];
+                        eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[3] + time));
+                        unitPrice = unitPriceList[3];
+                        break;
+                    case (!isNaN(stringLength[5]) && arr2ways[i][1].length > stringLength[4] && arr2ways[i][1].length <= stringLength[5]):
+                        od = odList[4];
+                        type = typeList[4];
+                        normalization = (arr2ways[i][2] == yes) ? 0 : normalizationList[4];
+                        eDD = dmYFormat(new Date(3600000 * turnAroundTimeList[4] + time));
+                        unitPrice = unitPriceList[4];
+                        break;
+                    default:
+                        break;
                 }
-            } else if (isProbe()) {
-                fee += (arr2ways[i][5] != '') ? parseInt(probeFeeList[probeValueList.indexOf(arr2ways[i][5])]) : 0;
-                console.log(arr2ways[i]);
-            }
-            total = unitPrice * arr2ways[i][1].length + fee;
-            subTotal += total;
-            str += `<tr>
-                        <td scope="col" class="text-center">${i}</td>
+                // console.log(arr2ways[i][1].length, arr2ways[i][0], unitPrice);
+                fee += (arr2ways[i][1].length < 14) ? lowNu : 0;
+                fee += (arr2ways[i][2] == yes) ? dryFee : 0;
+                fee += (normalization > 0) ? normalizationFee : 0;
+                if (isModified()) {
+                    fee += (arr2ways[i][3] != '') ? parseInt(modified5FeeList[modified5ValueList.indexOf(arr2ways[i][3])]) : 0;
+                    fee += (arr2ways[i][4] != '') ? parseInt(modified3FeeList[modified3ValueList.indexOf(arr2ways[i][4])]) : 0;
+                    for (let j = 0; j < modifiedBaseList.length; j++) {
+                        fee += (arr2ways[i][1].includes(modifiedBaseList[j])) ? (arr2ways[i][1].match(new RegExp(modifiedBaseList[j], "g")) || []).length * parseInt(modifiedFeeList[j]) : 0;
+                    }
+                } else if (isProbe()) {
+                    fee += (arr2ways[i][5] != '') ? parseInt(probeFeeList[probeValueList.indexOf(arr2ways[i][5])]) : 0;
+                }
+                total = unitPrice * arr2ways[i][1].length + fee;
+                subTotal += total;
+                str += `<tr>
+                        <td scope="col" class="text-center">${i + 1}</td>
                         <td scope="col" class="text-center">${arr2ways[i][0]}</td>`;
-            str += (isModified()) ? `<td scope="col" class="text-center">${arr2ways[i][4]}</td>` : ``;
-            str += `    <td scope="col" style="max-width: 25rem;">${arr2ways[i][1]}</td>`;
-            str += (isModified()) ? `<td scope="col" class="text-center">${arr2ways[i][5]}</td>` : ``;
-            str += (isProbe()) ? `<td scope="col" class="text-center">${arr2ways[i][6]}</td>` : ``;
-            str += `<td scope="col" class="text-center">${arr2ways[i][1].length}</td>
+                str += (isModified()) ? `<td scope="col" class="text-center">${arr2ways[i][3]}</td>` : ``;
+                str += `    <td scope="col" style="max-width: 25rem;">${arr2ways[i][1]}</td>`;
+                str += (isModified()) ? `<td scope="col" class="text-center">${arr2ways[i][4]}</td>` : ``;
+                str += (isProbe()) ? `<td scope="col" class="text-center">${arr2ways[i][5]}</td>` : ``;
+                str += `<td scope="col" class="text-center lownu-trigger">${arr2ways[i][1].length}</td>
                         <td scope="col" class="text-center">${od}</td>
                         <td scope="col" class="text-center">${type}</td>`;
-            str += (isModified() || isProbe()) ? `` : `<td scope="col" class="text-center">${arr2ways[i][2]}</td>`;
-            str += (isModified() || isProbe()) ? `` : `<td scope="col" class="text-center">${norrmalization}</td>`;
-            str += `    <td scope = "col" class="text-end" > ${unitPrice.toLocaleString()}</td>
+                str += (isModified() || isProbe()) ? `` : `<td scope="col" class="text-center status-trigger">${arr2ways[i][2]}</td>`;
+                str += (isModified() || isProbe()) ? `` : `<td scope="col" class="text-center normalization-trigger">${normalization}</td>`;
+                str += `    <td scope = "col" class="text-end" > ${unitPrice.toLocaleString()}</td>
                         <td scope="col" class="text-end">${fee.toLocaleString()}</td>
-                        <td scope="col" class="text-end">${total.toLocaleString()}</td>
-                        <!--td scope="col" class="text-center">${eDD}<td-->
-                        <td scope="col" class="text-center">
-                            <button class="btn btn-link btn-edit" onclick="editRow(${i})"><i class="fa-solid fa-pencil"></i></button>
-                            <button class="btn btn-link btn-remove" onclick="removeRow(${i})"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr > `;
+                        <td scope="col" class="text-end">${total.toLocaleString()}</td>`;
+                str += (arr2ways[i][6] == undefined) ? `` : `<td scope="col" class="text-end">${arr2ways[i][6]}</td>`;
+                str += `    <!--td scope="col" class="text-center">${eDD}<td-->`;
+                str += (editable) ? `
+                <td scope="col" class="text-center">
+                    <button class="btn btn-link btn-edit" onclick="editRow(${i})"><i class="fa-solid fa-pencil"></i></button>
+                    <button class="btn btn-link btn-remove" onclick="removeRow(${i})"><i class="fa-solid fa-trash"></i></button>
+                </td>` : ``;
+                str += `    </tr > `;
+            }
         }
         str += `</tbody>
                 <tfoot>
@@ -912,6 +939,9 @@ function displayOligo(arr2ways) {
                 </tfoot>
         </table > 
         <div id="product-oligo-subtotal" class="d-none">${subTotal}</div>`;
+        window.onbeforeunload = function (e) {
+            return 'Bạn có chắc chắn không?';
+        };
         return str;
     } else {
         return `<p> ${guideText} <span class="badge bg-primary text-light">${addBtnLabel}</span></p> `;
@@ -919,7 +949,7 @@ function displayOligo(arr2ways) {
 }
 
 function arrangePlate(arr2ways) {
-    let tableArrange = ``;
+    let tableArrange = ``, number, letter;
     if (productOption[0]) {
         for (let k = 0; k < arr2ways.length; k += 96) {
             if (productOption[2].length >= k / 96 + 1) {
@@ -933,13 +963,13 @@ function arrangePlate(arr2ways) {
             }
             tableArrange += `
                 <div class="row align-items-center">
-                <div class="col-3">
+                <div class="col-lg-3 col-sm-12">
                     <div class="input-group mb-3 align-middle">
                         <span class="input-group-text plate-label-label">${plateLabelLabelText}</span>
                         <input type="text" class="form-control plate-label" onchange="updateOption(this)" placeholder="${plateLabelPlaceholder + (k / 96 + 1)}" value="${pName}">
                     </div>
                 </div>
-                <div class="col-3 d-none">
+                <div class="col-lg-3 col-sm-12 d-none">
                     <div class="form-check mb-3 align-middle">
                     <input class="form-check-input well-label-input" type="checkbox" onchange="updateOption(this)" id="well-label-${k}" ${(productOption[3][k / 96]) ? 'checked' : ''}>
                         <label class="form-check-label well-label" for="well-label-${k}">
@@ -948,7 +978,7 @@ function arrangePlate(arr2ways) {
                     </div>
                 </div>
             </div>
-                <table class="table table-borderless table-arrange align-middle text-center">
+                <table class="table table-borderless table-arrange align-middle text-center" style="min-width:1000px">
                     <colgroup>
                         <col width="4%">
                             <col span="12" width="8%">
@@ -958,21 +988,26 @@ function arrangePlate(arr2ways) {
                                     <th scope="col" style="width: 50px;"></th>`;
             for (let i = 1; i < 13; i++) {
                 number = (i < 10) ? '0' + i : i;
-                tableArrange += `<th class="col-hover" onclick="emptyCol(${i + k - 1}, ${productOption[0]})" style="width: 100px;"><span>${number}</span></th>`;
+                colClick = (arr2ways.includes(``)) ? `` : `class="col-hover" onclick="emptyCol(${i + k - 1}, ${productOption[0]})"`;
+                tableArrange += `<th ${colClick} style="width: 100px;"><span>${number}</span></th>`;
             }
             tableArrange += `</tr>
                             </thead>
                             <tbody>`;
             for (let i = 0; i < 96; i += 12) {
                 letter = String.fromCharCode(i / 12 + 1 + 64);
+                rowClick = (arr2ways.includes(``)) ? `` : `class="row-hover c-pointer" onclick="emptyRow(${i + k}, ${productOption[0]})"`;
                 tableArrange += `<tr>
-                                    <th scope="row" class="row-hover c-pointer" onclick="emptyRow(${i + k}, ${productOption[0]})"><span>${letter}</span></th>`;
+                                    <th scope="row" ${rowClick}><span>${letter}</span></th>`;
                 for (let j = 0; j < 12; j++) {
                     if (i + j + k < arr2ways.length) {
                         if (arr2ways[i + j + k][0] == undefined) {
                             tableArrange += `<td class="cell-hover c-pointer" onclick="emptyCell('remove', ${i + j + k}, ${productOption[0]})">×</td>`;
                         } else {
-                            tableArrange += `<td class="cell-hover c-pointer" onclick="emptyCell('add', ${i + j + k}, ${productOption[0]})">${arr2ways[i + j + k][0]}</td>`;
+                            number = ((j + 1) < 10) ? '0' + (j + 1) : (j + 1);
+                            arr2ways[i + j + k][6] = pName + letter + number;
+                            cellClick = (arr2ways.includes(``)) ? `` : `class="cell-hover c-pointer" onclick="emptyCell('add', ${i + j + k}, ${productOption[0]})"`;
+                            tableArrange += `<td ${cellClick}>${arr2ways[i + j + k][0]}</td>`;
                         }
                     } else {
                         tableArrange += `<td></td>`;
@@ -997,13 +1032,13 @@ function arrangePlate(arr2ways) {
             }
             tableArrange += `
                         <div class="row align-items-center">
-                            <div class="col-3">
+                            <div class="col-lg-3 col-sm-12">
                                 <div class="input-group mb-3 align-middle">
                                     <span class="input-group-text plate-label-label">${plateLabelLabelText}</span>
                                     <input type="text" class="form-control plate-label" onchange="updateOption(this)" placeholder="${plateLabelPlaceholder + (k / 96 + 1)}" value="${pName}">
                                 </div>
                             </div>
-                            <div class="col-3 d-none">
+                            <div class="col-lg-3 col-sm-12 d-none">
                                 <div class="form-check mb-3 align-middle">
                                     <input class="form-check-input well-label-input" type="checkbox" onchange="updateOption(this)" id="well-label-${k}" ${(productOption[3][k / 96]) ? 'checked' : ''}>
                                         <label class="form-check-label well-label" for="well-label-${k}">
@@ -1012,27 +1047,32 @@ function arrangePlate(arr2ways) {
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-borderless table-arrange align-middle text-center">
+                        <table class="table table-borderless table-arrange align-middle text-center" style="min-width:1000px">
                             <thead>
                                 <tr>
                                     <th scope="col" style="width: 50px;"></th>`;
             for (let i = 1; i < 13; i++) {
                 number = (i < 10) ? '0' + i : i;
-                tableArrange += `<th class="col-hover c-pointer" onclick="emptyCol(${i + k / 8 - 1}, ${productOption[0]})" style="width: 100px;"><span>${number}</span></th>`;
+                colClick = (arr2ways.includes(``)) ? `` : `class="col-hover c-pointer" onclick="emptyCol(${i + k / 8 - 1}, ${productOption[0]})"`;
+                tableArrange += `<th ${colClick} style="width: 100px;"><span>${number}</span></th>`;
             }
             tableArrange += `</tr>
                             </thead>
                             <tbody>`;
             for (let i = 0; i < 96; i += 12) {
                 letter = String.fromCharCode(i / 12 + 1 + 64);
+                rowClick = (arr2ways.includes(``)) ? `` : `class="row-hover c-pointer" onclick="emptyRow(${i / 12 + k}, ${productOption[0]})"`;
                 tableArrange += `<tr>
-                                    <th scope="row" class="row-hover c-pointer" onclick="emptyRow(${i / 12 + k}, ${productOption[0]})"><span>${letter}</span></th>`;
+                                    <th scope="row" ${rowClick}><span>${letter}</span></th>`;
                 for (let j = 0; j < 12; j++) {
                     if ((i / 12 + k) + j * 8 < arr2ways.length) {
                         if (arr2ways[(i / 12 + k) + j * 8][0] == undefined) {
                             tableArrange += `<td class="cell-hover c-pointer" onclick="emptyCell('remove', ${(i / 12 + k) + j * 8}, ${productOption[0]})">×</td>`;
                         } else {
-                            tableArrange += `<td class="cell-hover c-pointer" onclick="emptyCell('add', ${(i / 12 + k) + j * 8}, ${productOption[0]})">${arr2ways[(i / 12 + k) + j * 8][0]}</td>`;
+                            number = ((j + 1) < 10) ? '0' + (j + 1) : (j + 1);
+                            arr2ways[(i / 12 + k) + j * 8][6] = pName + letter + number;
+                            cellClick = (arr2ways.includes(``)) ? `` : `class="cell-hover c-pointer" onclick="emptyCell('add', ${(i / 12 + k) + j * 8}, ${productOption[0]})"`;
+                            tableArrange += `<td ${cellClick}>${arr2ways[(i / 12 + k) + j * 8][0]}</td>`;
                         }
                     } else {
                         tableArrange += `<td></td>`;
@@ -1045,27 +1085,82 @@ function arrangePlate(arr2ways) {
                         </table>`;
         }
     }
-    tableArrange += `<hr class="py-2"><div class="mb-3">`;
-    let plateArrangeFee = 0, plateNameFee = 0, wellNameFee = 0, totalSurchanges = 0, subTotalAmount = 0;
-    plateArrangeFee += (productArr.includes('')) ? arrangeFee : 0;
-    for (let i = 0; i < productOption[2].length; i++) {
-        if (productOption[2][i] != i + 1) plateNameFee += plateFee;
-        if (productOption[3][i]) wellNameFee += wellFee;
-    }
-    tableArrange += (plateArrangeFee != 0) ? basePlateArrangeFeeText + arrangeFee.toLocaleString() + `<br />` : ``;
-    tableArrange += (plateNameFee != 0) ? plateNameFeeText + plateNameFee.toLocaleString() + `<br />` : ``;
-    tableArrange += (wellNameFee != 0) ? wellNameFeeText + wellNameFee.toLocaleString() + `<br />` : ``;
-    tableArrange += `<hr class="py-2">`;
-    totalSurchanges = plateArrangeFee + plateNameFee + wellNameFee;
-    subTotalAmount = parseInt(document.getElementById('product-oligo-subtotal').innerText) + totalSurchanges;
-
-    oligoSummary.innerHTML = productArr.length + quantityOligoText + ` <span id=product-oligo-quantity>${productOption[2].length}</span> ` + box + `96`;
-    priceOligo.innerText = subTotalAmount / productOption[2].length;
-
-    tableArrange += totalSurchagesText + totalSurchanges.toLocaleString() + `<br />`;
-    tableArrange += `</div>`;
-    productOption[4] = totalSurchanges;
+    oligoList.innerHTML = displayOligo(arr2ways, false);
     return tableArrange;
+}
+
+/*---------------------------------
+Hiển thị tổng kết chi phí và các phụ phí phát sinh cho sản phẩm oligo trước khi đưa vào giỏ hàng
+-----------------------------------*/
+function summaryOligo() {
+    var sumText = ``, plateArrangeFee = 0, plateNameFee = 0, wellNameFee = 0, packageBoxFee = 0, totalSurchanges = 0, subTotalAmount = 0,
+        totalAmount = parseInt(document.getElementById('product-oligo-subtotal').innerText),
+        lowNuTrigger = document.querySelectorAll('.lownu-trigger'),
+        statusTrigger = document.querySelectorAll('.status-trigger'),
+        normalizationTrigger = document.querySelectorAll('.normalization-trigger'),
+        a, b, c, d, e, f, g, h;
+    sumText += `<table class="table table-hover my-3">
+    <tr>
+        <th scope="col" class="text-start ps-5">Diễn giải</th>
+        <th scope="col" class="text-end pe-5">Giá trị</th>
+    </tr>`;
+
+    if (isPlate()) {
+        plateArrangeFee += (productArr.includes('')) ? arrangeFee : 0;
+        for (let i = 0; i < productOption[2].length; i++) {
+            plateNameFee += (productOption[2][i] != i + 1) ? plateFee : 0;
+            wellNameFee += (productOption[3][i]) ? wellFee : 0;
+        }
+        productOption[4] = plateArrangeFee + plateNameFee + wellNameFee;
+        d = 96;
+    } else {
+        a = (productArr.length % 20 != 0) ? (productArr.length % 20) / 20 : 1;
+        b = (productArr.length % 45 != 0) ? (productArr.length % 45) / 45 : 1;
+        d = (Math.max(a, b) == a) ? 20 : 45;
+    }
+
+    e = (productArr.length % d == 0) ? productArr.length / d : (productArr.length - (productArr.length % d)) / d + 1;
+    for (const lowNu of lowNuTrigger) {
+        f = (parseInt(lowNu.innerText) < 14) ? true : false;
+        if (f) break;
+    }
+    for (const status of statusTrigger) {
+        g = (status.innerText == yes) ? true : false;
+        if (g) break;
+    }
+    for (const normalization of normalizationTrigger) {
+        h = (parseInt(normalization.innerText) > 0) ? true : false;
+        if (h) break;
+    }
+    sumText += (f) ? `<tr>
+        <td scope="col" colspan="2" class="text-start ps-5">Phụ phí ${lowNu.toLocaleString()}đ đã được áp dụng với các trình tự có số nucleotide ít hơn ${stringLength[1]}</td>
+    </tr>`: ``;
+    sumText += (g) ? `<tr>
+        <td scope="col" colspan="2" class="text-start ps-5">Phụ phí ${dryFee.toLocaleString()}đ đã được áp dụng với các trình tự được yêu cầu sấy khô trước khi giao</td>
+    </tr>`: ``;
+    sumText += (h) ? `<tr>
+        <td scope="col" colspan="2" class="text-start ps-5">Phụ phí ${normalizationFee.toLocaleString()}đ đã được áp dụng với các trình tự có nồng độ tùy chỉnh</td>
+    </tr>`: ``;
+    sumText += `<tr>
+        <td scope="col" colspan="2" class="text-start ps-5">Các chuỗi nucleotide sau khi sản xuất theo quy trình tiêu chuẩn của Phù Sa genomics sẽ được sắp xếp và đóng gói vào các hộp trước khi giao hàng. Phù Sa genomics tạm tính quy cách đóng gói ${e} hộp ${d} cho ${productArr.length} chuỗi nucleotide đã nhập. Quy cách này có thể thay đổi cho phù hợp theo điều kiện thực tế.</td>
+    </tr>`;
+    sumText += `<tr>
+        <td scope="col" class="text-start ps-5">Giá trị Oligo đã nhập</td>
+        <td scope="col" class="text-end pe-5">${totalAmount.toLocaleString()}đ</td>
+    </tr>`;
+    packageBoxFee += (totalAmount <= minOrderValue) ? packageFee : 0;
+    sumText += (packageBoxFee != 0) ? `<tr><td scope="col" class="text-start ps-5">${packageFeeText + minOrderValue.toLocaleString()}đ</td><td scope="col" class="text-end pe-5">${packageBoxFee.toLocaleString()}đ</td></tr>` : ``;
+    sumText += (plateArrangeFee != 0) ? `<tr><td scope="col" class="text-start ps-5">${basePlateArrangeFeeText}</td><td scope="col" class="text-end pe-5">${arrangeFee.toLocaleString()}đ</td></tr>` : ``;
+    sumText += (plateNameFee != 0) ? `<tr><td scope="col" class="text-start ps-5">${plateNameFeeText}</td><td scope="col" class="text-end pe-5">${plateNameFee.toLocaleString()}đ</td></tr>` : ``;
+    sumText += (wellNameFee != 0) ? `<tr><td scope="col" class="text-start ps-5">${wellNameFeeText}</td><td scope="col" class="text-end pe-5">${wellNameFee.toLocaleString()}đ</td></tr>` : ``;
+    totalSurchanges = plateArrangeFee + plateNameFee + wellNameFee + packageBoxFee;
+    subTotalAmount = totalAmount + totalSurchanges;
+    sumText += (totalSurchanges != 0) ? `<tr><th scope="col" class="text-start ps-5">Tổng giá trị gói hàng Oligo</th><th scope="col" class="text-end pe-5">${subTotalAmount.toLocaleString()}đ</th></tr>` : ``;
+    sumText += `</table>`;
+
+    quantityOligo.innerText = e;
+    priceOligo.innerText = subTotalAmount / e;
+    return sumText;
 }
 
 /*---------------------------------
